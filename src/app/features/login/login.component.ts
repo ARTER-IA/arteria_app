@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +35,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private loginService: LoginService
   ) {}
 
   onLogin() {
@@ -46,7 +48,7 @@ export class LoginComponent {
 
       console.log('Attempting to log in with', loginData);
 
-      this.http.post('http://localhost:8080/api/v1/doctors/auth/sign-in', loginData).subscribe(
+      this.loginService.login(loginData).subscribe(
         (res: any) => {
           console.log('API response:', res);
           if (res.roles) {
@@ -60,7 +62,7 @@ export class LoginComponent {
         },
         (error: any) => {
           console.error('API error:', error);
-          alert("An error occurred while trying to log in.");
+          alert("Invalid credentials");
         }
       );
     }
