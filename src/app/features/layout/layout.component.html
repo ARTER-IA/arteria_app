@@ -1,0 +1,10 @@
+<main>
+  <header class="brand-name">
+    <p-menubar [model]="items"></p-menubar>
+    <p-button label="Logout" (click)="logOff()"></p-button>
+  </header>
+  <section class="content"></section>
+</main>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

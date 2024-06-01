@@ -1,65 +1,64 @@
-import { Component } from '@angular/core';
-import {MenubarModule} from "primeng/menubar";
-import {MenuItem} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { MenubarModule } from "primeng/menubar";
+import { MenuItem } from "primeng/api";
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    MenubarModule
+    MenubarModule,
+    HttpClientModule,
+    CommonModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  items: MenuItem[] | undefined;
+export class HomeComponent implements OnInit {
 
-  ngOnInit() {
-    this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-home'
-      },
-      {
-        label: 'Features',
-        icon: 'pi pi-star'
-      },
-      {
-        label: 'Projects',
-        icon: 'pi pi-search',
-        items: [
-          {
-            label: 'Components',
-            icon: 'pi pi-bolt'
-          },
-          {
-            label: 'Blocks',
-            icon: 'pi pi-server'
-          },
-          {
-            label: 'UI Kit',
-            icon: 'pi pi-pencil'
-          },
-          {
-            label: 'Templates',
-            icon: 'pi pi-palette',
-            items: [
-              {
-                label: 'Apollo',
-                icon: 'pi pi-palette'
-              },
-              {
-                label: 'Ultima',
-                icon: 'pi pi-palette'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        label: 'Contact',
-        icon: 'pi pi-envelope'
-      }
-    ]
+  //doctor:any[]=[];
+  doctor: any;
+
+  constructor(private http: HttpClient) {
+
   }
+
+  ngOnInit(): void {
+    //this.getAllUsers();
+    this.loadDoctor();
+  }
+
+  /*
+    getAllUsers() {
+      this.http.get('http://localhost:8080/api/v1/doctors').subscribe((res:any)=>{
+        this.doctor=res.data;
+      }, error => {
+        alert("Error in fetching data");
+      })
+    }*/
+
+  loadDoctor() {
+    const doctorId = localStorage.getItem('id');
+    if (doctorId) {
+      this.getDoctorById(doctorId);
+    } else {
+      alert("No doctor data found");
+    }
+  }
+
+  getDoctorById(id: string) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = { 'Authorization': `Bearer ${token}` };
+      this.http.get(`http://localhost:8080/api/v1/doctors/${id}`, { headers }).subscribe((res: any) => {
+        this.doctor = res;
+      }, error => {
+        alert("Error in fetching data");
+      })
+    } else {
+      alert("Token not found. Please log in again.");
+    }
+  }
+
 }

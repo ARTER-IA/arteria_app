@@ -1,9 +1,8 @@
-<main>
-  <header class="brand-name">
-    <p-menubar [model]="items"></p-menubar>
-  </header>
+<p>BIENVENIDO</p>
 
-  <section class="content">
-
-  </section>
-</main>
+<div *ngIf="doctor">
+  <h1>Welcome, Dr. {{ doctor.id }} {{ doctor.lastName }}</h1>
+</div>
+<div *ngIf="!doctor">
+  <p>No doctor information available. Please log in.</p>
+</div>

@@ -1,0 +1,222 @@
+<form [formGroup]="registerForm">
+  <p-card header="Register" [style]="{ width: '360px' }">
+    <div class="field">
+      <label for="userName">Username</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="userName"
+        class="w-full"
+        name="userName"
+        placeholder="Escriba su username"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.userName.invalid &&
+          (registerForm.controls.userName.dirty ||
+            registerForm.controls.userName.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.userName.errors?.['required']">
+          Username es requerido
+        </div>
+        <div *ngIf="registerForm.controls.userName.errors?.['pattern']">
+          Ingresa un username válido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="firstName">Nombre</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="firstName"
+        class="w-full"
+        name="firstName"
+        placeholder="Escriba su nombre"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.firstName.invalid &&
+          (registerForm.controls.firstName.dirty ||
+            registerForm.controls.firstName.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.firstName.errors?.['required']">
+          Nombre es requerido
+        </div>
+        <div *ngIf="registerForm.controls.firstName.errors?.['pattern']">
+          Ingresa un nombre válido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="lastName">Apellido</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="lastName"
+        class="w-full"
+        name="lastName"
+        placeholder="Escriba su apellido"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.lastName.invalid &&
+          (registerForm.controls.lastName.dirty ||
+            registerForm.controls.lastName.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.lastName.errors?.['required']">
+          Apellido es requerido
+        </div>
+        <div *ngIf="registerForm.controls.lastName.errors?.['pattern']">
+          Ingresa un apellido válido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="dni">DNI</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="dni"
+        class="w-full"
+        name="dni"
+        placeholder="Escriba su DNI"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.dni.invalid &&
+          (registerForm.controls.dni.dirty || registerForm.controls.dni.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.dni.errors?.['required']">
+          DNI es requerido
+        </div>
+        <div *ngIf="registerForm.controls.dni.errors?.['pattern']">
+          Ingrese un DNI válido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="birthDate">Fecha de Nacimiento</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="birthDate"
+        class="w-full"
+        name="birthDate"
+        placeholder="Escriba su fecha de nacimiento"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.birthDate.invalid &&
+          (registerForm.controls.birthDate.dirty ||
+            registerForm.controls.birthDate.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.birthDate.errors?.['required']">
+          Fecha de nacimiento es requerido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="email"
+        class="w-full"
+        name="email"
+        placeholder="Escriba su email"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.email.invalid &&
+          (registerForm.controls.email.dirty ||
+            registerForm.controls.email.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.email.errors?.['required']">
+          Email es requerido
+        </div>
+        <div *ngIf="registerForm.controls.email.errors?.['email']">
+          Ingrese un Email válido
+        </div>
+      </small>
+    </div>
+    <div class="field">
+      <label for="password">Contraseña</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="password"
+        class="w-full"
+        name="password"
+        placeholder="Escriba su contraseña"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.password.invalid &&
+          (registerForm.controls.password.dirty ||
+            registerForm.controls.password.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.password.errors?.['required']">
+          Contraseña es requerido
+        </div>
+      </small>
+    </div>
+
+    <div class="field">
+      <label for="confirmPassword">Confirme su Contraseña</label>
+      <input
+        type="password"
+        pInputText
+        formControlName="confirmPassword"
+        class="w-full"
+        name="confirmPassword"
+        placeholder="Escriba su contraseña"
+      />
+      <small
+        *ngIf="
+          registerForm.controls.confirmPassword.invalid &&
+          (registerForm.controls.confirmPassword.dirty ||
+            registerForm.controls.confirmPassword.touched)
+        "
+        class="block p-error"
+      >
+        <div *ngIf="registerForm.controls.confirmPassword.errors?.['required']">
+          Confirme su contraseña
+        </div>
+        <div *ngIf="registerForm.controls.confirmPassword.errors?.['passwordMismatch']">
+          Contraseña no coincide
+        </div>
+      </small>
+    </div>
+
+    <p-button
+      label="SIGN UP"
+      styleClass="w-full"
+      [disabled]="registerForm.invalid"
+      (click)="onSubmit()"
+    ></p-button>
+    <div class="mt-2">
+      Already a member?
+      <a routerLink="/login">Login</a>
+    </div>
+  </p-card>
+</form>
