@@ -1,0 +1,148 @@
+<form [formGroup]="addPatientForm">
+    <div class="flex justify-content-center align-items-center h-full">
+        <p-card [style]="{ width: '1200px' }">
+            <div class="flex flex-column md:flex-row">
+                <!-- First Column -->
+                <div class="w-full md:w-6 flex flex-column gap-3">
+                    <div class="flex flex-wrap justify-content-center text-center">
+                        <p-image src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image"
+                            width="250" />
+                    </div>
+
+                    <h2>Personal Information</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="firstName">First Name</label>
+                        <input type="text" pInputText formControlName="firstName" id="firstName" name="firstName" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" pInputText formControlName="lastName" id="lastName" name="lastName" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="birthdayDate">Birth Date</label>
+                        <!--<input type="date" pInputText formControlName="birthdayDate" name="birthdayDate"
+                            class="w-full" />-->
+                        <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
+                            inputId="buttondisplay" id="birthdayDate" name="birthdayDate" class="w-full"/>
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="gender">Gender</label>
+                        <!--<input type="text" pInputText formControlName="gender" name="gender" class="w-full" />-->
+                        <p-dropdown formControlName="gender" [options]="genders" optionLabel="name"
+                            placeholder="Select a genre" id="gender" name="gender" class="w-full"/>
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="dni">DNI</label>
+                        <input type="text" pInputText formControlName="dni" id="dni" name="dni" class="w-full" />
+                    </div>
+
+                    <h2>Contact Information</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="phoneNumber">Phone</label>
+                        <p-inputMask mask="999999999" formControlName="phoneNumber" id="phoneNumber" name="phoneNumber"
+                            placeholder="999999999" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="email">E-mail</label>
+                        <input type="email" pInputText formControlName="email" id="email" name="email" class="w-full" />
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="w-full md:w-1">
+                    <p-divider layout="vertical" styleClass="hidden md:flex">
+                        <b> </b>
+                    </p-divider>
+                    <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'">
+                        <b> </b>
+                    </p-divider>
+                </div>
+
+                <!-- Second Column -->
+                <div class="w-full md:w-8 flex flex-column gap-3">
+                    <h2>Basic Medical Information</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="height">Height</label>
+                        <input type="number" pInputText formControlName="height" id="height" name="height" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="weight">Weight</label>
+                        <input type="number" pInputText formControlName="weight" id="weight" name="weight" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="bloodgroup">Blood Group</label>
+                        <input type="text" pInputText formControlName="bloodGroup" id="bloodGroup" name="bloodGroup" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="allergies">Allergies</label>
+                        <input type="text" pInputText formControlName="allergies" id="allergies" name="allergies" class="w-full" />
+                        <!--<p-chips formControlName="allergies" class="w-full"/>-->
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="currentMedications">Current Medications</label>
+                        <input type="text" pInputText formControlName="currentMedications" id="currentMedications" name="currentMedications" class="w-full" />
+                    </div>
+
+                    <h2>Health Insurance Information</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="insuranceNumber">Insurance Number</label>
+                        <input type="text" pInputText formControlName="insuranceNumber" id="insuranceNumber" name="insuranceNumber"
+                            class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="policy">Policy</label>
+                        <input type="text" pInputText formControlName="policy" id="policy" name="policy" class="w-full" />
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="w-full md:w-1">
+                    <p-divider layout="vertical" styleClass="hidden md:flex">
+                        <b> </b>
+                    </p-divider>
+                    <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'">
+                        <b> </b>
+                    </p-divider>
+                </div>
+
+                <!-- Third Column -->
+                <div class="w-full md:w-8 flex flex-column gap-3">
+                    <h2>Medical History</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="previousIllnesses">Previous Illnesses</label>
+                        <input type="text" pInputText formControlName="previousIllnesses" id="previousIllnesses" name="previousIllnesses" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="previousSurgeries">Previous Surgeries</label>
+                        <input type="text" pInputText formControlName="previousSurgeries" id="previousSurgeries" name="previousSurgeries" class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="currentConditions">Current Conditions</label>
+                        <!--<textarea rows="5" cols="40" pInputTextarea formControlName="currentConditions"
+                            name="currentConditions" [autoResize]="true">
+                        </textarea>-->
+                        <p-chips formControlName="currentConditions" id="currentConditions" name="currentConditions" class="w-full"/>
+                    </div>
+
+                    <h2>Emergency Information</h2>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="emergencyContact">Emergency Contact</label>
+                        <input type="text" pInputText formControlName="emergencyContact" id="emergencyContact" name="emergencyContact"
+                            class="w-full" />
+                    </div>
+                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                        <label for="emergencyPhoneNumber">Emergency Phone Number</label>
+                        <p-inputMask mask="999999999" formControlName="emergencyPhoneNumber" placeholder="999999999"
+                        id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="w-full" />
+                    </div>
+
+                    <div class="flex flex-wrap justify-content-center align-items-center">
+                        <p-button label="Register" styleClass="w-10rem mx-auto" [disabled]="addPatientForm.invalid"
+                            (click)="onRegister()"></p-button>
+                    </div>
+                </div>
+
+            </div>
+        </p-card>
+    </div>
+</form>

@@ -28,8 +28,11 @@ export class LayoutComponent {
         icon: 'pi pi-home'
       },
       {
-        label: 'Features',
-        icon: 'pi pi-star'
+        label: 'Add New Patient',
+        icon: 'pi pi-star',
+        command: () => {
+          this.router.navigate(['/add-new-patient']);
+      }
       },
       {
         label: 'Projects',
