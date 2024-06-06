@@ -6,3 +6,109 @@ body {
     height: 100%;
     margin: 0;
 }
+
+
+.p-button {
+    background-color: #daa520;
+    border-color: #daa520;
+}
+
+.p-card .p-card-content .title {
+    color: #2a2d77;
+}
+
+
+/* Menubar principal */
+.p-menubar {
+    background-color: #2a2d77;
+    border-color: #2a2d77;
+    border-radius: 0;
+}
+
+/* Estilo para ítems seleccionados en el menubar principal */
+.p-menubar .p-menuitem-link:hover,
+.p-menubar .p-menuitem-link:focus,
+.p-menubar .p-menuitem-link:active,
+.p-menubar .p-menuitem-link:visited {
+    background-color: #1e1e5b !important;
+    color: white !important;
+}
+
+/* Asegurar que el ítem principal del menú mantenga el fondo azul cuando el submenú está abierto */
+.p-menubar .p-menuitem-active>.p-menuitem-link {
+    background-color: #1e1e5b !important;
+    color: white !important;
+}
+
+/* Asegurar que el ítem principal del menú no se ponga en blanco cuando el cursor se aleja */
+.p-menubar .p-menuitem-link {
+    background-color: #2a2d77 !important;
+    color: white !important;
+}
+
+/* Estilo de los ítems del Menubar */
+.p-menubar .p-menuitem-link .p-menuitem-text {
+    color: white !important;
+}
+
+.p-menubar .p-menuitem-link .p-menuitem-icon {
+    color: white !important;
+}
+
+/* Estilo de las cabeceras del submenú */
+.p-menubar .p-submenu-header {
+    background: #2a2d77 !important;
+}
+
+/* Estilo de los ítems del submenú */
+.p-menu .p-menuitem-link {
+    background-color: #2a2d77 !important;
+    color: white !important;
+}
+
+
+
+/* Estilo del submenú para tener el fondo azul */
+.p-submenu-list {
+    background-color: #2a2d77 !important;
+}
+
+/* Alineación de los ítems del Menubar */
+p-menubarsub {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+@media (max-width: 768px) {
+
+    .p-menubar {
+        background-color: #2a2d77;
+        border-color: #2a2d77;
+        border-radius: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .p-menubar .p-menubar-root-list {
+        background-color: #2a2d77;
+        border-color: #2a2d77;
+        border-radius: 0;
+    }
+
+    .p-menubar .p-menubar-start {
+        order: 1;
+    }
+
+    .p-menubar .p-menubar-button {
+        background-color: #2a2d77;
+        border-color: #2a2d77;       
+    }
+
+    .p-menubar .p-submenu-list {
+        width: 100%;
+        justify-content: flex-end;
+        border-radius: 0;
+    }
+}

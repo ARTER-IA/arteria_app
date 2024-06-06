@@ -1,8 +1,83 @@
-<p>BIENVENIDO</p>
+<div class="flex justify-content-center align-items-center h-full flex-column">
+  <!-- Welcome Section -->
+  <div class="w-full text-center">
+    <br>
+    <div *ngIf="doctor">
+      <p class="welcome-text">Welcome, Dr. {{ doctor.firstName }} {{ doctor.lastName }}</p>
+    </div>
+    <div *ngIf="!doctor">
+      <p>No doctor information available. Please log in.</p>
+    </div>
+    <h1 class="title-text">What do you want to do today?</h1>
+  </div>
 
-<div *ngIf="doctor">
-  <h1>Welcome, Dr. {{ doctor.id }} {{ doctor.lastName }}</h1>
-</div>
-<div *ngIf="!doctor">
-  <p>No doctor information available. Please log in.</p>
+  <!-- Card Section -->
+  <div class="w-full flex flex-wrap justify-content-center gap-4 mt-4">
+    <div class="card-container">
+      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+        <ng-template pTemplate="header">
+          <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" class="card-image" />
+        </ng-template>
+        <ng-template pTemplate="title">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            Add New Patient
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="flex flex-wrap justify-content-center align-items-center text-center">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar consectetur elementum tempus hac.</p>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            <p-button label="Add" icon="pi pi-user-plus" styleClass="w-10rem mx-auto" [rounded]="true" (click)="goToAddNewPatient()"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="card-container">
+      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+        <ng-template pTemplate="header">
+          <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" class="card-image" />
+        </ng-template>
+        <ng-template pTemplate="title">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            CAD Prediction
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="flex flex-wrap justify-content-center align-items-center text-center">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar consectetur elementum tempus hac.</p>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            <p-button label="Predict" icon="pi pi-chart-line" styleClass="w-10rem mx-auto" [rounded]="true"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="card-container">
+      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+        <ng-template pTemplate="header">
+          <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria14.jpg" class="card-image" />
+        </ng-template>
+        <ng-template pTemplate="title">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            Search Patient
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="flex flex-wrap justify-content-center align-items-center text-center">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit semper dalar consectetur elementum tempus hac.</p>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex flex-wrap justify-content-center align-items-center">
+            <p-button label="Search" icon="pi pi-search" styleClass="w-10rem mx-auto" [rounded]="true"></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
 </div>

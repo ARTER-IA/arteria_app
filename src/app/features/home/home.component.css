@@ -1,0 +1,65 @@
+/* Responsive Text */
+.welcome-text {
+    text-transform: uppercase;
+    font-size: 1rem;
+    color: #daa520;
+    font-weight: 500;
+  }
+  .title-text {
+    font-size: 2rem;
+    color: #2a2d77;
+  }
+  
+  /* Responsive Card Container */
+  .card-container {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  /* Responsive Image */
+  .card-image {
+    height: auto;
+    width: 100%;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  /* Responsive Flexbox */
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Media Queries for Smaller Screens */
+  @media (max-width: 768px) {
+    .welcome-text {
+      font-size: 0.875rem;
+    }
+    .title-text {
+      font-size: 1.5rem;
+    }
+    .card-container {
+      max-width: 100%;
+    }
+    .card-image {
+      height: auto;
+    }
+  }
+  
+  /* Media Queries for Larger Screens */
+  @media (min-width: 769px) {
+    .welcome-text {
+      font-size: 1rem;
+    }
+    .title-text {
+      font-size: 2rem;
+    }
+    .card-container {
+      max-width: 350px;
+    }
+    .card-image {
+      height: 250px;
+    }
+  }
+  
