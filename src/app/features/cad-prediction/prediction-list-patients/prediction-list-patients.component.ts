@@ -54,6 +54,7 @@ export class PredictionListPatientsComponent implements OnInit {
     const doctorId = localStorage.getItem('id');
     this.patientsService.getByDoctorId(doctorId).subscribe((response: any) => {
       if (response) {
+        localStorage.setItem('patients', JSON.stringify(response));
         this.patients = response.map((item: any) => ({
           id: item.id,
           name: `${item.firstName} ${item.lastName}`
@@ -64,5 +65,10 @@ export class PredictionListPatientsComponent implements OnInit {
       console.error("Get failed", error);
     });
 
+  }
+
+  selectPatient(patient: Patient) {
+    localStorage.setItem('selectedPatientId', patient.id.toString());
+    this.router.navigateByUrl('/form');
   }
 }

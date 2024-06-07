@@ -26,8 +26,7 @@ export const routes: Routes = [
       },
       {
         path: 'form',
-        component: FormComponent,
-        canActivate: [authGuard]
+        component: FormComponent
       },
       {
         path: 'add-new-patient',

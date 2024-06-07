@@ -3,12 +3,10 @@ import { Card, CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastModule } from 'primeng/toast';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
 import { LoginService } from './services/login.service';
 
 @Component({
@@ -21,8 +19,7 @@ import { LoginService } from './services/login.service';
     InputTextModule,
     ReactiveFormsModule,
     ButtonModule,
-    HttpClientModule,
-    ToastModule
+    HttpClientModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -41,8 +38,7 @@ export class LoginComponent implements OnInit{
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private loginService: LoginService,
-    private messageService: MessageService
+    private loginService: LoginService
   ) {}
 
   ngOnInit(){

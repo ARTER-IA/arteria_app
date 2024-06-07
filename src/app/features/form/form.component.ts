@@ -9,34 +9,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { Router } from '@angular/router';
 import { FormService } from './services/form.service';
 
-/*interface newform {
-  height: number;
-  weight: number;
-  imc: number;
-  age: number;
-  gender: string;
-  smoking: number;
-  alcoholism: number;
-  sedentaryLifestyle: number;
-  familyHistoryOfEcv: number;
-  diabetesMellitus: number;
-  obesity: number;
-  bloodPressure: string;
-  coronaryCalcium: number;
-  triglycerides: number;
-  cholesterolTotal: number;
-  cLDL: number;
-  cHDL: number;
-  cReactiveProtein: number;
-  heartRate: number;
-  stSegment: number;
-  qtInterval: number;
-  electricShaft: number;
-  rrInterval: number;
-  qrsComplex: number;
-  tWave: number;
-  prSegmentAnomalies: number;
-}*/
 
 interface form {
   age: number;
@@ -84,6 +56,10 @@ interface form {
 })
 
 export class FormComponent implements OnInit {
+
+  patient: any;
+
+
   newForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
@@ -117,30 +93,43 @@ export class FormComponent implements OnInit {
     hb: new FormControl(0, [Validators.required])
   });
 
-  constructor(private router: Router, private addForm: FormService) { }
+  constructor(private router: Router, private formService: FormService) { }
 
   ngOnInit(): void {
-    const patientJson = localStorage.getItem('patient');
-    if (patientJson) {
-      const patient = JSON.parse(patientJson);
-      const age = this.calculateAge(patient.birthdayDate);
-      const imc = this.calculateIMC(patient.weight, patient.height);
-      this.newForm.patchValue({
-        firstName: patient.firstName,
-        lastName: patient.lastName,
-        length: patient.height,
-        weight: patient.weight,
-        bmi: imc,
-        age: age,
-        sex: patient.gender.name,
-        bloodGroup: patient.bloodGroup,
-      });
+    this.loadPatientData();
+  }
+
+  loadPatientData() {
+    const patientId = localStorage.getItem('selectedPatientId');
+    if (patientId) {
+      this.formService.getPatientById(patientId).subscribe(
+        (res: any) => {
+          console.log('Patient data:', res);
+          this.patient = res;
+          this.patchFormWithPatientData(res);
+        },
+        (error: any) => {
+          console.error('Error loading patient data:', error)
+        }
+      );
+    } else {
+      alert("No patient data found");
     }
+  }
 
-    /*this.newForm.get('smoking')!.valueChanges.subscribe((value: number | null) => {
-      console.log('Smoking checkbox value changed:', value);
-    });*/
-
+  patchFormWithPatientData(patient: any) {
+    const age = this.calculateAge(patient.birthdayDate);
+    const imc = this.calculateIMC(patient.weight, patient.height);
+    this.newForm.patchValue({
+      firstName: patient.firstName,
+      lastName: patient.lastName,
+      length: patient.height,
+      weight: patient.weight,
+      bmi: imc,
+      age: age,
+      sex: patient.gender.name,
+      bloodGroup: patient.bloodGroup,
+    });
   }
 
   calculateAge(birthday: string): number {
@@ -160,12 +149,37 @@ export class FormComponent implements OnInit {
     return parseFloat((weight / (heightInMeters * heightInMeters)).toFixed(2));
   }
 
-  onCheckboxChange(event: any): void {
+  onCheckboxChange(event: any, inputId: string): void {
     const checked = event.checked;
-    this.newForm.patchValue({
-      dm: checked ? 1 : 0
-    });
+    const patchValue: { [key: string]: number } = {};
+
+    switch (inputId) {
+      case 'dm':
+      case 'htn':
+      case 'current_Smoker':
+      case 'ex_Smoker':
+      case 'fh':
+      case 'obesity':
+      case 'cva':
+      case 'thyroid_Disease':
+        patchValue[inputId] = checked ? 1 : 0;
+        this.newForm.patchValue(patchValue);
+        break;
+      default:
+        console.warn(`Unknown control: ${inputId}`);
+    }
   }
+
+
+  /*
+    onCheckboxChange(event: any): void {
+      const checked = event.checked;
+      this.newForm.patchValue({
+        dm: checked ? 1 : 0
+      });
+    }
+  */
+
 
   onSubmit() {
     const formResource: form = {
@@ -198,9 +212,9 @@ export class FormComponent implements OnInit {
     }
 
     const doctorId = localStorage.getItem('id');
-    const patientId = localStorage.getItem('patientId');
+    const patientId = localStorage.getItem('selectedPatientId');
 
-    this.addForm.create(formResource, doctorId, patientId).subscribe((response: any) => {
+    this.formService.create(formResource, doctorId, patientId).subscribe((response: any) => {
       console.log("Create successful", response);
       if (response) {
         localStorage.setItem('form', JSON.stringify(response));

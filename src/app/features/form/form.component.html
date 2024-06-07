@@ -1,15 +1,10 @@
 <form [formGroup]="newForm">
-  <div
-    class="flex justify-content-center align-items-center h-full"
-    style="display: flex; flex-direction: column; gap: 20px"
-  >
+  <div class="form-container">
     <p-card header="Personal Information" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
-        <div class="w-full md:w-7 flex flex-column gap-3">
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -20,9 +15,7 @@
               class="w-full"
             />
           </div>
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="age">Age</label>
             <input
               type="text"
@@ -37,11 +30,8 @@
 
         <div class="w-full md:w-1"></div>
 
-        <!-- Second Column -->
-        <div class="w-full md:w-7 flex flex-column gap-3">
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
             <label for="lastName">Last Name</label>
             <input
               type="text"
@@ -52,10 +42,7 @@
               class="w-full"
             />
           </div>
-
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="sex">Gender</label>
             <input
               type="text"
@@ -70,11 +57,8 @@
 
         <div class="w-full md:w-1"></div>
 
-        <!-- Third Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="length">Length</label>
             <input
               type="text"
@@ -85,10 +69,7 @@
               class="w-full"
             />
           </div>
-
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="bloodGroup">Blood Group</label>
             <input
               type="text"
@@ -103,11 +84,8 @@
 
         <div class="w-full md:w-1"></div>
 
-        <!-- Fourth Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="weight">Weight</label>
             <input
               type="text"
@@ -118,10 +96,7 @@
               class="w-full"
             />
           </div>
-
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="bmi">BMI</label>
             <input
               type="text"
@@ -136,91 +111,90 @@
       </div>
     </p-card>
 
-    <p-card header="Medical Conditions" [style]="{ width: 'auto', height: 'auto' }">
+    <p-card header="Medical Conditions" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
-        <div class="w-full md:w-3 flex flex-column gap-3">
+        <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="dm"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'dm')"
             ></p-checkbox>
             <label for="dm" class="p-checkbox-label">Diabetes Mellitus</label>
           </div>
-
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="htn"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'htn')"
             ></p-checkbox>
             <label for="htn" class="p-checkbox-label">Hypertension</label>
           </div>
         </div>
 
-        <!-- Second Column -->
-        <div class="w-full md:w-3 flex flex-column gap-3">
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="current_Smoker"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'current_Smoker')"
             ></p-checkbox>
             <label for="current_Smoker" class="p-checkbox-label"
               >Current Smoker</label
             >
           </div>
-
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="ex_Smoker"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'ex_Smoker')"
             ></p-checkbox>
             <label for="ex_Smoker" class="p-checkbox-label">Ex Smoker</label>
           </div>
         </div>
 
-        <!-- Third Column -->
-        <div class="w-full md:w-3 flex flex-column gap-3">
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="fh"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'fh')"
             ></p-checkbox>
             <label for="fh" class="p-checkbox-label">Family History</label>
           </div>
-
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="obesity"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'obesity')"
             ></p-checkbox>
             <label for="obesity" class="p-checkbox-label">Obesity</label>
           </div>
         </div>
 
-        <!-- Fourth Column -->
-        <div class="w-full md:w-3 flex flex-column gap-3">
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="cva"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'cva')"
             ></p-checkbox>
             <label for="cva" class="p-checkbox-label"
               >Cerebrovascular Accident</label
             >
           </div>
-
           <div class="flex align-items-center gap-1">
             <p-checkbox
               [binary]="true"
               inputId="thyroid_Disease"
-              (onChange)="onCheckboxChange($event)"
+              (onChange)="onCheckboxChange($event, 'thyroid_Disease')"
             ></p-checkbox>
             <label for="thyroid_Disease" class="p-checkbox-label"
               >Thyroid Disease</label
@@ -230,13 +204,11 @@
       </div>
     </p-card>
 
-    <p-card header="Risk Factors" [style]="{ width: '360px', height: 'auto' }">
+    <p-card header="Risk Factors" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
-          <div
-            class="flex flex-wrap justify-content-start align-items-start gap-2"
-          >
+          <div class="input-group">
             <label for="bp">Blood Pressure mm Hg</label>
             <input
               type="text"
@@ -247,9 +219,175 @@
               class="w-full"
             />
           </div>
+          <div class="input-group">
+            <label for="pr">Pulse Rate ppm</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="pr"
+              id="pr"
+              name="pr"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="weak_Peripheral_Pulse">Weak Peripheral Pulse</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="weak_Peripheral_Pulse"
+              id="weak_Peripheral_Pulse"
+              name="weak_Peripheral_Pulse"
+              class="w-full"
+            />
+          </div>
+          <div class="input-group">
+            <label for="tg">Triglyceride mg/dL</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="tg"
+              id="tg"
+              name="tg"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="ldl">Low-density Lipoprotein mg/dL</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="ldl"
+              id="ldl"
+              name="ldl"
+              class="w-full"
+            />
+          </div>
+          <div class="input-group">
+            <label for="hdl">High-density Lipoprotein mg/dL</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="hdl"
+              id="hdl"
+              name="hdl"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="hb">Hemoglobin g/dL</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="hb"
+              id="hb"
+              name="hb"
+              class="w-full"
+            />
+          </div>
         </div>
       </div>
     </p-card>
+
+    <p-card header="Electrocardiogram" [style]="{ width: '100%' }">
+      <div class="flex flex-column md:flex-row">
+        <!-- First Column -->
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="q_Wave">Q Wave</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="q_Wave"
+              id="q_Wave"
+              name="q_Wave"
+              class="w-full"
+            />
+          </div>
+          <div class="input-group">
+            <label for="st_Elevation">St Elevation</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="st_Elevation"
+              id="st_Elevation"
+              name="st_Elevation"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="st_Depression">St Depression</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="st_Depression"
+              id="st_Depression"
+              name="st_Depression"
+              class="w-full"
+            />
+          </div>
+          <div class="input-group">
+            <label for="tinversion">T Inversion</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="tinversion"
+              id="tinversion"
+              name="tinversion"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div class="input-group">
+            <label for="lvh">Left Ventricular Hypertrophy</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="lvh"
+              id="lvh"
+              name="lvh"
+              class="w-full"
+            />
+          </div>
+          <div class="input-group">
+            <label for="poor_R_Progression">Poor R-wave Progression</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="poor_R_Progression"
+              id="poor_R_Progression"
+              name="poor_R_Progression"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </p-card>
+
     <div class="flex flex-wrap justify-content-center align-items-center">
       <p-button
         label="Register"

@@ -28,4 +28,16 @@ export class FormService {
     
     }
   }
+
+  getPatientById(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${this.basePath}/patients/${id}`, { headers });
+    } else {
+      return new Observable((observer) => {
+        observer.error("Token not found. Please log in again.");
+      });
+    }
+  }
 }

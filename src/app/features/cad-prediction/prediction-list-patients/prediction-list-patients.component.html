@@ -8,7 +8,8 @@
             formControlName="selectedPatient" 
             optionLabel="name" 
             [style]="{ width: '360' }" 
-            [listStyle]="{'max-height': '75vh'}">
+            [listStyle]="{'max-height': '75vh'}"
+            (onChange)="selectPatient($event.value)">
             <ng-template let-patient pTemplate="item">
                 <div>
                     {{patient.name}}

@@ -5,12 +5,11 @@ import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenubarModule } from 'primeng/menubar';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [MenubarModule, RouterOutlet, ButtonModule, AvatarModule, OverlayPanelModule, ToastModule],
+  imports: [MenubarModule, RouterOutlet, ButtonModule, AvatarModule, OverlayPanelModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
 })
