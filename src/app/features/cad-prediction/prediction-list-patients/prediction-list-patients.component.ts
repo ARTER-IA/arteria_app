@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ListboxModule } from 'primeng/listbox';
-import { ListPatientsService } from '../list-patients/services/list-patients.service';
+import { PatientService } from '../../patient/services/patient.service';
 
 interface Patient {
   id: number;
@@ -33,7 +33,7 @@ export class PredictionListPatientsComponent implements OnInit {
     this.getPatients();
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private listPatientsService: ListPatientsService) {
+  constructor(private fb: FormBuilder, private router: Router, private patientsService: PatientService) {
     this.searchForm = this.fb.group({
       searchQuery: [''],
       selectedPatient: [null]
@@ -41,12 +41,6 @@ export class PredictionListPatientsComponent implements OnInit {
 
     this.searchForm.get('searchQuery')?.valueChanges.subscribe(query => {
       this.filterPatients(query);
-    });
-
-    this.searchForm.get('selectedPatient')?.valueChanges.subscribe(patient => {
-      if (patient) {
-        this.selectPatient(patient);
-      }
     });
   }
 
@@ -58,7 +52,7 @@ export class PredictionListPatientsComponent implements OnInit {
 
   getPatients() {
     const doctorId = localStorage.getItem('id');
-    this.listPatientsService.getByDoctorId(doctorId).subscribe((response: any) => {
+    this.patientsService.getByDoctorId(doctorId).subscribe((response: any) => {
       if (response) {
         this.patients = response.map((item: any) => ({
           id: item.id,
@@ -70,9 +64,5 @@ export class PredictionListPatientsComponent implements OnInit {
       console.error("Get failed", error);
     });
 
-  }
-
-  selectPatient(patient: Patient) {
-    this.router.navigate(['/patient-profile', patient.id]);
   }
 }

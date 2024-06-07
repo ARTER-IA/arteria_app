@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AddNewPatientService {
+export class PatientService {
   basePath: string = 'http://localhost:8080/api/v1';
 
   httpOptions = {
@@ -17,5 +17,9 @@ export class AddNewPatientService {
 
   create(data: any, doctorId: any){
     return this.http.post(`${this.basePath}/patients/doctor/${doctorId}`, data, this.httpOptions);
+  }
+
+  getByDoctorId(doctorId: any){
+    return this.http.get(`${this.basePath}/patients/doctor/${doctorId}`, this.httpOptions);
   }
 }

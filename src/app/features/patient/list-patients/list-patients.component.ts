@@ -5,8 +5,9 @@ import { CardModule } from 'primeng/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ListPatientsService } from './services/list-patients.service';
+import { PatientService } from '../services/patient.service';
 import { AvatarModule } from 'primeng/avatar';
+import { Router } from '@angular/router';
 
 interface Patient {
   id: number;
@@ -24,11 +25,12 @@ interface Patient {
   styleUrl: './list-patients.component.css'
 })
 export class ListPatientsComponent implements OnInit {
+
   patients: Patient[] = [];
   filteredPatients: Patient[] = [...this.patients];
   searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private listPatientsService: ListPatientsService) {
+  constructor(private fb: FormBuilder, private router: Router, private patientService: PatientService) {
     this.searchForm = this.fb.group({
       searchQuery: ['']
     });
@@ -53,7 +55,7 @@ export class ListPatientsComponent implements OnInit {
 
   getPatients() {
     const doctorId = localStorage.getItem('id');
-    this.listPatientsService.getByDoctorId(doctorId).subscribe((response: any) => {
+    this.patientService.getByDoctorId(doctorId).subscribe((response: any) => {
       if (response) {
         this.patients = response.map((item: any) => ({
           id: item.id,
@@ -82,5 +84,12 @@ export class ListPatientsComponent implements OnInit {
     }
   
     return age;
+  }
+
+  selectPatient(patient: Patient) {
+    console.log("Entra")
+    this.router.navigate(['patient-profile', patient.id], {
+      state: { patient },
+    });
   }
 }

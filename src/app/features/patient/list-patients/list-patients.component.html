@@ -17,7 +17,7 @@
                 <p>Gender: {{patient.gender}}</p>
                 <p>Age: {{patient.age}}</p>
                 <ng-template pTemplate="footer">
-                    <p-button label="Profile" icon="pi pi-book" styleClass="w-8rem mx-auto" [rounded]="true"></p-button>
+                    <p-button label="Profile" icon="pi pi-book" styleClass="w-8rem mx-auto" [rounded]="true" (click)="selectPatient(patient)"></p-button>
                 </ng-template>
             </p-card>
         </div>
