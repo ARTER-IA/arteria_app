@@ -5,6 +5,8 @@ import { RegisterComponent } from './features/register/register.component';
 import { LayoutComponent } from './features/layout/layout.component';
 import { authGuard } from './features/login/services/auth.guard';
 import { AddNewPatientComponent } from './features/add-new-patient/add-new-patient.component';
+import { ListPatientsComponent } from './features/list-patients/list-patients.component';
+import { PredictionListPatientsComponent } from './features/prediction-list-patients/prediction-list-patients.component';
 
 export const routes: Routes = [
   //{path: 'home', component: HomeComponent},
@@ -23,6 +25,16 @@ export const routes: Routes = [
       {
         path: 'add-new-patient',
         component: AddNewPatientComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'search-patients',
+        component: ListPatientsComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'cad-prediction',
+        component: PredictionListPatientsComponent,
         canActivate: [authGuard]
       }
     ]

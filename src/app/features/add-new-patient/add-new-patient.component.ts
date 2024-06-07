@@ -135,8 +135,6 @@ export class AddNewPatientComponent implements OnInit{
       }
     }, (error: any) => {
       console.error("Creation failed", error);
-    }).add(() => {
-
     });
   }
 

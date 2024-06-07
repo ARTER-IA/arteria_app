@@ -1,0 +1,22 @@
+.container {
+    padding: 2rem;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    margin-left: 0.5rem;
+}
+
+.patient-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.patient-cards .col-10 {
+    flex: 1 1 calc(25% - 1rem); /* 25% width for each card with gap of 1rem */
+    max-width: calc(25% - 1rem); /* 25% width for each card with gap of 1rem */
+    box-sizing: border-box;
+}

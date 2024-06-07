@@ -12,9 +12,9 @@
   </div>
 
   <!-- Card Section -->
-  <div class="w-full flex flex-wrap justify-content-center gap-4 mt-4">
+  <div class="w-full flex flex-wrap justify-content-center gap-6 mt-4">
     <div class="card-container">
-      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+      <p-card [style]="{ borderRadius: '15px' }">
         <ng-template pTemplate="header">
           <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" class="card-image" />
         </ng-template>
@@ -36,7 +36,7 @@
       </p-card>
     </div>
     <div class="card-container">
-      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+      <p-card [style]="{ borderRadius: '15px' }">
         <ng-template pTemplate="header">
           <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria11.jpg" class="card-image" />
         </ng-template>
@@ -52,13 +52,13 @@
         </ng-template>
         <ng-template pTemplate="footer">
           <div class="flex flex-wrap justify-content-center align-items-center">
-            <p-button label="Predict" icon="pi pi-chart-line" styleClass="w-10rem mx-auto" [rounded]="true"></p-button>
+            <p-button label="Predict" icon="pi pi-chart-line" styleClass="w-10rem mx-auto" [rounded]="true" (click)="goToPrediction()"></p-button>
           </div>
         </ng-template>
       </p-card>
     </div>
     <div class="card-container">
-      <p-card [style]="{ borderRadius: '15px', color: '#2a2d77' }">
+      <p-card [style]="{ borderRadius: '15px' }">
         <ng-template pTemplate="header">
           <img alt="Card" src="https://primefaces.org/cdn/primeng/images/galleria/galleria14.jpg" class="card-image" />
         </ng-template>
@@ -74,7 +74,7 @@
         </ng-template>
         <ng-template pTemplate="footer">
           <div class="flex flex-wrap justify-content-center align-items-center">
-            <p-button label="Search" icon="pi pi-search" styleClass="w-10rem mx-auto" [rounded]="true"></p-button>
+            <p-button label="Search" icon="pi pi-search" styleClass="w-10rem mx-auto" [rounded]="true" (click)="goToSearchPatient()"></p-button>
           </div>
         </ng-template>
       </p-card>

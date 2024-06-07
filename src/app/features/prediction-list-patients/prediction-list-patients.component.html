@@ -1,0 +1,19 @@
+<div class="container">
+    <form [formGroup]="searchForm">
+        <div class="search-bar">
+            <input type="text" pInputText placeholder="Search by name" formControlName="searchQuery" class="w-full">
+        </div>
+        <p-listbox 
+            [options]="filteredPatients" 
+            formControlName="selectedPatient" 
+            optionLabel="name" 
+            [style]="{ width: '360' }" 
+            [listStyle]="{'max-height': '75vh'}">
+            <ng-template let-patient pTemplate="item">
+                <div class="patient-item">
+                    {{patient.name}}
+                </div>
+            </ng-template>
+        </p-listbox>
+    </form>
+</div>

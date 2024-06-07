@@ -58,4 +58,12 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('/add-new-patient');    
   }
 
+  goToSearchPatient(){
+    this.router.navigateByUrl('/search-patients');
+  }
+
+  goToPrediction() {
+    this.router.navigateByUrl('/cad-prediction');
+  }
+
 }

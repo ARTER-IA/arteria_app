@@ -13,10 +13,9 @@ body {
     border-color: #daa520;
 }
 
-.p-card .p-card-content .title {
+.p-card .p-card-title {
     color: #2a2d77;
 }
-
 
 /* Menubar principal */
 .p-menubar {

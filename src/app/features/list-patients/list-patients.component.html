@@ -1,0 +1,25 @@
+<div class="container">
+    <form [formGroup]="searchForm">
+        <div class="search-bar">
+            <input type="text" pInputText placeholder="Search by name" formControlName="searchQuery" class="w-5">
+        </div>
+    </form>
+    <div class="card patient-cards">
+        <div *ngFor="let patient of filteredPatients" class="col-10 md-4">
+            <p-card header="{{patient.name}}" subheader="DNI: {{patient.dni}}" class="text-center" [style]="{ 
+                border: '1px solid #d4d2e3',  
+                borderRadius: '15px'
+            }">
+                <ng-template pTemplate="header">
+                    <p-avatar icon="pi pi-user" styleClass="mr-2" size="xlarge"
+                        [style]="{ 'background-color': '#f2f1fa', color: '#5d5a88', 'margin-top': '2rem' }" />
+                </ng-template>
+                <p>Gender: {{patient.gender}}</p>
+                <p>Age: {{patient.age}}</p>
+                <ng-template pTemplate="footer">
+                    <p-button label="Profile" icon="pi pi-book" styleClass="w-8rem mx-auto" [rounded]="true"></p-button>
+                </ng-template>
+            </p-card>
+        </div>
+    </div>
+</div>
