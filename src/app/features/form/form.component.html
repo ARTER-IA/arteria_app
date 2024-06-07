@@ -1,0 +1,261 @@
+<form [formGroup]="newForm">
+  <div
+    class="flex justify-content-center align-items-center h-full"
+    style="display: flex; flex-direction: column; gap: 20px"
+  >
+    <p-card header="Personal Information" [style]="{ width: '100%' }">
+      <div class="flex flex-column md:flex-row">
+        <!-- First Column -->
+        <div class="w-full md:w-7 flex flex-column gap-3">
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="firstName"
+              id="firstName"
+              name="firstName"
+              class="w-full"
+            />
+          </div>
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="age">Age</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="age"
+              id="age"
+              name="age"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <!-- Second Column -->
+        <div class="w-full md:w-7 flex flex-column gap-3">
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="lastName"
+              id="lastName"
+              name="lastName"
+              class="w-full"
+            />
+          </div>
+
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="sex">Gender</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="sex"
+              id="sex"
+              name="sex"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <!-- Third Column -->
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="length">Length</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="length"
+              id="length"
+              name="length"
+              class="w-full"
+            />
+          </div>
+
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="bloodGroup">Blood Group</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="bloodGroup"
+              id="bloodGroup"
+              name="bloodGroup"
+              class="w-full"
+            />
+          </div>
+        </div>
+
+        <div class="w-full md:w-1"></div>
+
+        <!-- Fourth Column -->
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="weight">Weight</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="weight"
+              id="weight"
+              name="weight"
+              class="w-full"
+            />
+          </div>
+
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="bmi">BMI</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="bmi"
+              id="bmi"
+              name="bmi"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card header="Medical Conditions" [style]="{ width: 'auto', height: 'auto' }">
+      <div class="flex flex-column md:flex-row">
+        <!-- First Column -->
+        <div class="w-full md:w-3 flex flex-column gap-3">
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="dm"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="dm" class="p-checkbox-label">Diabetes Mellitus</label>
+          </div>
+
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="htn"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="htn" class="p-checkbox-label">Hypertension</label>
+          </div>
+        </div>
+
+        <!-- Second Column -->
+        <div class="w-full md:w-3 flex flex-column gap-3">
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="current_Smoker"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="current_Smoker" class="p-checkbox-label"
+              >Current Smoker</label
+            >
+          </div>
+
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="ex_Smoker"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="ex_Smoker" class="p-checkbox-label">Ex Smoker</label>
+          </div>
+        </div>
+
+        <!-- Third Column -->
+        <div class="w-full md:w-3 flex flex-column gap-3">
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="fh"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="fh" class="p-checkbox-label">Family History</label>
+          </div>
+
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="obesity"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="obesity" class="p-checkbox-label">Obesity</label>
+          </div>
+        </div>
+
+        <!-- Fourth Column -->
+        <div class="w-full md:w-3 flex flex-column gap-3">
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="cva"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="cva" class="p-checkbox-label"
+              >Cerebrovascular Accident</label
+            >
+          </div>
+
+          <div class="flex align-items-center gap-1">
+            <p-checkbox
+              [binary]="true"
+              inputId="thyroid_Disease"
+              (onChange)="onCheckboxChange($event)"
+            ></p-checkbox>
+            <label for="thyroid_Disease" class="p-checkbox-label"
+              >Thyroid Disease</label
+            >
+          </div>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card header="Risk Factors" [style]="{ width: '360px', height: 'auto' }">
+      <div class="flex flex-column md:flex-row">
+        <!-- First Column -->
+        <div class="w-full md:w-6 flex flex-column gap-3">
+          <div
+            class="flex flex-wrap justify-content-start align-items-start gap-2"
+          >
+            <label for="bp">Blood Pressure mm Hg</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="bp"
+              id="bp"
+              name="bp"
+              class="w-full"
+            />
+          </div>
+        </div>
+      </div>
+    </p-card>
+    <div class="flex flex-wrap justify-content-center align-items-center">
+      <p-button
+        label="Register"
+        styleClass="w-10rem mx-auto"
+        (click)="onSubmit()"
+      ></p-button>
+    </div>
+  </div>
+</form>

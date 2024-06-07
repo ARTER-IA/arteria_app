@@ -1,0 +1,26 @@
+input[pInputText] {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+input[pInputText]:focus {
+  outline: none;
+  border: 1px solid #007ad9;
+  padding: 8px;
+}
+
+
+
+.p-checkbox-label {
+  margin-right: 9.3rem; /* Ajusta este valor según sea necesario */
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .p-checkbox-label {
+    margin-right: 6.8rem; /* Ajusta este valor según sea necesario */
+    white-space: nowrap;
+  }
+}
