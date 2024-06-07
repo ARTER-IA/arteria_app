@@ -12,7 +12,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddNewPatientService } from './services/add-new-patient.service';
+import { PatientService } from '../services/patient.service';
 
 interface patient {
   firstName: string;
@@ -89,7 +89,7 @@ export class AddNewPatientComponent implements OnInit{
 
   genders: genre[] | undefined;
 
-  constructor(private addNewPatientService: AddNewPatientService, private router: Router) { }
+  constructor(private patientService: PatientService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -128,15 +128,13 @@ export class AddNewPatientComponent implements OnInit{
 
     console.log("Resource", patientResource);
 
-    this.addNewPatientService.create(patientResource, doctorId).subscribe((response: any) => {      
+    this.patientService.create(patientResource, doctorId).subscribe((response: any) => {      
       console.log("Create successful", response);
       if (response) {
         this.router.navigateByUrl('/home');
       }
     }, (error: any) => {
       console.error("Creation failed", error);
-    }).add(() => {
-
     });
   }
 

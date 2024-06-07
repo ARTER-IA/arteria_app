@@ -1,0 +1,9 @@
+<div class="container">
+    <h2>Patient Profile</h2>
+    <div *ngIf="patient">
+        <p>Name: {{ patient.name }}</p>
+    </div>
+    <div *ngIf="!patient">
+        <p>Loading patient details...</p>
+    </div>
+</div>

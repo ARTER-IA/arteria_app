@@ -1,10 +1,18 @@
 <main>
   <header class="brand-name">
-    <p-menubar [model]="items"></p-menubar>
-    <p-button label="Logout" (click)="logOff()"></p-button>
+    <p-toast/>
+    <p-menubar [model]="items">
+      <ng-template pTemplate="start">
+        <div class="flex justify-content-center align-items-center">
+          <i class="pi pi-slack mr-2" style="color: #daa520;"></i>
+          <span class="font-semibold" style="color: #daa520;">ARTER</span>
+          <span class="font-semibold" style="color: white">IA</span>
+        </div>
+      </ng-template>      
+    </p-menubar>
   </header>
   <section class="content"></section>
 </main>
 <div class="container">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
