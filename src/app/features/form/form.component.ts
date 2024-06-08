@@ -8,6 +8,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Router } from '@angular/router';
 import { FormService } from './services/form.service';
+import { PredictionService } from './services/prediction.service';
+import { calculatedRisk } from './interfaces/calculated-risk';
+
 
 
 interface form {
@@ -37,6 +40,14 @@ interface form {
   ldl: number;
   hdl: number;
   hb: number;
+}
+
+interface calulatedRisk {
+  calculatedRisks: number;
+  heartBlockProbability: number;
+  ischemiaProbability: number;
+  cardiomyopathyProbability: number;
+  arrhythmiasProbability: number;
 }
 
 @Component({
@@ -93,7 +104,11 @@ export class FormComponent implements OnInit {
     hb: new FormControl(0, [Validators.required])
   });
 
-  constructor(private router: Router, private formService: FormService) { }
+  constructor(
+    private router: Router,
+    private formService: FormService,
+    private predictionService: PredictionService
+  ) { }
 
   ngOnInit(): void {
     this.loadPatientData();
@@ -209,20 +224,70 @@ export class FormComponent implements OnInit {
       ldl: this.newForm.value.ldl ?? 0,
       hdl: this.newForm.value.hdl ?? 0,
       hb: this.newForm.value.hb ?? 0
-    }
+    };
 
     const doctorId = localStorage.getItem('id');
     const patientId = localStorage.getItem('selectedPatientId');
 
-    this.formService.create(formResource, doctorId, patientId).subscribe((response: any) => {
-      console.log("Create successful", response);
-      if (response) {
-        localStorage.setItem('form', JSON.stringify(response));
-        this.router.navigateByUrl('/home');
+    if (!doctorId || !patientId) {
+      console.error("Doctor ID or Patient ID is missing");
+      return;
+    }
+
+    this.formService.create(formResource, doctorId, patientId).subscribe(
+      (response: any) => {
+        console.log("Create successful", response);
+        if (response) {
+          //localStorage.setItem('formId', response.id);
+          this.predictionService.predict(formResource).subscribe(
+            (predictionResponse: any) => {
+              console.log("Prediction successful", predictionResponse);
+              if (predictionResponse) {
+                //localStorage.setItem('prediction', JSON.stringify(predictionResponse));
+                //localStorage.setItem('predictedClass', predictionResponse.predicted_class);
+                //localStorage.setItem('predictedProbability', predictionResponse.prediction_probability);
+
+                const calculatedRiskResource: calculatedRisk = {
+                  eacProbability: predictionResponse.predicted_class,
+                  heartBlockProbability: predictionResponse.prediction_probability ?? 0,
+                  ischemiaProbability: 10.5, // Valores de ejemplo, reemplazar con datos reales si es necesario
+                  cardiomyopathyProbability: 10.2, // Valores de ejemplo, reemplazar con datos reales si es necesario
+                  arrhythmiasProbability: 15.6 // Valores de ejemplo, reemplazar con datos reales si es necesario
+                };
+
+                /*const formId = localStorage.getItem('formId');
+                if (!formId) {
+                  console.error("Form ID is missing");
+                  return;
+                }*/
+
+                this.formService.createCalculatedRisk(calculatedRiskResource, response.id).subscribe(
+                  (calculatedRiskResponse: any) => {
+                    console.log("Calculated risk created", calculatedRiskResponse);
+                    if (calculatedRiskResponse) {
+                      localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskResponse));
+                    }
+
+                    // Navegar al final, después de completar la creación del riesgo calculado
+                    this.router.navigateByUrl('/home');
+                  },
+                  (calculatedRiskError: any) => {
+                    console.error("Calculated risk creation failed", calculatedRiskError);
+                  }
+                );
+              }
+            },
+            (predictionError: any) => {
+              console.error("Prediction failed", predictionError);
+            }
+          );
+        }
+      },
+      (error: any) => {
+        console.error("Creation failed", error);
       }
-    }, (error: any) => {
-      console.error("Creation failed", error);
-    }).add(() => {
-    });
+    ).add(() => { });
   }
+
+
 }

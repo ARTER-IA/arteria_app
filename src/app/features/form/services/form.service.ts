@@ -40,4 +40,16 @@ export class FormService {
       });
     }
   }
+
+  createCalculatedRisk(data: any, formId: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.basePath}/calculatedRisks/form/${formId}`, data, { headers });
+    } else {
+      return new Observable((observer) => {
+        observer.error("Token not found. Please log in again.");
+      });
+    }
+  }
 }
