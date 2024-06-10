@@ -43,11 +43,8 @@ interface form {
 }
 
 interface calulatedRisk {
-  calculatedRisks: number;
-  heartBlockProbability: number;
-  ischemiaProbability: number;
-  cardiomyopathyProbability: number;
-  arrhythmiasProbability: number;
+  prediction_probability: number;
+  predicted_class: number;
 }
 
 @Component({
@@ -248,11 +245,8 @@ export class FormComponent implements OnInit {
                 //localStorage.setItem('predictedProbability', predictionResponse.prediction_probability);
 
                 const calculatedRiskResource: calculatedRisk = {
-                  eacProbability: predictionResponse.predicted_class,
-                  heartBlockProbability: predictionResponse.prediction_probability ?? 0,
-                  ischemiaProbability: 10.5, // Valores de ejemplo, reemplazar con datos reales si es necesario
-                  cardiomyopathyProbability: 10.2, // Valores de ejemplo, reemplazar con datos reales si es necesario
-                  arrhythmiasProbability: 15.6 // Valores de ejemplo, reemplazar con datos reales si es necesario
+                  predicted_class: predictionResponse.predicted_class ?? 0,
+                  prediction_probability: predictionResponse.prediction_probability ?? 0,
                 };
 
                 /*const formId = localStorage.getItem('formId');
