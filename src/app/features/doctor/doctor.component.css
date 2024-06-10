@@ -1,0 +1,76 @@
+.doctor-container {
+  display: flex;
+  justify-content: center; /* Centra las tarjetas horizontalmente */
+  align-items: flex-start; /* Alinea las tarjetas en la parte superior */
+  padding: 20px;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  margin: 0 auto; /* Centra el contenedor en la página */
+}
+
+.card-column-1 {
+  flex: 1 1 33.3333%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-column-2-3 {
+  flex: 2 1 66.6666%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-column-3-inner {
+  display: flex;
+  gap: 20px;
+}
+
+.card-column-3-inner p-card {
+  flex: 1 1 50%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input[pInputText] {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  border: 1px solid #ccc;
+  padding: 8px;
+  width: 100%;
+}
+
+input[pInputText]:focus {
+  outline: none;
+  border: 1px solid #007ad9;
+}
+
+p-card {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .doctor-container {
+    flex-direction: column;
+  }
+
+  .card-column-1,
+  .card-column-2-3 {
+    flex: 1 1 100%;
+  }
+
+  .card-column-3-inner {
+    flex-direction: column;
+  }
+
+  .card-column-3-inner p-card {
+    flex: 1 1 100%;
+  }
+}

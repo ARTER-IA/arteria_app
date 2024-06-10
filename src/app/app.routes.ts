@@ -9,6 +9,7 @@ import { AddNewPatientComponent } from './features/patient/add-new-patient/add-n
 import { ListPatientsComponent } from './features/patient/list-patients/list-patients.component';
 import { PredictionListPatientsComponent } from './features/cad-prediction/prediction-list-patients/prediction-list-patients.component';
 import { PatientProfileComponent } from './features/patient/patient-profile/patient-profile.component';
+import { DoctorComponent } from './features/doctor/doctor.component';
 
 export const routes: Routes = [
   //{path: 'home', component: HomeComponent},
@@ -43,7 +44,10 @@ export const routes: Routes = [
       {
         path: 'cad-prediction',
         component: PredictionListPatientsComponent
-
+      },
+      {
+        path: 'profile',
+        component: DoctorComponent
       }
     ]
   }
