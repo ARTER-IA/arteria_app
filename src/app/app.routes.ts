@@ -10,6 +10,7 @@ import { ListPatientsComponent } from './features/patient/list-patients/list-pat
 import { PredictionListPatientsComponent } from './features/cad-prediction/prediction-list-patients/prediction-list-patients.component';
 import { PatientProfileComponent } from './features/patient/patient-profile/patient-profile.component';
 import { DoctorComponent } from './features/doctor/doctor.component';
+import { PredictionResultsComponent } from './features/cad-prediction/prediction-results/prediction-results.component';
 
 export const routes: Routes = [
   //{path: 'home', component: HomeComponent},
@@ -48,6 +49,10 @@ export const routes: Routes = [
       {
         path: 'profile',
         component: DoctorComponent
+      },
+      {
+        path: 'prediction-results',
+        component: PredictionResultsComponent
       }
     ]
   }

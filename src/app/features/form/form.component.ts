@@ -235,14 +235,25 @@ export class FormComponent implements OnInit {
       (response: any) => {
         console.log("Create successful", response);
         if (response) {
-          //localStorage.setItem('formId', response.id);
+          const formData = {
+            formId: response.id,
+            bmi: response.bmi,
+            bp: response.bp,
+            pr: response.pr,
+            tg: response.tg,
+            ldl: response.ldl,
+            hdl: response.hdl,
+            hb: response.hb
+          };
+
+          const formDataJSON = JSON.stringify(formData);
+          localStorage.setItem('formData', formDataJSON);
+
           this.predictionService.predict(formResource).subscribe(
             (predictionResponse: any) => {
               console.log("Prediction successful", predictionResponse);
               if (predictionResponse) {
-                //localStorage.setItem('prediction', JSON.stringify(predictionResponse));
-                //localStorage.setItem('predictedClass', predictionResponse.predicted_class);
-                //localStorage.setItem('predictedProbability', predictionResponse.prediction_probability);
+                localStorage.setItem('prediction', JSON.stringify(predictionResponse));
 
                 const calculatedRiskResource: calculatedRisk = {
                   predicted_class: predictionResponse.predicted_class ?? 0,
@@ -263,7 +274,7 @@ export class FormComponent implements OnInit {
                     }
 
                     // Navegar al final, después de completar la creación del riesgo calculado
-                    this.router.navigateByUrl('/home');
+                    this.router.navigateByUrl('/prediction-results');
                   },
                   (calculatedRiskError: any) => {
                     console.error("Calculated risk creation failed", calculatedRiskError);

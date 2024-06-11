@@ -1,0 +1,27 @@
+<form [formGroup]="newResults">
+  <div class="prediction-results-container">
+    <p-card class="square-card">
+      <ng-template pTemplate="content">
+        <div class="knob-container">
+          <p-knob
+            formControlName="prediction_probability"
+            [size]="296"
+            [readonly]="true"
+            [valueTemplate]="'{value}%'"
+          ></p-knob>
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card class="square-card">
+      <ng-template pTemplate="content">
+        <div class="chart-container">
+          <p-chart
+            type="radar"
+            [data]="chartData"
+            [options]="chartOptions"
+          ></p-chart>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</form>
