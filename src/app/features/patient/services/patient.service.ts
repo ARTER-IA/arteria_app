@@ -15,11 +15,27 @@ export class PatientService {
 
   constructor(private http: HttpClient) { }
 
-  create(data: any, doctorId: any){
+  create(data: any, doctorId: any) {
     return this.http.post(`${this.basePath}/patients/doctor/${doctorId}`, data, this.httpOptions);
   }
 
-  getByDoctorId(doctorId: any){
+  getById(patientId: any) {
+    return this.http.get(`${this.basePath}/patients/${patientId}`, this.httpOptions);
+  }
+
+  getByDoctorId(doctorId: any) {
     return this.http.get(`${this.basePath}/patients/doctor/${doctorId}`, this.httpOptions);
+  }
+
+  update(patientId: any, data: any) {
+    return this.http.put(`${this.basePath}/patients/${patientId}`, data, this.httpOptions);
+  }
+
+  uploadProfilePicture(patientId: any, data: any) {
+    return this.http.post(`${this.basePath}/patients/upload/${patientId}`, data);
+  }
+
+  getProfilePicture(patientId: string) {
+    return this.http.get(`${this.basePath}/patients/profilePicture/${patientId}`, { responseType: 'blob' });
   }
 }

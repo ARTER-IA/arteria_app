@@ -10,9 +10,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { ChipsModule } from 'primeng/chips';
+import { FileUploadModule } from 'primeng/fileupload';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PatientService } from '../services/patient.service';
+import { CommonModule } from '@angular/common';
 
 interface patient {
   firstName: string;
@@ -34,7 +36,6 @@ interface patient {
   previousIllnesses: string,
   previousSurgeries: string;
   currentConditions: string[];
-  profilePictureUri: string;
 }
 
 interface genre {
@@ -57,7 +58,9 @@ interface genre {
     InputTextareaModule,
     MultiSelectModule,
     DropdownModule,
-    ChipsModule
+    ChipsModule,
+    FileUploadModule,
+    CommonModule
   ],
   templateUrl: './add-new-patient.component.html',
   styleUrl: './add-new-patient.component.css'
@@ -88,6 +91,8 @@ export class AddNewPatientComponent implements OnInit{
   });
 
   genders: genre[] | undefined;
+  profilePictureUri: string = '';
+  profilePictureFile: File | null = null;
 
   constructor(private patientService: PatientService, private router: Router) { }
 
@@ -120,8 +125,7 @@ export class AddNewPatientComponent implements OnInit{
       currentMedications: this.addPatientForm.value.currentMedications ?? '',
       previousIllnesses: this.addPatientForm.value.previousIllnesses ?? '',
       previousSurgeries: this.addPatientForm.value.previousSurgeries ?? '',
-      currentConditions: this.addPatientForm.value.currentConditions ?? [],
-      profilePictureUri: "Photo Uri"
+      currentConditions: this.addPatientForm.value.currentConditions ?? []
     }
 
     const doctorId = localStorage.getItem('id');
@@ -131,10 +135,53 @@ export class AddNewPatientComponent implements OnInit{
     this.patientService.create(patientResource, doctorId).subscribe((response: any) => {      
       console.log("Create successful", response);
       if (response) {
+        this.uploadProfilePicture(response.id);
         this.router.navigateByUrl('/home');
       }
     }, (error: any) => {
       console.error("Creation failed", error);
+    });
+  }
+
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      this.profilePictureFile = event.target.files[0];
+      console.log("file", this.profilePictureFile);
+    }
+  }
+
+  /*onUpload(event: any) {
+    const file = event.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      console.log("Result", reader.result);
+      this.profilePictureUri = reader.result as string;
+    };
+  }*/
+
+  onUpload(event: any) {
+    const file = event.files[0];
+    this.profilePictureFile = file;
+    console.log("File selected", this.profilePictureFile);
+
+    // Create a URL for the selected image file
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.profilePictureUri = reader.result as string;
+    };
+  }
+
+  uploadProfilePicture(patientId: number) {
+    var formData = new FormData();
+    formData.append('file', this.profilePictureFile!);
+
+    this.patientService.uploadProfilePicture(patientId, formData).subscribe((response: any) => {
+      console.log("response", response);
+    }, (error: any) => {
+      console.error("Image upload failed", error);
     });
   }
 

@@ -88,8 +88,9 @@ export class ListPatientsComponent implements OnInit {
 
   selectPatient(patient: Patient) {
     console.log("Entra")
-    this.router.navigate(['patient-profile', patient.id], {
+    this.router.navigate(['patient-profile', patient.id]);
+    /*this.router.navigate(['patient-profile', patient.id], {
       state: { patient },
-    });
+    });*/
   }
 }

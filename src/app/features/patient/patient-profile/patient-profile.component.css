@@ -1,0 +1,7 @@
+::ng-deep .p-listbox-item {
+    height: 3rem !important;
+    /* Ajusta la altura según sea necesario */
+    line-height: 1.5 !important;
+    /* Ajusta la altura de línea según sea necesario */
+    /* Ajusta el relleno según sea necesario */
+}
