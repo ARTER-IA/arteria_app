@@ -1,6 +1,17 @@
 <form [formGroup]="newResults">
+  <!-- Welcome Section -->
+  <div class="w-full text-center">
+    <br />
+    <h1 class="title-text">Calculated Risk</h1>
+    <div>
+      <p class="welcome-text">
+        The calculated risk information and a radar graph with the risk factors
+        are displayed
+      </p>
+    </div>
+  </div>
   <div class="prediction-results-container">
-    <p-card class="square-card">
+    <p-card class="square-card knob-card">
       <ng-template pTemplate="content">
         <div class="knob-container">
           <p-knob
@@ -10,16 +21,48 @@
             [valueTemplate]="'{value}%'"
           ></p-knob>
         </div>
+        <div class="probability-text">
+          <p>
+            {{ newResults.value.prediction_probability }}% probability of having
+            the disease
+          </p>
+        </div>
       </ng-template>
     </p-card>
-    <p-card class="square-card">
+    <p-card class="square-card chart-card">
       <ng-template pTemplate="content">
-        <div class="chart-container">
-          <p-chart
-            type="radar"
-            [data]="chartData"
-            [options]="chartOptions"
-          ></p-chart>
+        <div class="chart-legend-container">
+          <div class="chart-container">
+            <p-chart
+              type="radar"
+              [data]="chartData"
+              [options]="chartOptions"
+            ></p-chart>
+          </div>
+          <div class="legend-container">
+            <h3>Legend</h3>
+            <ul>
+              <li>
+                <span class="legend-symbol">BMI</span>: Body Mass Index</li>
+              <li>
+                <span class="legend-symbol">BP</span>: Blood Pressure (mm Hg)
+              </li>
+              <li><span class="legend-symbol">PR</span>: Pulse Rate (PPM)</li>
+              <li>
+                <span class="legend-symbol">TG</span>: Triglyceride (mg/dL)
+              </li>
+              <li>
+                <span class="legend-symbol">LDL</span>: Low-density Lipoprotein
+                (mg/dL)
+              </li>
+              <li>
+                <span class="legend-symbol">HDL</span>: High-density Lipoprotein
+                (mg/dL)
+              </li>
+              <li><span class="legend-symbol">HB</span>: Hemoglobin (g/dL)</li>
+              <!-- Add more symbols and meanings as needed -->
+            </ul>
+          </div>
         </div>
       </ng-template>
     </p-card>
