@@ -1,0 +1,41 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.p-card {
+  margin: 20px 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input[pInputText] {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+input[pInputText]:focus {
+  outline: none;
+  border: 1px solid #007ad9;
+}
+
+.p-checkbox-label {
+  margin-right: 1rem; /* Ajusta este valor según sea necesario */
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .p-checkbox-label {
+    margin-right: 0.5rem; /* Ajusta este valor según sea necesario */
+  }
+}

@@ -3,7 +3,6 @@ import { Card, CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToastModule } from 'primeng/toast';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,8 +19,7 @@ import { LoginService } from './services/login.service';
     InputTextModule,
     ReactiveFormsModule,
     ButtonModule,
-    HttpClientModule,
-    ToastModule
+    HttpClientModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

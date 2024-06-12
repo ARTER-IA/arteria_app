@@ -43,7 +43,10 @@ export class LayoutComponent implements OnInit {
         items: [
           {
             label: 'My Profile',
-            icon: 'pi pi-address-book'
+            icon: 'pi pi-address-book',
+            command: () => {
+              this.router.navigate(['/profile']);
+            }
           },
           {
             label: 'Log Out',
