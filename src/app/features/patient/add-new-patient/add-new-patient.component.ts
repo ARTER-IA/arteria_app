@@ -66,7 +66,7 @@ interface genre {
   styleUrl: './add-new-patient.component.css'
 })
 
-export class AddNewPatientComponent implements OnInit{
+export class AddNewPatientComponent implements OnInit {
 
   addPatientForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
@@ -132,7 +132,7 @@ export class AddNewPatientComponent implements OnInit{
 
     console.log("Resource", patientResource);
 
-    this.patientService.create(patientResource, doctorId).subscribe((response: any) => {      
+    this.patientService.create(patientResource, doctorId).subscribe((response: any) => {
       console.log("Create successful", response);
       if (response) {
         this.uploadProfilePicture(response.id);
@@ -180,6 +180,9 @@ export class AddNewPatientComponent implements OnInit{
 
     this.patientService.uploadProfilePicture(patientId, formData).subscribe((response: any) => {
       console.log("response", response);
+      if (response.message === "File uploaded successfully") {
+        console.log("Image uploaded successfully");
+      }
     }, (error: any) => {
       console.error("Image upload failed", error);
     });
