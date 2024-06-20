@@ -93,13 +93,21 @@ export class DoctorComponent implements OnInit {
     }
   }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const year = date.getUTCFullYear();
+    const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+    const day = ('0' + date.getUTCDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
   patchFormWithDoctorData(doctor: any) {
     this.newDoctor.patchValue({
       username: doctor.username,
       firstName: doctor.firstName,
       lastName: doctor.lastName,
       dni: doctor.dni,
-      birthDate: doctor.birthDate,
+      birthDate: this.formatDate(doctor.birthDate),
       email: doctor.email,
       gender: doctor.gender,
       phone: doctor.phone,

@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { HttpClientModule } from '@angular/common/http';
 import { passwordMatchValidator } from '../../shared/password-match.directive';
 import { RegisterService } from './services/register.service';
+import { CalendarModule } from 'primeng/calendar';
 
 
 interface doctor {
@@ -15,7 +16,7 @@ interface doctor {
   firstName: string;
   lastName: string;
   dni: string;
-  birthDate: string;
+  birthDate: Date;
   gender: string;
   country: string;
   department: string;
@@ -40,7 +41,8 @@ interface doctor {
     InputTextModule,
     ReactiveFormsModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    CalendarModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -52,7 +54,7 @@ export class RegisterComponent implements OnInit {
     userName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     firstName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     lastName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
-    birthDate: new FormControl('', Validators.required),
+    birthDate: new FormControl(null, Validators.required),
     dni: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -71,7 +73,7 @@ export class RegisterComponent implements OnInit {
       firstName: this.registerForm.value.firstName ?? '',
       lastName: this.registerForm.value.lastName ?? '',
       dni: this.registerForm.value.dni ?? '',
-      birthDate: this.registerForm.value.birthDate ?? '',
+      birthDate: this.registerForm.value.birthDate ?? new Date(),
       gender: "Male",
       country: "Peru",
       department: "Lima",
