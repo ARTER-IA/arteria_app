@@ -18,7 +18,8 @@ import { Router } from '@angular/router';
     DividerModule,
     ButtonModule,
     ChartModule,
-    KnobModule
+    KnobModule,
+    ButtonModule
   ],
   templateUrl: './prediction-results.component.html',
   styleUrls: ['./prediction-results.component.css']
@@ -84,5 +85,9 @@ export class PredictionResultsComponent implements OnInit {
 
   formatPercentage(value: number): number {
     return parseFloat((value * 100).toFixed(1));
+  }
+
+  goToReport(){
+    this.router.navigateByUrl('/report'); 
   }
 }

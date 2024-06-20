@@ -11,6 +11,7 @@ import { PredictionListPatientsComponent } from './features/cad-prediction/predi
 import { PatientProfileComponent } from './features/patient/patient-profile/patient-profile.component';
 import { DoctorComponent } from './features/doctor/doctor.component';
 import { PredictionResultsComponent } from './features/cad-prediction/prediction-results/prediction-results.component';
+import { ResultsReportComponent } from './features/cad-prediction/results-report/results-report.component';
 
 export const routes: Routes = [
   //{path: 'home', component: HomeComponent},
@@ -53,6 +54,10 @@ export const routes: Routes = [
       {
         path: 'prediction-results',
         component: PredictionResultsComponent
+      }, 
+      {
+        path: 'report',
+        component: ResultsReportComponent
       }
     ]
   }

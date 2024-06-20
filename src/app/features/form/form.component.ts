@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { FormService } from './services/form.service';
 import { PredictionService } from './services/prediction.service';
 import { calculatedRisk } from './interfaces/calculated-risk';
+import { ResultsReportComponent } from '../cad-prediction/results-report/results-report.component';
+import { OpenaiService } from './services/openai.service';
 
 
 
@@ -104,7 +106,8 @@ export class FormComponent implements OnInit {
   constructor(
     private router: Router,
     private formService: FormService,
-    private predictionService: PredictionService
+    private predictionService: PredictionService,
+    private resultsReportService: OpenaiService
   ) { }
 
   ngOnInit(): void {
@@ -271,6 +274,58 @@ export class FormComponent implements OnInit {
                     console.log("Calculated risk created", calculatedRiskResponse);
                     if (calculatedRiskResponse) {
                       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskResponse));
+
+                      const generateRecommendation = {
+                        prediction_probability: predictionResponse.prediction_probability ?? 0,
+                        predicted_class: predictionResponse.predicted_class ?? 0,
+                        age: response.age,
+                        weight: response.weight,
+                        length: response.length,
+                        sex: response.sex,
+                        bmi: response.bmi,
+                        dm: response.dm,
+                        htn: response.htn,
+                        current_Smoker: response.current_Smoker,
+                        ex_Smoker: response.ex_Smoker,
+                        fh: response.fh,
+                        obesity: response.obesity,
+                        cva: response.cva,
+                        thyroid_Disease: response.thyroid_Disease,
+                        bp: response.bp,
+                        pr: response.pr,
+                        weak_Peripheral_Pulse: response.weak_Peripheral_Pulse,
+                        q_Wave: response.q_Wave,
+                        st_Elevation: response.st_Elevation,
+                        st_Depression: response.st_Depression,
+                        tinversion: response.tinversion,
+                        lvh: response.lvh,
+                        poor_R_Progression: response.poor_R_Progression,
+                        tg: response.tg,
+                        ldl: response.ldl,
+                        hdl: response.hdl,
+                        hb: response.hb
+                      }
+
+                      this.resultsReportService.generateRecommendation(generateRecommendation).subscribe((openAiResponse: any) => {
+                        if(openAiResponse){
+                          const recommendationModel = {
+                            description: openAiResponse.message
+                          }
+
+                          this.formService.createRecommendation(recommendationModel, calculatedRiskResponse.id).subscribe((recommendationResponse: any) => {
+                            if (recommendationResponse) {
+                              console.log("recommendation", recommendationResponse);
+                            }
+                          },
+                            (recommendationError: any) => {
+                              console.error("Recommendation creation failed", recommendationError);
+                            });
+                        }
+
+                      },
+                      (openAiError: any) => {
+                        console.error("Open AI request failed", openAiError);
+                      });
                     }
 
                     // Navegar al final, después de completar la creación del riesgo calculado

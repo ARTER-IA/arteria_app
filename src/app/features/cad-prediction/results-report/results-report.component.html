@@ -1,0 +1,39 @@
+<form [formGroup]="predictionReport">
+    <div class="flex justify-content-center align-items-center h-full">
+        <p-card [style]="{ width: '360' }">
+            <div class="w-full text-center">
+                <h1 class="title-text">Prediction Report</h1>
+            </div>
+
+            <div class="report-container">
+                <div class="input-column">
+                    <div class="patient-info">
+                        <label for="fullName" class="mr-5">Patient</label>
+                        <input type="text" class="mr-5 mb-3" pInputText id="fullName" formControlName="fullName" />
+                        <label for="age" class="mr-5">Age</label>
+                        <input type="text" class="mb-3" pInputText id="age" formControlName="age" />
+                    </div>
+                    <div class="patient-info">
+                        <label for="gender" class="mr-5">Gender</label>
+                        <p-dropdown formControlName="gender" class="mr-5" [options]="genders" optionLabel="name" id="gender"
+                            name="gender" />
+                        <label for="date" class="mr-5">Date</label>
+                        <p-calendar [showIcon]="true" formControlName="date" [showOnFocus]="false"></p-calendar>
+                    </div>
+                </div>
+                <div class="knob-column">
+                    <div class="result-item">
+                        <p-knob [size]="150" [readonly]="true" id="CADResult" formControlName="CADResult"></p-knob>
+                        <p>CAD</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <p-card header="Recommendations">
+                    <p [innerHTML]="recommendation"></p>
+                </p-card>
+            </div>
+        </p-card>
+    </div>
+</form>
