@@ -276,7 +276,7 @@ export class FormComponent implements OnInit {
                       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskResponse));
 
                       const generateRecommendation = {
-                        prediction_probability: predictionResponse.prediction_probability ?? 0,
+                        prediction_probability: predictionResponse.prediction_probability,
                         predicted_class: predictionResponse.predicted_class ?? 0,
                         age: response.age,
                         weight: response.weight,
