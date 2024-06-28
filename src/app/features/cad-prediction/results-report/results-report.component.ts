@@ -9,11 +9,13 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { DomSanitizer } from '@angular/platform-browser';
 import { KnobModule } from 'primeng/knob';
+import { ButtonModule } from 'primeng/button';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CommonModule } from '@angular/common';
+import { EditorModule } from 'primeng/editor';
 
 interface Recommendation {
-  id: number;
   description: string;
-  calculatedRisk: number;
 }
 
 interface Patient {
@@ -32,42 +34,42 @@ interface Genre {
   selector: 'app-results-report',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     CardModule,
     InputTextModule,
     CalendarModule,
     DropdownModule,
-    KnobModule
+    KnobModule,
+    ButtonModule,
+    InputTextareaModule,
+    EditorModule
   ],
   templateUrl: './results-report.component.html',
-  styleUrl: './results-report.component.css'
+  styleUrls: ['./results-report.component.css']
 })
 export class ResultsReportComponent implements OnInit{
 
   predictionReport: FormGroup;
-  /*patientName: string = 'John Carter';
-  patientAge: number = 45;
-  patientGender: string = 'Masculine';
-  reportDate: string = '06/19/2024';*/
-  results: any = {
-    CAD: 66,
-    Arrhythmias: 31,
-    HeartBlock: 7,
-    Ischemia: 75
-  };
   recommendation: string | any;
   calculatedRiskId: number = 0;
   resultCAD: number = 0;
   genders: Genre[] | undefined;
+  editMode: boolean = false;
+  recommendationToUpdateId: any;
+  newRecommendation: Recommendation | any;
 
   constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer) {
-    this.predictionReport = new FormGroup({
+    this.predictionReport = this.fb.group({
       fullName: new FormControl({ value: '', disabled: true }),
       age: new FormControl({ value: '', disabled: true }),
       gender: new FormControl({ value: '', disabled: true }),
       date: new FormControl({ value: '', disabled: true }),
-      CADResult: new FormControl({ value: 0, disabled: false})
+      CADResult: new FormControl({ value: 0, disabled: true }),
+      editableRecommendation: new FormControl('')
     });
+
+    this.newRecommendation = { description: '' };
   }
 
   ngOnInit(): void {
@@ -85,14 +87,22 @@ export class ResultsReportComponent implements OnInit{
     }
     this.getPatient(patientId);
     this.getRecommendations(this.calculatedRiskId);
-    
   }
 
   getRecommendations(calculatedRiskId: any) {
     this.predictionEACService.getRecommendationsByCalculatedRisk(calculatedRiskId).subscribe((response: any) => {
       if (response) {
-        this.recommendation = this.sanitizer.bypassSecurityTrustHtml(response.description.replace(/\n/g, '<br>'));
+        const sanitizedDescription = response.description
+          .replace(/\n/g, '<br>') 
+          .replace(/### (.*?)(?=<br>|\n|$)/g, '<h3>$1</h3>') 
+          .replace(/## (.*?)(?=<br>|\n|$)/g, '<h2>$1</h2>') 
+          .replace(/# (.*?)(?=<br>|\n|$)/g, '<h1>$1</h1>') 
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
+        this.recommendation = this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
+        this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription }); 
+        console.log("form", this.predictionReport);
         console.log("response", response);
+        this.recommendationToUpdateId = response.id.toString();
       }
     }, (error: any) => {
       console.error("Get failed", error);
@@ -103,7 +113,7 @@ export class ResultsReportComponent implements OnInit{
     this.patientService.getById(patientId).subscribe((response: any) => {
       console.log(response);
       if (response) {
-        this.predictionReport.setValue({
+        this.predictionReport.patchValue({
           fullName: `${response.firstName} ${response.lastName}`,
           age: this.calculateAge(response.birthdayDate),
           gender: response.gender,
@@ -127,5 +137,23 @@ export class ResultsReportComponent implements OnInit{
     return age;
   }
 
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+  }
 
+  saveRecommendation() {
+    const updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value;  
+    console.log("updatedRec", updatedRecommendation);    
+    //this.recommendation = updatedRecommendation;
+    this.newRecommendation.description = updatedRecommendation.toString();
+    this.predictionEACService.updateRecommendation(this.recommendationToUpdateId, this.newRecommendation).subscribe((response: any) =>{
+      if (response){
+        this.recommendation = response.description;
+        console.log("responseUpd", response);
+      }
+    }, (error: any) => {
+      console.error("Get failed", error);
+    })
+    this.toggleEditMode();
+  }
 }

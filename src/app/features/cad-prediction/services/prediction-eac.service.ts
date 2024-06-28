@@ -19,4 +19,8 @@ export class PredictionEacService {
   getRecommendationsByCalculatedRisk(calculatedRiskId: any){
     return this.http.get(`${this.basePath}/recommendations/calculatedRisk/${calculatedRiskId}`, this.httpOptions);
   }
+
+  updateRecommendation(recommendationId: any, data: any){
+    return this.http.put(`${this.basePath}/recommendations/${recommendationId}`, data, this.httpOptions);
+  }
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="predictionReport">
     <div class="flex justify-content-center align-items-center h-full">
-        <p-card [style]="{ width: '360' }">
+        <p-card [style]="{ width: '100%' }">
             <div class="w-full text-center">
                 <h1 class="title-text">Prediction Report</h1>
             </div>
@@ -15,8 +15,8 @@
                     </div>
                     <div class="patient-info">
                         <label for="gender" class="mr-5">Gender</label>
-                        <p-dropdown formControlName="gender" class="mr-5" [options]="genders" optionLabel="name" id="gender"
-                            name="gender" />
+                        <p-dropdown formControlName="gender" class="mr-5" [options]="genders" optionLabel="name"
+                            id="gender" name="gender" />
                         <label for="date" class="mr-5">Date</label>
                         <p-calendar [showIcon]="true" formControlName="date" [showOnFocus]="false"></p-calendar>
                     </div>
@@ -31,7 +31,20 @@
 
             <div class="recommendations">
                 <p-card header="Recommendations">
-                    <p [innerHTML]="recommendation"></p>
+                    <div *ngIf="editMode">
+                        <!--<textarea pInputTextarea formControlName="editableRecommendation" rows="15" cols="175"
+                            class="w-full"></textarea>-->
+                        <p-editor formControlName="editableRecommendation" [style]="{ height: '320px' }"></p-editor>
+                        <div class="flex flex-wrap justify-content-end mt-5">
+                            <p-button icon="pi pi-save" [rounded]="true" (click)="saveRecommendation()"></p-button>
+                        </div>
+                    </div>
+                    <div *ngIf="!editMode">
+                        <p [innerHTML]="recommendation"></p>
+                    </div>
+                    <div *ngIf="!editMode" class="flex flex-wrap justify-content-end">
+                        <p-button icon="pi pi-pencil" [rounded]="true" (click)="toggleEditMode()"></p-button>
+                    </div>
                 </p-card>
             </div>
         </p-card>
