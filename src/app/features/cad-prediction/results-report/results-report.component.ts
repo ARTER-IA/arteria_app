@@ -48,10 +48,10 @@ interface Genre {
   templateUrl: './results-report.component.html',
   styleUrls: ['./results-report.component.css']
 })
-export class ResultsReportComponent implements OnInit{
+export class ResultsReportComponent implements OnInit {
 
   predictionReport: FormGroup;
-  recommendation: string | any;
+  //recommendation: string | any;
   calculatedRiskId: number = 0;
   resultCAD: number = 0;
   genders: Genre[] | undefined;
@@ -66,7 +66,8 @@ export class ResultsReportComponent implements OnInit{
       gender: new FormControl({ value: '', disabled: true }),
       date: new FormControl({ value: '', disabled: true }),
       CADResult: new FormControl({ value: 0, disabled: true }),
-      editableRecommendation: new FormControl('')
+      editableRecommendation: new FormControl(''),
+      recommendation: new FormControl('')
     });
 
     this.newRecommendation = { description: '' };
@@ -93,13 +94,14 @@ export class ResultsReportComponent implements OnInit{
     this.predictionEACService.getRecommendationsByCalculatedRisk(calculatedRiskId).subscribe((response: any) => {
       if (response) {
         const sanitizedDescription = response.description
-          .replace(/\n/g, '<br>') 
-          .replace(/### (.*?)(?=<br>|\n|$)/g, '<h3>$1</h3>') 
-          .replace(/## (.*?)(?=<br>|\n|$)/g, '<h2>$1</h2>') 
-          .replace(/# (.*?)(?=<br>|\n|$)/g, '<h1>$1</h1>') 
-          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
-        this.recommendation = this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
-        this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription }); 
+          .replace(/\n/g, '<br>')
+          .replace(/### (.*?)(?=<br>|\n|$)/g, '<h3>$1</h3>')
+          .replace(/## (.*?)(?=<br>|\n|$)/g, '<h2>$1</h2>')
+          .replace(/# (.*?)(?=<br>|\n|$)/g, '<h1>$1</h1>')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        //this.recommendation = this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
+        this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription });
+        this.predictionReport.patchValue({ recommendation: sanitizedDescription });
         console.log("form", this.predictionReport);
         console.log("response", response);
         this.recommendationToUpdateId = response.id.toString();
@@ -142,13 +144,21 @@ export class ResultsReportComponent implements OnInit{
   }
 
   saveRecommendation() {
-    const updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value;  
-    console.log("updatedRec", updatedRecommendation);    
+    //const updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value; 
+    let updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value;
+
+    updatedRecommendation = updatedRecommendation
+      .replace(/<p><br\s*\/?><\/p>/g, '<br>')
+      .replace(/<br\s*\/?><br\s*\/?>/g, '<br>')
+      .trim();
+
+    console.log("updatedRec", updatedRecommendation);
     //this.recommendation = updatedRecommendation;
     this.newRecommendation.description = updatedRecommendation.toString();
-    this.predictionEACService.updateRecommendation(this.recommendationToUpdateId, this.newRecommendation).subscribe((response: any) =>{
-      if (response){
-        this.recommendation = response.description;
+    this.predictionEACService.updateRecommendation(this.recommendationToUpdateId, this.newRecommendation).subscribe((response: any) => {
+      if (response) {
+        //this.recommendation = response.description;
+        this.predictionReport.patchValue({ recommendation: response.description });
         console.log("responseUpd", response);
       }
     }, (error: any) => {

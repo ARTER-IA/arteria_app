@@ -1,52 +1,96 @@
 <form [formGroup]="predictionReport">
-    <div class="flex justify-content-center align-items-center h-full">
-        <p-card [style]="{ width: '100%' }">
-            <div class="w-full text-center">
-                <h1 class="title-text">Prediction Report</h1>
-            </div>
+  <div class="flex justify-content-center align-items-center h-full">
+    <p-card [style]="{ width: '100%' }">
+      <div class="w-full text-center">
+        <h1 class="title-text">Prediction Report</h1>
+      </div>
 
-            <div class="report-container">
-                <div class="input-column">
-                    <div class="patient-info">
-                        <label for="fullName" class="mr-5">Patient</label>
-                        <input type="text" class="mr-5 mb-3" pInputText id="fullName" formControlName="fullName" />
-                        <label for="age" class="mr-5">Age</label>
-                        <input type="text" class="mb-3" pInputText id="age" formControlName="age" />
-                    </div>
-                    <div class="patient-info">
-                        <label for="gender" class="mr-5">Gender</label>
-                        <p-dropdown formControlName="gender" class="mr-5" [options]="genders" optionLabel="name"
-                            id="gender" name="gender" />
-                        <label for="date" class="mr-5">Date</label>
-                        <p-calendar [showIcon]="true" formControlName="date" [showOnFocus]="false"></p-calendar>
-                    </div>
-                </div>
-                <div class="knob-column">
-                    <div class="result-item">
-                        <p-knob [size]="150" [readonly]="true" id="CADResult" formControlName="CADResult"></p-knob>
-                        <p>CAD</p>
-                    </div>
-                </div>
-            </div>
+      <div class="report-container">
+        <div class="input-column">
+          <div class="patient-info">
+            <label for="fullName" class="mr-5">Patient</label>
+            <input
+              type="text"
+              class="mr-5 mb-3"
+              pInputText
+              id="fullName"
+              formControlName="fullName"
+            />
+            <label for="age" class="mr-5">Age</label>
+            <input
+              type="text"
+              class="mb-3"
+              pInputText
+              id="age"
+              formControlName="age"
+            />
+          </div>
+          <div class="patient-info">
+            <label for="gender" class="mr-5">Gender</label>
+            <p-dropdown
+              formControlName="gender"
+              class="mr-5"
+              [options]="genders"
+              optionLabel="name"
+              id="gender"
+              name="gender"
+            />
+            <label for="date" class="mr-5">Date</label>
+            <p-calendar
+              [showIcon]="true"
+              formControlName="date"
+              [showOnFocus]="false"
+            ></p-calendar>
+          </div>
+        </div>
+        <div class="knob-column">
+          <div class="result-item">
+            <p-knob
+              [size]="150"
+              [readonly]="true"
+              id="CADResult"
+              formControlName="CADResult"
+            ></p-knob>
+            <p>CAD</p>
+          </div>
+        </div>
+      </div>
 
-            <div class="recommendations">
-                <p-card header="Recommendations">
-                    <div *ngIf="editMode">
-                        <!--<textarea pInputTextarea formControlName="editableRecommendation" rows="15" cols="175"
+      <div class="recommendations">
+        <p-card header="Recommendations">
+          <div *ngIf="editMode">
+            <!--<textarea pInputTextarea formControlName="editableRecommendation" rows="15" cols="175"
                             class="w-full"></textarea>-->
-                        <p-editor formControlName="editableRecommendation" [style]="{ height: '320px' }"></p-editor>
-                        <div class="flex flex-wrap justify-content-end mt-5">
-                            <p-button icon="pi pi-save" [rounded]="true" (click)="saveRecommendation()"></p-button>
-                        </div>
-                    </div>
-                    <div *ngIf="!editMode">
-                        <p [innerHTML]="recommendation"></p>
-                    </div>
-                    <div *ngIf="!editMode" class="flex flex-wrap justify-content-end">
-                        <p-button icon="pi pi-pencil" [rounded]="true" (click)="toggleEditMode()"></p-button>
-                    </div>
-                </p-card>
+            <p-editor
+              formControlName="editableRecommendation"
+              [style]="{ height: '320px' }"
+            ></p-editor>
+            <div class="flex flex-wrap justify-content-end mt-5">
+              <p-button
+                icon="pi pi-save"
+                [rounded]="true"
+                (click)="saveRecommendation()"
+              ></p-button>
             </div>
+          </div>
+          <div *ngIf="!editMode">
+            <p-editor
+              [readonly]="true"
+              formControlName="recommendation"
+              [style]="{ height: '320px' }"
+            >
+              <ng-template pTemplate="header"> <span class="ql-formats">Generated By GPT 4o</span> </ng-template>
+            </p-editor>
+          </div>
+          <div *ngIf="!editMode" class="flex flex-wrap justify-content-end">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              (click)="toggleEditMode()"
+            ></p-button>
+          </div>
         </p-card>
-    </div>
+      </div>
+    </p-card>
+  </div>
 </form>
