@@ -12,6 +12,7 @@ import { PredictionService } from './services/prediction.service';
 import { calculatedRisk } from './interfaces/calculated-risk';
 import { ResultsReportComponent } from '../cad-prediction/results-report/results-report.component';
 import { OpenaiService } from './services/openai.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -59,7 +60,8 @@ interface calulatedRisk {
     InputTextModule,
     ButtonModule,
     CommonModule,
-    CheckboxModule
+    CheckboxModule,
+    DropdownModule
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
@@ -68,6 +70,7 @@ interface calulatedRisk {
 export class FormComponent implements OnInit {
 
   patient: any;
+  consentOptions: any[];
 
 
   newForm = new FormGroup({
@@ -108,7 +111,13 @@ export class FormComponent implements OnInit {
     private formService: FormService,
     private predictionService: PredictionService,
     private resultsReportService: OpenaiService
-  ) { }
+  ) {
+    this.consentOptions = [
+      { label: 'Yes', value: 1 },
+      { label: 'No', value: 0 }
+    ];
+
+  }
 
   ngOnInit(): void {
     this.loadPatientData();
@@ -160,7 +169,7 @@ export class FormComponent implements OnInit {
 
   calculateIMC(weight: number, height: number): number {
     if (height <= 0) return 0;
-    const heightInMeters = height / 100; // Assuming height is in cm
+    const heightInMeters = height / 100;
     return parseFloat((weight / (heightInMeters * heightInMeters)).toFixed(2));
   }
 
@@ -185,45 +194,40 @@ export class FormComponent implements OnInit {
     }
   }
 
-
-  /*
-    onCheckboxChange(event: any): void {
-      const checked = event.checked;
-      this.newForm.patchValue({
-        dm: checked ? 1 : 0
-      });
-    }
-  */
-
-
   onSubmit() {
+    const formValue = this.newForm.value;
+
+    const getDropdownValue = (field: any): number => {
+      return field && field.value !== undefined ? field.value : 0;
+    };
+
     const formResource: form = {
-      age: this.newForm.value.age ?? 0,
-      weight: this.newForm.value.weight ?? 0,
-      length: this.newForm.value.length ?? 0,
-      sex: this.newForm.value.sex ?? '',
-      bmi: this.newForm.value.bmi ?? 0,
-      dm: this.newForm.value.dm ?? 0,
-      htn: this.newForm.value.htn ?? 0,
-      current_Smoker: this.newForm.value.current_Smoker ?? 0,
-      ex_Smoker: this.newForm.value.ex_Smoker ?? 0,
-      fh: this.newForm.value.fh ?? 0,
-      obesity: this.newForm.value.obesity ?? 0,
-      cva: this.newForm.value.cva ?? 0,
-      thyroid_Disease: this.newForm.value.thyroid_Disease ?? 0,
-      bp: this.newForm.value.bp ?? 0,
-      pr: this.newForm.value.pr ?? 0,
-      weak_Peripheral_Pulse: this.newForm.value.weak_Peripheral_Pulse ?? 0,
-      q_Wave: this.newForm.value.q_Wave ?? 0,
-      st_Elevation: this.newForm.value.st_Elevation ?? 0,
-      st_Depression: this.newForm.value.st_Depression ?? 0,
-      tinversion: this.newForm.value.tinversion ?? 0,
-      lvh: this.newForm.value.lvh ?? 0,
-      poor_R_Progression: this.newForm.value.poor_R_Progression ?? 0,
-      tg: this.newForm.value.tg ?? 0,
-      ldl: this.newForm.value.ldl ?? 0,
-      hdl: this.newForm.value.hdl ?? 0,
-      hb: this.newForm.value.hb ?? 0
+      age: formValue.age ?? 0,
+      weight: formValue.weight ?? 0,
+      length: formValue.length ?? 0,
+      sex: formValue.sex ?? '',
+      bmi: formValue.bmi ?? 0,
+      dm: formValue.dm ?? 0,
+      htn: formValue.htn ?? 0,
+      current_Smoker: formValue.current_Smoker ?? 0,
+      ex_Smoker: formValue.ex_Smoker ?? 0,
+      fh: formValue.fh ?? 0,
+      obesity: formValue.obesity ?? 0,
+      cva: formValue.cva ?? 0,
+      thyroid_Disease: formValue.thyroid_Disease ?? 0,
+      bp: formValue.bp ?? 0,
+      pr: formValue.pr ?? 0,
+      weak_Peripheral_Pulse: formValue.weak_Peripheral_Pulse ?? 0,
+      q_Wave: getDropdownValue(formValue.q_Wave), 
+      st_Elevation: getDropdownValue(formValue.st_Elevation), 
+      st_Depression: getDropdownValue(formValue.st_Depression), 
+      tinversion: getDropdownValue(formValue.tinversion), 
+      lvh: getDropdownValue(formValue.lvh), 
+      poor_R_Progression: getDropdownValue(formValue.poor_R_Progression),
+      tg: formValue.tg ?? 0,
+      ldl: formValue.ldl ?? 0,
+      hdl: formValue.hdl ?? 0,
+      hb: formValue.hb ?? 0,
     };
 
     const doctorId = localStorage.getItem('id');
@@ -307,7 +311,7 @@ export class FormComponent implements OnInit {
                       }
 
                       this.resultsReportService.generateRecommendation(generateRecommendation).subscribe((openAiResponse: any) => {
-                        if(openAiResponse){
+                        if (openAiResponse) {
                           const recommendationModel = {
                             description: openAiResponse.message
                           }
@@ -323,9 +327,9 @@ export class FormComponent implements OnInit {
                         }
 
                       },
-                      (openAiError: any) => {
-                        console.error("Open AI request failed", openAiError);
-                      });
+                        (openAiError: any) => {
+                          console.error("Open AI request failed", openAiError);
+                        });
                     }
 
                     // Navegar al final, después de completar la creación del riesgo calculado

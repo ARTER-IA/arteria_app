@@ -310,6 +310,14 @@
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
             <label for="q_Wave">Q Wave</label>
+            <p-dropdown
+              formControlName="q_Wave"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -317,10 +325,18 @@
               id="q_Wave"
               name="q_Wave"
               class="w-full"
-            />
+            />-->
           </div>
           <div class="input-group">
             <label for="st_Elevation">St Elevation</label>
+            <p-dropdown
+              formControlName="st_Elevation"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -328,7 +344,7 @@
               id="st_Elevation"
               name="st_Elevation"
               class="w-full"
-            />
+            />-->
           </div>
         </div>
 
@@ -337,6 +353,14 @@
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
             <label for="st_Depression">St Depression</label>
+            <p-dropdown
+              formControlName="st_Depression"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -344,10 +368,18 @@
               id="st_Depression"
               name="st_Depression"
               class="w-full"
-            />
+            />-->
           </div>
           <div class="input-group">
             <label for="tinversion">T Inversion</label>
+            <p-dropdown
+              formControlName="tinversion"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -355,7 +387,7 @@
               id="tinversion"
               name="tinversion"
               class="w-full"
-            />
+            />-->
           </div>
         </div>
 
@@ -364,6 +396,14 @@
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
             <label for="lvh">Left Ventricular Hypertrophy</label>
+            <p-dropdown
+              formControlName="lvh"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -371,10 +411,18 @@
               id="lvh"
               name="lvh"
               class="w-full"
-            />
+            />-->
           </div>
           <div class="input-group">
             <label for="poor_R_Progression">Poor R-wave Progression</label>
+            <p-dropdown
+              formControlName="poor_R_Progression"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Select Yes or No"
+              class="w-full"
+            ></p-dropdown>
+            <!--
             <input
               type="text"
               pInputText
@@ -382,7 +430,7 @@
               id="poor_R_Progression"
               name="poor_R_Progression"
               class="w-full"
-            />
+            />-->
           </div>
         </div>
       </div>
