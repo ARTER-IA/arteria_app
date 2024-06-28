@@ -27,6 +27,10 @@ export class PatientService {
     return this.http.get(`${this.basePath}/patients/doctor/${doctorId}`, this.httpOptions);
   }
 
+  getResultsByPatientId(patientId: any){
+    return this.http.get(`${this.basePath}/calculatedRisks/patient/${patientId}`, this.httpOptions);
+  }
+
   update(patientId: any, data: any) {
     return this.http.put(`${this.basePath}/patients/${patientId}`, data, this.httpOptions);
   }

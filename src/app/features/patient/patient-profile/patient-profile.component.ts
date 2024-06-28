@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../services/patient.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ImageModule } from 'primeng/image';
@@ -38,9 +38,8 @@ interface Patient {
 
 interface Result {
   id: number;
-  prediction_probability: number;
-  date: Date;
-  patientId: string;
+  predictionProbability: number;
+  createdAt: Date;
 }
 
 interface Genre {
@@ -69,25 +68,17 @@ interface Genre {
 })
 export class PatientProfileComponent implements OnInit {
 
-  patientId: string | null = "";
+  patientId: string | any = "";
   patientFormGroup: FormGroup;
   genders: Genre[] | undefined;
   isEditing: boolean = false;
-  results: Result[] = [
-    { id: 1, prediction_probability: 0.23, date: new Date(), patientId: '1' },
-    { id: 2, prediction_probability: 0.45, date: new Date(), patientId: '1' },
-    { id: 3, prediction_probability: 0.78, date: new Date(), patientId: '1' },
-    { id: 4, prediction_probability: 0.45, date: new Date(), patientId: '1' },
-    { id: 5, prediction_probability: 0.78, date: new Date(), patientId: '2' },
-    { id: 6, prediction_probability: 0.45, date: new Date(), patientId: '2' },
-    { id: 7, prediction_probability: 0.78, date: new Date(), patientId: '3' }
-  ];
+  results: Result[] = [];
   filteredResults: Result[] = [];
   //profilePictureUrl: string | ArrayBuffer | null = "";
   //objectURL: any;
   profilePictureUrl: SafeUrl | string = '';
 
-  constructor(private route: ActivatedRoute, private patientService: PatientService, private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private patientService: PatientService, private sanitizer: DomSanitizer, private router: Router) {
     this.patientFormGroup = new FormGroup({
       firstName: new FormControl({ value: '', disabled: true }),
       lastName: new FormControl({ value: '', disabled: true }),
@@ -113,6 +104,7 @@ export class PatientProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.patientId = this.route.snapshot.paramMap.get('id');
+    localStorage.setItem('selectedPatientId', this.patientId.toString());    
     console.log("Id del paciente", this.patientId);
 
     this.genders = [
@@ -122,8 +114,9 @@ export class PatientProfileComponent implements OnInit {
 
     this.getPatient(this.patientId);
     this.getProfilePicture(this.patientId);
+    this.getResultsByPatient(this.patientId);
     // Filter results based on patientId
-    this.filteredResults = this.results.filter(result => result.patientId === this.patientId);
+    //this.filteredResults = this.results.filter(result => result.patientId === this.patientId);
   }
 
   getPatient(patientId: any) {
@@ -171,6 +164,22 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
+  getResultsByPatient(patientId: any){
+    this.patientService.getResultsByPatientId(patientId).subscribe((response: any) => {
+      if (response) {
+        console.log("response", response);
+        this.results = response.map((item: any) => ({
+          id: item.id,
+          predictionProbability: (Number(item.prediction_probability) * 100).toFixed(2) + '%',
+          createdAt: new Date(item.createdAt)
+        }))
+        console.log("results", this.results);
+      }
+    }, error => {
+      console.error("Get results by patient failed", error);
+    })
+  }
+
   onEditProfile() {
     this.isEditing = true;
     this.patientFormGroup.enable();
@@ -193,5 +202,9 @@ export class PatientProfileComponent implements OnInit {
         }
       );
     }
+  }
+
+  goToCADPrediction(){
+    this.router.navigateByUrl('/form');
   }
 }

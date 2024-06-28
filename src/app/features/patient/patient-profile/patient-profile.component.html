@@ -1,8 +1,9 @@
 <form [formGroup]="patientFormGroup">
     <div class="flex justify-content-center align-items-center h-full">
         <p-card [style]="{ width: '360' }">
-            <div class="flex flex-column md:flex-row">
-                <div class="w-full md:w-6 flex flex-column gap-3">
+            <div class="flex flex-column md:flex-row md:px-5">
+                <!-- Primera Columna -->
+                <div class="w-full md:w-3 flex flex-column row-gap-3">
                     <div class="flex flex-wrap justify-content-center text-center">
                         <p-image [src]="profilePictureUrl" alt="Profile Picture" width="250"></p-image>
                     </div>
@@ -30,8 +31,6 @@
                         <label for="dni">DNI</label>
                         <input type="dni" pInputText id="dni" class="w-full" formControlName="dni" />
                     </div>
-
-                    <h2>Contact Information</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="phoneNumber">Phone</label>
                         <input type="text" pInputText id="phoneNumber" class="w-full" formControlName="phoneNumber" />
@@ -51,117 +50,117 @@
                     </p-divider>
                 </div>
 
+                <!-- Segunda Columna -->
                 <div class="w-full md:w-8 flex flex-column gap-3">
-                    <h2>Basic Medical Information</h2>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="height">Height</label>
-                        <input type="number" pInputText id="height" class="w-full" formControlName="height" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="weight">Weight</label>
-                        <input type="number" pInputText id="weight" class="w-full" formControlName="weight" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="bloodGroup">Blood Group</label>
-                        <input type="text" pInputText id="bloodGroup" class="w-full" formControlName="bloodGroup" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="allergies">Allergies</label>
-                        <input type="text" pInputText id="allergies" class="w-full" formControlName="allergies" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="currentMedications">Current Medications</label>
-                        <input type="text" pInputText id="currentMedications" class="w-full"
-                            formControlName="currentMedications" />
+                    <div class="flex flex-column md:flex-row gap-4">
+                        <div class="w-full md:w-6 flex flex-column row-gap-3">
+                            <h2>Basic Medical Information</h2>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="height">Height</label>
+                                <input type="number" pInputText id="height" class="w-full" formControlName="height" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="weight">Weight</label>
+                                <input type="number" pInputText id="weight" class="w-full" formControlName="weight" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="bloodGroup">Blood Group</label>
+                                <input type="text" pInputText id="bloodGroup" class="w-full" formControlName="bloodGroup" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="allergies">Allergies</label>
+                                <input type="text" pInputText id="allergies" class="w-full" formControlName="allergies" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="currentMedications">Current Medications</label>
+                                <input type="text" pInputText id="currentMedications" class="w-full"
+                                    formControlName="currentMedications" />
+                            </div>
+
+                            <h2>Health Insurance Information</h2>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="insuranceNumber">Insurance Number</label>
+                                <input type="text" pInputText id="insuranceNumber" class="w-full"
+                                    formControlName="insuranceNumber" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="policy">Policy</label>
+                                <input type="text" pInputText id="policy" class="w-full" formControlName="policy" />
+                            </div>
+                        </div>
+
+                        <div class="w-full md:w-1">
+                            <p-divider layout="vertical" styleClass="hidden md:flex">
+                                <b> </b>
+                            </p-divider>
+                            <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'">
+                                <b> </b>
+                            </p-divider>
+                        </div>
+
+                        <div class="w-full md:w-6 flex flex-column gap-3">
+                            <h2>Medical History</h2>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="previousIllnesses">Previous Illnesses</label>
+                                <input type="text" pInputText id="previousIllnesses" class="w-full"
+                                    formControlName="previousIllnesses" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="previousSurgeries">Previous Surgeries</label>
+                                <input type="text" pInputText id="previousSurgeries" class="w-full"
+                                    formControlName="previousSurgeries" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="currentConditions">Current Conditions</label>
+                                <p-chips formControlName="currentConditions" id="currentConditions"
+                                    name="currentConditions" />
+                            </div>
+
+                            <h2>Emergency Information</h2>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="emergencyContact">Emergency Contact</label>
+                                <input type="text" pInputText id="emergencyContact" class="w-full"
+                                    formControlName="emergencyContact" />
+                            </div>
+                            <div class="flex flex-wrap justify-content-start align-items-start gap-2">
+                                <label for="emergencyPhoneNumber">Emergency Phone Number</label>
+                                <input type="text" pInputText id="emergencyPhoneNumber" class="w-full"
+                                    formControlName="emergencyPhoneNumber" />
+                            </div>
+                        </div>
                     </div>
 
-                    <h2>Health Insurance Information</h2>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="insuranceNumber">Insurance Number</label>
-                        <input type="text" pInputText id="insuranceNumber" class="w-full"
-                            formControlName="insuranceNumber" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="policy">Policy</label>
-                        <input type="text" pInputText id="policy" class="w-full" formControlName="policy" />
-                    </div>
-                </div>
-
-                <div class="w-full md:w-1">
-                    <p-divider layout="vertical" styleClass="hidden md:flex">
-                        <b> </b>
-                    </p-divider>
-                    <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'">
-                        <b> </b>
-                    </p-divider>
-                </div>
-
-                <div class="w-full md:w-8 flex flex-column gap-3">
-                    <h2>Medical History</h2>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="previousIllnesses">Previous Illnesses</label>
-                        <input type="text" pInputText id="previousIllnesses" class="w-full"
-                            formControlName="previousIllnesses" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="previousSurgeries">Previous Surgeries</label>
-                        <input type="text" pInputText id="previousSurgeries" class="w-full"
-                            formControlName="previousSurgeries" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="currentConditions">Current Conditions</label>
-                        <p-chips formControlName="currentConditions" id="currentConditions" name="currentConditions"
-                            class="w-full" />
-                    </div>
-
-                    <h2>Emergency Information</h2>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="emergencyContact">Emergency Contact</label>
-                        <input type="text" pInputText id="emergencyContact" class="w-full"
-                            formControlName="emergencyContact" />
-                    </div>
-                    <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="emergencyPhoneNumber">Emergency Phone Number</label>
-                        <input type="text" pInputText id="emergencyPhoneNumber" class="w-full"
-                            formControlName="emergencyPhoneNumber" />
-                    </div>
-
-                    <div class="flex-wrap justify-content-center align-items-center gap-2">
+                    <div class="w-full flex flex-column gap-3">
                         <h2>Latest Results</h2>
-                        <div *ngIf="filteredResults && filteredResults.length > 0; else noResults">
-                            <!--<div *ngFor="let result of filteredResults">
-                                <p-card header="Result Details">
-                                    <div class="text-center">
-                                        <p>ID: {{ result.id }}</p>
-                                        <p>Prediction Probability: {{ result.prediction_probability }}</p>
-                                        <p>Date: {{ result.date | date:'short' }}</p>
-                                    </div>
-                                </p-card>
-                            </div>-->
+                        <div *ngIf="results && results.length > 0; else noResults">
                             <p-listbox
-                                [options]="filteredResults"
+                                [options]="results"
                                 formControlName="selectedResult"
-                                optionLabel="name"
-                                [style]="{ width: '360' }">
+                                optionLabel="id"
+                                [style]="{ width: '100%', 'background-color': '#EAE9F5' }">
                                 <ng-template let-result pTemplate="item">
                                     <div class="flex gap-8">
-                                        <p>Date: {{ result.date | date:'short' }}</p>
-                                        <p>Result: {{ result.prediction_probability }}</p>
+                                        <p>Date: {{ result.createdAt | date:'short' }}</p>
+                                        <p>Result: {{ result.predictionProbability }}</p>
                                     </div>
                                 </ng-template>
                             </p-listbox>
-                        </div>
+                        </div>                        
                         <ng-template #noResults>
-                            <p>Oh, it looks like this patient still has no results...</p>
-                            <p-button label="Go to CAD Prediction" icon="pi pi-check"></p-button>
-                        </ng-template>                        
+                            <p-card [style]="{ 'background-color': '#EAE9F5', 'box-shadow': 'none', 'border': '1px solid #DBDBDE' }">
+                                <div class="flex flex-wrap md:justify-content-between justify-content-center">
+                                    <p>It looks like this patient still has no results.</p>
+                                    <p-button label="Go to CAD Prediction" (click)="goToCADPrediction()" icon="pi pi-check"></p-button>
+                                </div>
+                            </p-card>
+                        </ng-template>
                     </div>
 
                     <div class="flex flex-wrap justify-content-center align-items-center">
                         <p-button *ngIf="!isEditing" (click)="onEditProfile()" label="Edit Profile" icon="pi pi-pencil"
                             styleClass="w-10rem mx-auto"></p-button>
                         <p-button *ngIf="isEditing" (click)="onSaveChanges()" label="Save Changes" icon="pi pi-save"
-                            styleClass="w-10rem mx-auto"></p-button>
+                            styleClass="w-12rem mx-auto"></p-button>
                     </div>
                 </div>
             </div>
