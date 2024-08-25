@@ -8,6 +8,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PatientService } from '../services/patient.service';
 import { AvatarModule } from 'primeng/avatar';
 import { Router } from '@angular/router';
+import { ToolbarModule } from 'primeng/toolbar';
+import { DropdownModule } from 'primeng/dropdown';
+import { FieldsetModule } from 'primeng/fieldset';
 
 interface Patient {
   id: number;
@@ -15,12 +18,18 @@ interface Patient {
   age: number;
   gender: string;
   dni: string;
+  latestResult: number;
+}
+
+interface Genre {
+  name: string;
+  code: string;
 }
 
 @Component({
   selector: 'app-list-patients',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ButtonModule, CardModule, InputTextModule, AvatarModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonModule, CardModule, InputTextModule, AvatarModule, ToolbarModule, DropdownModule, FieldsetModule],
   templateUrl: './list-patients.component.html',
   styleUrl: './list-patients.component.css'
 })
@@ -29,60 +38,82 @@ export class ListPatientsComponent implements OnInit {
   patients: Patient[] = [];
   filteredPatients: Patient[] = [...this.patients];
   searchForm: FormGroup;
+  genders: Genre[] | undefined;
 
   constructor(private fb: FormBuilder, private router: Router, private patientService: PatientService) {
     this.searchForm = this.fb.group({
-      searchQuery: ['']
+      selectedName: [''],
+      selectedGenre: [''],
+      selectedAge: [''],
+      selectedCADPercent: ['']
     });
   }
 
   ngOnInit(): void {
-    this.searchForm.get('searchQuery')?.valueChanges.subscribe(value => {
-      this.filterPatients(value);
+    this.genders = [
+      { name: 'Femenino', code: 'F' },
+      { name: 'Masculino', code: 'M' }
+    ];
+
+    this.searchForm.valueChanges.subscribe(values => {
+      this.filterPatients(values);
     });
     this.getPatients();
   }
 
-  filterPatients(query: string): void {
-    if (query) {
-      this.filteredPatients = this.patients.filter(patient =>
-        patient.name.toLowerCase().includes(query.toLowerCase())
-      );
-    } else {
-      this.filteredPatients = [...this.patients];
-    }
+  filterPatients(values: any): void {
+    const { selectedName, selectedGenre, selectedAge, selectedCADPercent } = values;
+
+    this.filteredPatients = this.patients.filter(patient => {
+      const matchesName = selectedName ? patient.name.toLowerCase().includes(selectedName.toLowerCase()) : true;
+      const matchesGender = selectedGenre ? patient.gender === selectedGenre.name : true;
+      const matchesAge = selectedAge ? patient.age.toString().includes(selectedAge) : true;
+      const matchesCADPercent = selectedCADPercent ? patient.latestResult.toString().includes(selectedCADPercent) : true;
+
+      return matchesName && matchesGender && matchesAge && matchesCADPercent;
+    });
   }
 
   getPatients() {
     const doctorId = localStorage.getItem('id');
     this.patientService.getByDoctorId(doctorId).subscribe((response: any) => {
       if (response) {
-        this.patients = response.map((item: any) => ({
-          id: item.id,
-          name: `${item.firstName} ${item.lastName}`,
-          age: this.calculateAge(item.birthdayDate),
-          gender: item.gender.name,
-          dni: item.dni
-        }));
-        this.filteredPatients = [...this.patients];
+        const patientPromises = response.map((item: any) =>
+          this.getLatestResultByPatient(item.id).then(latestResult => ({
+            id: item.id,
+            name: `${item.firstName} ${item.lastName}`,
+            age: this.calculateAge(item.birthdayDate),
+            gender: item.gender.name,
+            dni: item.dni,
+            latestResult: latestResult !== null ? latestResult * 100 : 0
+          }))
+        );
+
+        Promise.all(patientPromises).then(patients => {
+          this.patients = patients;
+          this.filteredPatients = [...this.patients];
+          console.log("patients", this.patients);
+        }).catch(error => {
+          console.error("Failed to fetch latest results", error);
+        });
       }
     }, (error: any) => {
       console.error("Get failed", error);
     });
-
   }
+
 
   calculateAge(birthday: string): number {
     const birthDate = new Date(birthday);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
-    
+
     // Check if the birthday has occurred yet this year; if not, subtract one from the age
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-  
+
     return age;
   }
 
@@ -93,4 +124,24 @@ export class ListPatientsComponent implements OnInit {
       state: { patient },
     });*/
   }
+
+  getLatestResultByPatient(patientId: string): Promise<number | null> {
+    return new Promise((resolve, reject) => {
+      this.patientService.getLatestResult(patientId).subscribe((response: any) => {
+        if (response !== null && response !== undefined) {
+          resolve(response);
+        } else {
+          resolve(null);
+        }
+      }, (error: any) => {
+        console.error("Get failed", error);
+        reject(error);
+      });
+    });
+  }
+
+  clearFilters(): void {
+    this.searchForm.reset();
+  }
+
 }

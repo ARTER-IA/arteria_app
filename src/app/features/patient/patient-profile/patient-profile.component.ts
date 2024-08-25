@@ -13,6 +13,7 @@ import { ChipsModule } from 'primeng/chips';
 import { DropdownModule } from 'primeng/dropdown';
 import { ListboxModule } from 'primeng/listbox';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { FileUploadModule } from 'primeng/fileupload';
 
 interface Patient {
   firstName: string;
@@ -61,7 +62,8 @@ interface Genre {
     CalendarModule,
     ChipsModule,
     DropdownModule,
-    ListboxModule
+    ListboxModule,    
+    FileUploadModule
   ],
   templateUrl: './patient-profile.component.html',
   styleUrls: ['./patient-profile.component.css']
@@ -74,9 +76,9 @@ export class PatientProfileComponent implements OnInit {
   isEditing: boolean = false;
   results: Result[] = [];
   filteredResults: Result[] = [];
-  //profilePictureUrl: string | ArrayBuffer | null = "";
-  //objectURL: any;
   profilePictureUrl: SafeUrl | string = '';
+  //profilePictureUri: string = '';
+  profilePictureFile: File | null = null;
 
   constructor(private route: ActivatedRoute, private patientService: PatientService, private sanitizer: DomSanitizer, private router: Router) {
     this.patientFormGroup = new FormGroup({
@@ -201,8 +203,38 @@ export class PatientProfileComponent implements OnInit {
           console.error("Update failed", error);
         }
       );
+
+      this.uploadProfilePicture(this.patientId);
     }
   }
+
+  onUpload(event: any) {
+    const file = event.files[0];
+    this.profilePictureFile = file;
+    console.log("File selected", this.profilePictureFile);
+
+    // Create a URL for the selected image file
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.profilePictureUrl = reader.result as string;
+    };
+  }
+
+  uploadProfilePicture(patientId: number) {
+    var formData = new FormData();
+    formData.append('file', this.profilePictureFile!);
+
+    this.patientService.uploadProfilePicture(patientId, formData).subscribe((response: any) => {
+      console.log("response", response);
+      if (response.message === "File uploaded successfully") {
+        console.log("Image uploaded successfully");
+      }
+    }, (error: any) => {
+      console.error("Image upload failed", error);
+    });
+  }
+
 
   goToCADPrediction(){
     this.router.navigateByUrl('/form');

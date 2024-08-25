@@ -42,4 +42,8 @@ export class PatientService {
   getProfilePicture(patientId: string) {
     return this.http.get(`${this.basePath}/patients/profilePicture/${patientId}`, { responseType: 'blob' });
   }
+
+  getLatestResult(patientId: string){
+    return this.http.get(`${this.basePath}/patients/latestResult/${patientId}`, this.httpOptions);
+  }
 }

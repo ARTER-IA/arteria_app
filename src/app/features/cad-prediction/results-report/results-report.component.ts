@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommonModule } from '@angular/common';
 import { EditorModule } from 'primeng/editor';
+import { ChartModule } from 'primeng/chart';
 
 interface Recommendation {
   description: string;
@@ -43,7 +44,8 @@ interface Genre {
     KnobModule,
     ButtonModule,
     InputTextareaModule,
-    EditorModule
+    EditorModule,
+    ChartModule
   ],
   templateUrl: './results-report.component.html',
   styleUrls: ['./results-report.component.css']
@@ -51,13 +53,14 @@ interface Genre {
 export class ResultsReportComponent implements OnInit {
 
   predictionReport: FormGroup;
-  //recommendation: string | any;
   calculatedRiskId: number = 0;
   resultCAD: number = 0;
   genders: Genre[] | undefined;
   editMode: boolean = false;
   recommendationToUpdateId: any;
   newRecommendation: Recommendation | any;
+  chartData: any;
+  chartOptions: any;
 
   constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer) {
     this.predictionReport = this.fb.group({
@@ -71,6 +74,53 @@ export class ResultsReportComponent implements OnInit {
     });
 
     this.newRecommendation = { description: '' };
+
+    this.chartData = {
+      labels: ['BMI', 'BP', 'PR', 'TG', 'LDL', 'HDL', 'HB'],
+      datasets: [
+        {
+          label: 'Minimal Normal Health Metrics',
+          data: [18.5, 90, 60, 0, 0, 40, 13.8],
+          fill: true,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+        },
+        {
+          label: 'Patient Health Metrics',
+          data: [0, 0, 0, 0, 0, 0, 0],
+          fill: true,
+          backgroundColor: 'rgba(75,192,192,0.2)',
+          borderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: 'rgba(75,192,192,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(75,192,192,1)'
+        },
+        {
+          label: 'Maximum Normal Health Metrics',
+          data: [24.9, 120, 100, 150, 100, 120, 17.2],
+          fill: true,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(255, 99, 132, 1)'
+        }
+      ]
+    };
+
+    this.chartOptions = {
+      plugins: {
+        legend: {
+          position: 'bottom', // Cambia 'bottom' a 'top', 'left', o 'right' según lo que necesites
+        }
+      }
+    };
   }
 
   ngOnInit(): void {
@@ -78,6 +128,12 @@ export class ResultsReportComponent implements OnInit {
       { name: 'Femenino', code: 'F' },
       { name: 'Masculino', code: 'M' }
     ];
+
+    const formJson = localStorage.getItem('formData');
+    if (formJson) {
+      const formData = JSON.parse(formJson);
+      this.updateChartData(formData);
+    }
 
     const calculatedRiskJson = localStorage.getItem('calculatedRisk');
     const patientId = localStorage.getItem('selectedPatientId');
@@ -88,6 +144,18 @@ export class ResultsReportComponent implements OnInit {
     }
     this.getPatient(patientId);
     this.getRecommendations(this.calculatedRiskId);
+  }
+
+  updateChartData(formData: any) {
+    this.chartData.datasets[1].data = [
+      formData.bmi,
+      formData.bp,
+      formData.pr,
+      formData.tg,
+      formData.ldl,
+      formData.hdl,
+      formData.hb
+    ];
   }
 
   getRecommendations(calculatedRiskId: any) {
@@ -118,7 +186,7 @@ export class ResultsReportComponent implements OnInit {
         this.predictionReport.patchValue({
           fullName: `${response.firstName} ${response.lastName}`,
           age: this.calculateAge(response.birthdayDate),
-          gender: response.gender,
+          gender: response.gender.name,
           date: new Date(),
           CADResult: this.resultCAD
         });

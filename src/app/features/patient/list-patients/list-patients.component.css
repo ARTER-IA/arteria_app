@@ -5,8 +5,31 @@
 .search-bar {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
-    margin-left: 0.5rem;
+}
+
+.search-input {
+    width: 100%;    
+}
+
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filters-label {
+    color: #aaa5cb;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.filters-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
 }
 
 .patient-cards {
@@ -15,8 +38,59 @@
     gap: 1rem;
 }
 
-.patient-cards .col-10 {
-    flex: 1 1 calc(25% - 1rem); /* 25% width for each card with gap of 1rem */
-    max-width: calc(25% - 1rem); /* 25% width for each card with gap of 1rem */
+.patient-cards .col-12 {
+    flex: 1 1 calc(25% - 1rem);
+    max-width: calc(25% - 1rem);
     box-sizing: border-box;
+}
+
+@media (max-width: 1400px) {
+    .search-bar {
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+    }
+
+    .filters-container {
+        width: 50%;
+        align-items: center;
+    }
+
+    .filters-group {
+        justify-content: center;
+    }
+
+    .patient-cards .col-12 {
+        flex: 1 1 calc(33.33% - 1rem);
+        max-width: calc(33.33% - 1rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .filters-container {
+        width: 100%;
+        align-items: center;
+    }
+
+    .filters-group {
+        justify-content: center;
+    }
+
+    .patient-cards .col-12 {
+        flex: 1 1 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .patient-cards .col-12 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
 }

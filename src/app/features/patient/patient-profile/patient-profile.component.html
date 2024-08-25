@@ -4,8 +4,15 @@
             <div class="flex flex-column md:flex-row md:px-5">
                 <!-- Primera Columna -->
                 <div class="w-full md:w-3 flex flex-column row-gap-3">
+                    <!-- Dentro de la primera columna, en el bloque de la foto de perfil -->
                     <div class="flex flex-wrap justify-content-center text-center">
-                        <p-image [src]="profilePictureUrl" alt="Profile Picture" width="250"></p-image>
+                        <p-image *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture"
+                            width="250"></p-image>
+                    </div>
+                    <div *ngIf="isEditing" class="flex flex-wrap justify-content-center text-center mt-3">
+                        <p-fileUpload mode="basic" chooseLabel="Browse" [auto]="true"
+                            name="pictureProfileUri" customUpload="true" (uploadHandler)="onUpload($event)"
+                            accept="image/*" maxFileSize="1000000" />
                     </div>
 
                     <h2>Personal Information</h2>
@@ -65,11 +72,13 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="bloodGroup">Blood Group</label>
-                                <input type="text" pInputText id="bloodGroup" class="w-full" formControlName="bloodGroup" />
+                                <input type="text" pInputText id="bloodGroup" class="w-full"
+                                    formControlName="bloodGroup" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="allergies">Allergies</label>
-                                <input type="text" pInputText id="allergies" class="w-full" formControlName="allergies" />
+                                <input type="text" pInputText id="allergies" class="w-full"
+                                    formControlName="allergies" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="currentMedications">Current Medications</label>
@@ -133,10 +142,7 @@
                     <div class="w-full flex flex-column gap-3">
                         <h2>Latest Results</h2>
                         <div *ngIf="results && results.length > 0; else noResults">
-                            <p-listbox
-                                [options]="results"
-                                formControlName="selectedResult"
-                                optionLabel="id"
+                            <p-listbox [options]="results" formControlName="selectedResult" optionLabel="id"
                                 [style]="{ width: '100%', 'background-color': '#EAE9F5' }">
                                 <ng-template let-result pTemplate="item">
                                     <div class="flex gap-8">
@@ -145,12 +151,14 @@
                                     </div>
                                 </ng-template>
                             </p-listbox>
-                        </div>                        
+                        </div>
                         <ng-template #noResults>
-                            <p-card [style]="{ 'background-color': '#EAE9F5', 'box-shadow': 'none', 'border': '1px solid #DBDBDE' }">
+                            <p-card
+                                [style]="{ 'background-color': '#EAE9F5', 'box-shadow': 'none', 'border': '1px solid #DBDBDE' }">
                                 <div class="flex flex-wrap md:justify-content-between justify-content-center">
                                     <p>It looks like this patient still has no results.</p>
-                                    <p-button label="Go to CAD Prediction" (click)="goToCADPrediction()" icon="pi pi-check"></p-button>
+                                    <p-button label="Go to CAD Prediction" (click)="goToCADPrediction()"
+                                        icon="pi pi-check"></p-button>
                                 </div>
                             </p-card>
                         </ng-template>
