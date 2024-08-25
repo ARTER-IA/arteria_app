@@ -91,19 +91,19 @@ export class FormComponent implements OnInit {
     obesity: new FormControl(0, [Validators.required]),
     cva: new FormControl(0, [Validators.required]),
     thyroid_Disease: new FormControl(0, [Validators.required]),
-    bp: new FormControl(0, [Validators.required]),
-    pr: new FormControl(0, [Validators.required]),
-    weak_Peripheral_Pulse: new FormControl(0, [Validators.required]),
-    q_Wave: new FormControl(0, [Validators.required]),
-    st_Elevation: new FormControl(0, [Validators.required]),
-    st_Depression: new FormControl(0, [Validators.required]),
-    tinversion: new FormControl(0, [Validators.required]),
-    lvh: new FormControl(0, [Validators.required]),
-    poor_R_Progression: new FormControl(0, [Validators.required]),
-    tg: new FormControl(0, [Validators.required]),
-    ldl: new FormControl(0, [Validators.required]),
-    hdl: new FormControl(0, [Validators.required]),
-    hb: new FormControl(0, [Validators.required])
+    bp: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    pr: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    weak_Peripheral_Pulse: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    q_Wave: new FormControl(null, [Validators.required]),
+    st_Elevation: new FormControl(null, [Validators.required]),
+    st_Depression: new FormControl(null, [Validators.required]),
+    tinversion: new FormControl(null, [Validators.required]),
+    lvh: new FormControl(null, [Validators.required]),
+    poor_R_Progression: new FormControl(null, [Validators.required]),
+    tg: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    ldl: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    hdl: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    hb: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)])
   });
 
   constructor(
@@ -195,6 +195,8 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
+
+
     const formValue = this.newForm.value;
 
     const getDropdownValue = (field: any): number => {
@@ -218,11 +220,11 @@ export class FormComponent implements OnInit {
       bp: formValue.bp ?? 0,
       pr: formValue.pr ?? 0,
       weak_Peripheral_Pulse: formValue.weak_Peripheral_Pulse ?? 0,
-      q_Wave: getDropdownValue(formValue.q_Wave), 
-      st_Elevation: getDropdownValue(formValue.st_Elevation), 
-      st_Depression: getDropdownValue(formValue.st_Depression), 
-      tinversion: getDropdownValue(formValue.tinversion), 
-      lvh: getDropdownValue(formValue.lvh), 
+      q_Wave: getDropdownValue(formValue.q_Wave),
+      st_Elevation: getDropdownValue(formValue.st_Elevation),
+      st_Depression: getDropdownValue(formValue.st_Depression),
+      tinversion: getDropdownValue(formValue.tinversion),
+      lvh: getDropdownValue(formValue.lvh),
       poor_R_Progression: getDropdownValue(formValue.poor_R_Progression),
       tg: formValue.tg ?? 0,
       ldl: formValue.ldl ?? 0,
@@ -352,6 +354,7 @@ export class FormComponent implements OnInit {
       }
     ).add(() => { });
   }
+
 
 
 }

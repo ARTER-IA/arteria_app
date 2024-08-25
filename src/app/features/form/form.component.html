@@ -218,6 +218,20 @@
               name="bp"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.bp.invalid &&
+                (newForm.controls.bp.dirty || newForm.controls.bp.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.bp.errors?.['required']">
+                BP es requerido
+              </div>
+              <div *ngIf="newForm.controls.bp.errors?.['pattern']">
+                Ingrese un BP válido
+              </div>
+            </small>
           </div>
           <div class="input-group">
             <label for="pr">Pulse Rate ppm</label>
@@ -229,6 +243,20 @@
               name="pr"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.pr.invalid &&
+                (newForm.controls.pr.dirty || newForm.controls.pr.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.pr.errors?.['required']">
+                PR es requerido
+              </div>
+              <div *ngIf="newForm.controls.pr.errors?.['pattern']">
+                Ingrese un PR válido
+              </div>
+            </small>
           </div>
         </div>
 
@@ -245,6 +273,25 @@
               name="weak_Peripheral_Pulse"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.weak_Peripheral_Pulse.invalid &&
+                (newForm.controls.weak_Peripheral_Pulse.dirty ||
+                  newForm.controls.weak_Peripheral_Pulse.touched)
+              "
+              class="block p-error"
+            >
+              <div
+                *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['required']"
+              >
+                Weak Peripheral Pulse es requerido
+              </div>
+              <div
+                *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['pattern']"
+              >
+                Ingrese un Weak Peripheral Pulse válido
+              </div>
+            </small>
           </div>
           <div class="input-group">
             <label for="tg">Triglyceride mg/dL</label>
@@ -256,6 +303,20 @@
               name="tg"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.tg.invalid &&
+                (newForm.controls.tg.dirty || newForm.controls.tg.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.tg.errors?.['required']">
+                TG es requerido
+              </div>
+              <div *ngIf="newForm.controls.tg.errors?.['pattern']">
+                Ingrese un TG válido
+              </div>
+            </small>
           </div>
         </div>
 
@@ -272,6 +333,20 @@
               name="ldl"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.ldl.invalid &&
+                (newForm.controls.ldl.dirty || newForm.controls.ldl.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.ldl.errors?.['required']">
+                LDL es requerido
+              </div>
+              <div *ngIf="newForm.controls.ldl.errors?.['pattern']">
+                Ingrese un LDL válido
+              </div>
+            </small>
           </div>
           <div class="input-group">
             <label for="hdl">High-density Lipoprotein mg/dL</label>
@@ -283,6 +358,20 @@
               name="hdl"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.hdl.invalid &&
+                (newForm.controls.hdl.dirty || newForm.controls.hdl.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.hdl.errors?.['required']">
+                HDL es requerido
+              </div>
+              <div *ngIf="newForm.controls.hdl.errors?.['pattern']">
+                Ingrese un HDL válido
+              </div>
+            </small>
           </div>
         </div>
 
@@ -299,6 +388,20 @@
               name="hb"
               class="w-full"
             />
+            <small
+              *ngIf="
+                newForm.controls.hb.invalid &&
+                (newForm.controls.hb.dirty || newForm.controls.hb.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newForm.controls.hb.errors?.['required']">
+                HB es requerido
+              </div>
+              <div *ngIf="newForm.controls.hb.errors?.['pattern']">
+                Ingrese un HB válido
+              </div>
+            </small>
           </div>
         </div>
       </div>
@@ -317,15 +420,16 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="q_Wave"
-              id="q_Wave"
-              name="q_Wave"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.q_Wave.invalid &&
+                (newForm.controls.q_Wave.dirty ||
+                  newForm.controls.q_Wave.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
           <div class="input-group">
             <label for="st_Elevation">St Elevation</label>
@@ -336,15 +440,16 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="st_Elevation"
-              id="st_Elevation"
-              name="st_Elevation"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.st_Elevation.invalid &&
+                (newForm.controls.st_Elevation.dirty ||
+                  newForm.controls.st_Elevation.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
         </div>
 
@@ -360,15 +465,16 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="st_Depression"
-              id="st_Depression"
-              name="st_Depression"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.st_Depression.invalid &&
+                (newForm.controls.st_Depression.dirty ||
+                  newForm.controls.st_Depression.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
           <div class="input-group">
             <label for="tinversion">T Inversion</label>
@@ -379,15 +485,16 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="tinversion"
-              id="tinversion"
-              name="tinversion"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.tinversion.invalid &&
+                (newForm.controls.tinversion.dirty ||
+                  newForm.controls.tinversion.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
         </div>
 
@@ -403,15 +510,15 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="lvh"
-              id="lvh"
-              name="lvh"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.lvh.invalid &&
+                (newForm.controls.lvh.dirty || newForm.controls.lvh.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
           <div class="input-group">
             <label for="poor_R_Progression">Poor R-wave Progression</label>
@@ -422,15 +529,16 @@
               placeholder="Select Yes or No"
               class="w-full"
             ></p-dropdown>
-            <!--
-            <input
-              type="text"
-              pInputText
-              formControlName="poor_R_Progression"
-              id="poor_R_Progression"
-              name="poor_R_Progression"
-              class="w-full"
-            />-->
+            <small
+              *ngIf="
+                newForm.controls.poor_R_Progression.invalid &&
+                (newForm.controls.poor_R_Progression.dirty ||
+                  newForm.controls.poor_R_Progression.touched)
+              "
+              class="block p-error"
+            >
+              Debes seleccionar una opción válida.
+            </small>
           </div>
         </div>
       </div>
@@ -440,6 +548,7 @@
       <p-button
         label="Register"
         styleClass="w-10rem mx-auto"
+        [disabled]="newForm.invalid"
         (click)="onSubmit()"
       ></p-button>
     </div>
