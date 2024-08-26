@@ -110,8 +110,8 @@ export class PatientProfileComponent implements OnInit {
     console.log("Id del paciente", this.patientId);
 
     this.genders = [
-      { name: 'Femenino', code: 'F' },
-      { name: 'Masculino', code: 'M' }
+      { name: 'Female', code: 'F' },
+      { name: 'Male', code: 'M' }
     ];
 
     this.getPatient(this.patientId);

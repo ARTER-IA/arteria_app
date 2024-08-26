@@ -51,8 +51,8 @@ export class ListPatientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.genders = [
-      { name: 'Femenino', code: 'F' },
-      { name: 'Masculino', code: 'M' }
+      { name: 'Female', code: 'F' },
+      { name: 'Male', code: 'M' }
     ];
 
     this.searchForm.valueChanges.subscribe(values => {
