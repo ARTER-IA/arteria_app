@@ -1,11 +1,11 @@
 <form [formGroup]="newForm">
   <div class="form-container">
-    <p-card header="Personal Information" [style]="{ width: '100%' }">
+    <p-card header="Información Personal" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="firstName">First Name</label>
+            <label for="firstName">Nombre</label>
             <input
               type="text"
               pInputText
@@ -16,7 +16,7 @@
             />
           </div>
           <div class="input-group">
-            <label for="age">Age</label>
+            <label for="age">Edad</label>
             <input
               type="text"
               pInputText
@@ -32,7 +32,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="lastName">Last Name</label>
+            <label for="lastName">Apellido</label>
             <input
               type="text"
               pInputText
@@ -43,7 +43,7 @@
             />
           </div>
           <div class="input-group">
-            <label for="sex">Gender</label>
+            <label for="sex">Género</label>
             <input
               type="text"
               pInputText
@@ -59,7 +59,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="length">Length</label>
+            <label for="length">Altura</label>
             <input
               type="text"
               pInputText
@@ -70,7 +70,7 @@
             />
           </div>
           <div class="input-group">
-            <label for="bloodGroup">Blood Group</label>
+            <label for="bloodGroup">Grupo sanguíneo</label>
             <input
               type="text"
               pInputText
@@ -86,7 +86,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="weight">Weight</label>
+            <label for="weight">Peso</label>
             <input
               type="text"
               pInputText
@@ -97,7 +97,7 @@
             />
           </div>
           <div class="input-group">
-            <label for="bmi">BMI</label>
+            <label for="bmi">IMC</label>
             <input
               type="text"
               pInputText
@@ -111,7 +111,7 @@
       </div>
     </p-card>
 
-    <p-card header="Medical Conditions" [style]="{ width: '100%' }">
+    <p-card header="Condiciones Médicas" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
@@ -129,7 +129,7 @@
               inputId="htn"
               (onChange)="onCheckboxChange($event, 'htn')"
             ></p-checkbox>
-            <label for="htn" class="p-checkbox-label">Hypertension</label>
+            <label for="htn" class="p-checkbox-label">Hipertensión</label>
           </div>
         </div>
 
@@ -143,7 +143,7 @@
               (onChange)="onCheckboxChange($event, 'current_Smoker')"
             ></p-checkbox>
             <label for="current_Smoker" class="p-checkbox-label"
-              >Current Smoker</label
+              >Fumador actual</label
             >
           </div>
           <div class="flex align-items-center gap-1">
@@ -152,7 +152,7 @@
               inputId="ex_Smoker"
               (onChange)="onCheckboxChange($event, 'ex_Smoker')"
             ></p-checkbox>
-            <label for="ex_Smoker" class="p-checkbox-label">Ex Smoker</label>
+            <label for="ex_Smoker" class="p-checkbox-label">Ex Fumador</label>
           </div>
         </div>
 
@@ -165,7 +165,7 @@
               inputId="fh"
               (onChange)="onCheckboxChange($event, 'fh')"
             ></p-checkbox>
-            <label for="fh" class="p-checkbox-label">Family History</label>
+            <label for="fh" class="p-checkbox-label">Historia familiar</label>
           </div>
           <div class="flex align-items-center gap-1">
             <p-checkbox
@@ -173,7 +173,7 @@
               inputId="obesity"
               (onChange)="onCheckboxChange($event, 'obesity')"
             ></p-checkbox>
-            <label for="obesity" class="p-checkbox-label">Obesity</label>
+            <label for="obesity" class="p-checkbox-label">Obesidad</label>
           </div>
         </div>
 
@@ -187,7 +187,7 @@
               (onChange)="onCheckboxChange($event, 'cva')"
             ></p-checkbox>
             <label for="cva" class="p-checkbox-label"
-              >Cerebrovascular Accident</label
+              >Accidente cerebrovascular</label
             >
           </div>
           <div class="flex align-items-center gap-1">
@@ -197,19 +197,19 @@
               (onChange)="onCheckboxChange($event, 'thyroid_Disease')"
             ></p-checkbox>
             <label for="thyroid_Disease" class="p-checkbox-label"
-              >Thyroid Disease</label
+              >Enfermedad de la tiroides</label
             >
           </div>
         </div>
       </div>
     </p-card>
 
-    <p-card header="Risk Factors" [style]="{ width: '100%' }">
+    <p-card header="Factores de Riesgo" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="bp">Blood Pressure mm Hg</label>
+            <label for="bp">Presión arterial mm Hg</label>
             <input
               type="text"
               pInputText
@@ -226,15 +226,15 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.bp.errors?.['required']">
-                BP es requerido
+                Presión arterial es requerido
               </div>
               <div *ngIf="newForm.controls.bp.errors?.['pattern']">
-                Ingrese un BP válido
+                Ingrese una presión arterial válido
               </div>
             </small>
           </div>
           <div class="input-group">
-            <label for="pr">Pulse Rate ppm</label>
+            <label for="pr">Frecuencia del pulso ppm</label>
             <input
               type="text"
               pInputText
@@ -251,10 +251,10 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.pr.errors?.['required']">
-                PR es requerido
+                Frecuencia del pulso es requerido
               </div>
               <div *ngIf="newForm.controls.pr.errors?.['pattern']">
-                Ingrese un PR válido
+                Ingrese una frecuencia del pulso válido
               </div>
             </small>
           </div>
@@ -264,7 +264,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="weak_Peripheral_Pulse">Weak Peripheral Pulse</label>
+            <label for="weak_Peripheral_Pulse">Pulso periférico débil</label>
             <input
               type="text"
               pInputText
@@ -284,17 +284,17 @@
               <div
                 *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['required']"
               >
-                Weak Peripheral Pulse es requerido
+                Pulso periférico débil es requerido
               </div>
               <div
                 *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['pattern']"
               >
-                Ingrese un Weak Peripheral Pulse válido
+                Ingrese un Pulso periférico débil válido
               </div>
             </small>
           </div>
           <div class="input-group">
-            <label for="tg">Triglyceride mg/dL</label>
+            <label for="tg">Triglicérido mg/dL</label>
             <input
               type="text"
               pInputText
@@ -311,10 +311,10 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.tg.errors?.['required']">
-                TG es requerido
+                Triglicérido es requerido
               </div>
               <div *ngIf="newForm.controls.tg.errors?.['pattern']">
-                Ingrese un TG válido
+                Ingrese un triglicérido válido
               </div>
             </small>
           </div>
@@ -324,7 +324,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="ldl">Low-density Lipoprotein mg/dL</label>
+            <label for="ldl">Lipoproteína de baja densidad mg/dL</label>
             <input
               type="text"
               pInputText
@@ -341,15 +341,15 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.ldl.errors?.['required']">
-                LDL es requerido
+                Lipoproteína de baja densidad es requerido
               </div>
               <div *ngIf="newForm.controls.ldl.errors?.['pattern']">
-                Ingrese un LDL válido
+                Ingrese un valor de Lipoproteína de baja densidad válido
               </div>
             </small>
           </div>
           <div class="input-group">
-            <label for="hdl">High-density Lipoprotein mg/dL</label>
+            <label for="hdl">Lipoproteína de alta densidad mg/dL</label>
             <input
               type="text"
               pInputText
@@ -366,10 +366,10 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.hdl.errors?.['required']">
-                HDL es requerido
+                Lipoproteína de alta densidad es requerido
               </div>
               <div *ngIf="newForm.controls.hdl.errors?.['pattern']">
-                Ingrese un HDL válido
+                Ingrese un valor Lipoproteína de alta densidad válido
               </div>
             </small>
           </div>
@@ -379,7 +379,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="hb">Hemoglobin g/dL</label>
+            <label for="hb">Hemoglobina g/dL</label>
             <input
               type="text"
               pInputText
@@ -396,10 +396,10 @@
               class="block p-error"
             >
               <div *ngIf="newForm.controls.hb.errors?.['required']">
-                HB es requerido
+                Hemoglobina es requerido
               </div>
               <div *ngIf="newForm.controls.hb.errors?.['pattern']">
-                Ingrese un HB válido
+                Ingrese un valo de Hemoglobina válido
               </div>
             </small>
           </div>
@@ -407,12 +407,12 @@
       </div>
     </p-card>
 
-    <p-card header="Electrocardiogram" [style]="{ width: '100%' }">
+    <p-card header="Electrocardiograma" [style]="{ width: '100%' }">
       <div class="flex flex-column md:flex-row">
         <!-- First Column -->
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="q_Wave">Q Wave</label>
+            <label for="q_Wave">Onda Q</label>
             <p-dropdown
               formControlName="q_Wave"
               [options]="consentOptions"
@@ -432,7 +432,7 @@
             </small>
           </div>
           <div class="input-group">
-            <label for="st_Elevation">St Elevation</label>
+            <label for="st_Elevation">Elevación de Segmento ST</label>
             <p-dropdown
               formControlName="st_Elevation"
               [options]="consentOptions"
@@ -457,7 +457,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="st_Depression">St Depression</label>
+            <label for="st_Depression">Depresión del segmento ST</label>
             <p-dropdown
               formControlName="st_Depression"
               [options]="consentOptions"
@@ -477,7 +477,7 @@
             </small>
           </div>
           <div class="input-group">
-            <label for="tinversion">T Inversion</label>
+            <label for="tinversion">Inversión T</label>
             <p-dropdown
               formControlName="tinversion"
               [options]="consentOptions"
@@ -502,7 +502,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="lvh">Left Ventricular Hypertrophy</label>
+            <label for="lvh">Hipertrofia ventricular izquierda</label>
             <p-dropdown
               formControlName="lvh"
               [options]="consentOptions"
@@ -521,7 +521,9 @@
             </small>
           </div>
           <div class="input-group">
-            <label for="poor_R_Progression">Poor R-wave Progression</label>
+            <label for="poor_R_Progression"
+              >Mala progresión de la onda R
+            </label>
             <p-dropdown
               formControlName="poor_R_Progression"
               [options]="consentOptions"
@@ -546,7 +548,7 @@
 
     <div class="flex flex-wrap justify-content-center align-items-center">
       <p-button
-        label="Register"
+        label="Registrar"
         styleClass="w-10rem mx-auto"
         [disabled]="newForm.invalid"
         (click)="onSubmit()"
