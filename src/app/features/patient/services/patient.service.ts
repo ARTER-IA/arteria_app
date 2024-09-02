@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
-  basePath: string = 'http://localhost:8080/api/v1';
+  basePath: string = environment.basePath;
 
   httpOptions = {
     headers: new HttpHeaders({
