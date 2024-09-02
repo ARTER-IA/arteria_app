@@ -3,21 +3,21 @@
         <div class="flex flex-wrap align-items-center justify-content-between">
             <div class="search-bar p-input-icon-left m-2">
                 <i class="pi pi-search"></i>
-                <input type="text" pInputText placeholder="Search by name" formControlName="selectedName"
+                <input type="text" pInputText placeholder="Buscar por nombre" formControlName="selectedName"
                     class="search-input">
             </div>
             <div class="filters-container">
                 <p-toolbar>
                     <div class="p-toolbar-group-start flex flex-column align-items-center md:align-items-start">
-                        <label for="filters" class="filters-label">FILTERS</label>
+                        <label for="filters" class="filters-label">FILTROS</label>
                         <div class="filters-group flex flex-wrap justify-content-center md:justify-content-start">
                             <p-dropdown formControlName="selectedGenre" [options]="genders" optionLabel="name"
-                                placeholder="Select a genre" class="mr-2" />
-                            <input type="number" pInputText placeholder="Enter age" formControlName="selectedAge"
+                                placeholder="Selecciona un género" class="mr-2" />
+                            <input type="number" pInputText placeholder="Ingresa edad" formControlName="selectedAge"
                                 class="mr-2">
-                            <input type="number" pInputText placeholder="Enter CAD percent"
+                            <input type="number" pInputText placeholder="Ingresa porcentaje EAC"
                                 formControlName="selectedCADPercent" class="mr-2">
-                            <p-button label="Clear filters" icon="pi pi-times" class="clear-filters-button"
+                            <p-button label="Limpiar filtros" icon="pi pi-times" class="clear-filters-button"
                                 [rounded]="true" (click)="clearFilters()"></p-button>
                         </div>
                     </div>
@@ -34,10 +34,10 @@
                     <p-avatar icon="pi pi-user" styleClass="mr-2" size="xlarge"
                         [style]="{ 'background-color': '#f2f1fa', color: '#5d5a88', 'margin-top': '2rem' }" />
                 </ng-template>
-                <p>Gender: {{patient.gender}}</p>
-                <p>Age: {{patient.age}}</p>
+                <p>Género: {{patient.gender}}</p>
+                <p>Edad: {{patient.age}}</p>
                 <ng-template pTemplate="footer">
-                    <p-button label="Profile" icon="pi pi-book" styleClass="w-8rem mx-auto" [rounded]="true"
+                    <p-button label="Perfil" icon="pi pi-book" styleClass="w-8rem mx-auto" [rounded]="true"
                         (click)="selectPatient(patient)"></p-button>
                 </ng-template>
             </p-card>

@@ -12,41 +12,41 @@
                             accept="image/*" maxFileSize="1000000"/>
                     </div>
 
-                    <h2>Personal Information</h2>
+                    <h2>Información Personal</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="firstName">First Name</label>
+                        <label for="firstName">Nombres</label>
                         <input type="text" pInputText formControlName="firstName" id="firstName" name="firstName"
                             class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName">Apellidos</label>
                         <input type="text" pInputText formControlName="lastName" id="lastName" name="lastName"
                             class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="birthdayDate">Birth Date</label>
+                        <label for="birthdayDate">Fecha de nacimiento</label>
                         <!--<input type="date" pInputText formControlName="birthdayDate" name="birthdayDate"
                             class="w-full" />-->
                         <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
                             inputId="buttondisplay" id="birthdayDate" name="birthdayDate" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="gender">Gender</label>
+                        <label for="gender">Género</label>
                         <!--<input type="text" pInputText formControlName="gender" name="gender" class="w-full" />-->
                         <p-dropdown formControlName="gender" [options]="genders" optionLabel="name"
-                            placeholder="Select a genre" id="gender" name="gender" class="w-full" />
+                            placeholder="Selecciona un género" id="gender" name="gender" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="dni">DNI</label>
                         <input type="text" pInputText formControlName="dni" id="dni" name="dni" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="phoneNumber">Phone</label>
+                        <label for="phoneNumber">Celular</label>
                         <p-inputMask mask="999999999" formControlName="phoneNumber" id="phoneNumber" name="phoneNumber"
                             placeholder="999999999" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="email">E-mail</label>
+                        <label for="email">Correo</label>
                         <input type="email" pInputText formControlName="email" id="email" name="email" class="w-full" />
                     </div>
                 </div>
@@ -63,42 +63,42 @@
 
                 <!-- Second Column -->
                 <div class="w-full md:w-8 flex flex-column gap-3">
-                    <h2>Basic Medical Information</h2>
+                    <h2>Información Médica Básica</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="height">Height</label>
+                        <label for="height">Altura (cm)</label>
                         <input type="number" pInputText formControlName="height" id="height" name="height"
                             class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="weight">Weight</label>
+                        <label for="weight">Peso (kg)</label>
                         <input type="number" pInputText formControlName="weight" id="weight" name="weight"
                             class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="bloodgroup">Blood Group</label>
+                        <label for="bloodgroup">Grupo sanguíneo</label>
                         <input type="text" pInputText formControlName="bloodGroup" id="bloodGroup" name="bloodGroup"
                             class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="allergies">Allergies</label>
+                        <label for="allergies">Alergias</label>
                         <input type="text" pInputText formControlName="allergies" id="allergies" name="allergies"
                             class="w-full" />
                         <!--<p-chips formControlName="allergies" class="w-full"/>-->
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="currentMedications">Current Medications</label>
+                        <label for="currentMedications">Medicación actual</label>
                         <input type="text" pInputText formControlName="currentMedications" id="currentMedications"
                             name="currentMedications" class="w-full" />
                     </div>
 
-                    <h2>Health Insurance Information</h2>
+                    <h2>Información sobre el Seguro Médico</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="insuranceNumber">Insurance Number</label>
+                        <label for="insuranceNumber">Número del seguro</label>
                         <input type="text" pInputText formControlName="insuranceNumber" id="insuranceNumber"
                             name="insuranceNumber" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="policy">Policy</label>
+                        <label for="policy">Poliza de seguro</label>
                         <input type="text" pInputText formControlName="policy" id="policy" name="policy"
                             class="w-full" />
                     </div>
@@ -116,19 +116,19 @@
 
                 <!-- Third Column -->
                 <div class="w-full md:w-8 flex flex-column gap-3">
-                    <h2>Medical History</h2>
+                    <h2>Historial Médico</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="previousIllnesses">Previous Illnesses</label>
+                        <label for="previousIllnesses">Enfermedades previas</label>
                         <input type="text" pInputText formControlName="previousIllnesses" id="previousIllnesses"
                             name="previousIllnesses" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="previousSurgeries">Previous Surgeries</label>
+                        <label for="previousSurgeries">Cirugías previas</label>
                         <input type="text" pInputText formControlName="previousSurgeries" id="previousSurgeries"
                             name="previousSurgeries" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="currentConditions">Current Conditions</label>
+                        <label for="currentConditions">Condiciones actuales</label>
                         <!--<textarea rows="5" cols="40" pInputTextarea formControlName="currentConditions"
                             name="currentConditions" [autoResize]="true">
                         </textarea>-->
@@ -136,20 +136,20 @@
                             class="w-full" />
                     </div>
 
-                    <h2>Emergency Information</h2>
+                    <h2>Contacto de Emergencia</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="emergencyContact">Emergency Contact</label>
+                        <label for="emergencyContact">Nombre completo</label>
                         <input type="text" pInputText formControlName="emergencyContact" id="emergencyContact"
                             name="emergencyContact" class="w-full" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="emergencyPhoneNumber">Emergency Phone Number</label>
+                        <label for="emergencyPhoneNumber">Celular</label>
                         <p-inputMask mask="999999999" formControlName="emergencyPhoneNumber" placeholder="999999999"
                             id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="w-full" />
                     </div>
 
                     <div class="flex flex-wrap justify-content-center align-items-center">
-                        <p-button label="Register" styleClass="w-10rem mx-auto" [disabled]="addPatientForm.invalid"
+                        <p-button label="Registrar" styleClass="w-10rem mx-auto" [disabled]="addPatientForm.invalid"
                             (click)="onRegister()"></p-button>
                     </div>
                 </div>

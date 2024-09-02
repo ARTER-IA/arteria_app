@@ -15,22 +15,22 @@
                             accept="image/*" maxFileSize="1000000" />
                     </div>
 
-                    <h2>Personal Information</h2>
+                    <h2>Información Personal</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="firstName">Name</label>
+                        <label for="firstName">Nombres</label>
                         <input type="text" pInputText id="firstName" class="w-full" formControlName="firstName" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName">Apellidos</label>
                         <input type="text" pInputText id="lastName" class="w-full" formControlName="lastName" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="birthdayDate">Birth Date</label>
+                        <label for="birthdayDate">Fecha de nacimiento</label>
                         <p-calendar [showIcon]="true" class="w-full" formControlName="birthdayDate"
                             [showOnFocus]="false"></p-calendar>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="gender">Gender</label>
+                        <label for="gender">Género</label>
                         <p-dropdown formControlName="gender" [options]="genders" optionLabel="name" id="gender"
                             name="gender" class="w-full" />
                     </div>
@@ -39,11 +39,11 @@
                         <input type="dni" pInputText id="dni" class="w-full" formControlName="dni" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="phoneNumber">Phone</label>
+                        <label for="phoneNumber">Celular</label>
                         <input type="text" pInputText id="phoneNumber" class="w-full" formControlName="phoneNumber" />
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                        <label for="email">E-mail</label>
+                        <label for="email">Correo</label>
                         <input type="text" pInputText id="email" class="w-full" formControlName="email" />
                     </div>
                 </div>
@@ -61,39 +61,39 @@
                 <div class="w-full md:w-8 flex flex-column gap-3">
                     <div class="flex flex-column md:flex-row gap-4">
                         <div class="w-full md:w-6 flex flex-column row-gap-3">
-                            <h2>Basic Medical Information</h2>
+                            <h2>Información Médica Básica</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="height">Height</label>
+                                <label for="height">Altura (cm)</label>
                                 <input type="number" pInputText id="height" class="w-full" formControlName="height" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="weight">Weight</label>
+                                <label for="weight">Peso (kg)</label>
                                 <input type="number" pInputText id="weight" class="w-full" formControlName="weight" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="bloodGroup">Blood Group</label>
+                                <label for="bloodGroup">Grupo sanguíneo</label>
                                 <input type="text" pInputText id="bloodGroup" class="w-full"
                                     formControlName="bloodGroup" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="allergies">Allergies</label>
+                                <label for="allergies">Alergias</label>
                                 <input type="text" pInputText id="allergies" class="w-full"
                                     formControlName="allergies" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="currentMedications">Current Medications</label>
+                                <label for="currentMedications">Medicación actual</label>
                                 <input type="text" pInputText id="currentMedications" class="w-full"
                                     formControlName="currentMedications" />
                             </div>
 
-                            <h2>Health Insurance Information</h2>
+                            <h2>Información sobre el Seguro Médico</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="insuranceNumber">Insurance Number</label>
+                                <label for="insuranceNumber">Número del seguro</label>
                                 <input type="text" pInputText id="insuranceNumber" class="w-full"
                                     formControlName="insuranceNumber" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="policy">Policy</label>
+                                <label for="policy">Poliza</label>
                                 <input type="text" pInputText id="policy" class="w-full" formControlName="policy" />
                             </div>
                         </div>
@@ -108,31 +108,31 @@
                         </div>
 
                         <div class="w-full md:w-6 flex flex-column gap-3">
-                            <h2>Medical History</h2>
+                            <h2>Historial Médico</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="previousIllnesses">Previous Illnesses</label>
+                                <label for="previousIllnesses">Enfermedades previas</label>
                                 <input type="text" pInputText id="previousIllnesses" class="w-full"
                                     formControlName="previousIllnesses" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="previousSurgeries">Previous Surgeries</label>
+                                <label for="previousSurgeries">Cirugías previas</label>
                                 <input type="text" pInputText id="previousSurgeries" class="w-full"
                                     formControlName="previousSurgeries" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="currentConditions">Current Conditions</label>
+                                <label for="currentConditions">Condiciones actuales</label>
                                 <p-chips formControlName="currentConditions" id="currentConditions"
                                     name="currentConditions" />
                             </div>
 
-                            <h2>Emergency Information</h2>
+                            <h2>Contacto de Emergencia</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="emergencyContact">Emergency Contact</label>
+                                <label for="emergencyContact">Nombre completo</label>
                                 <input type="text" pInputText id="emergencyContact" class="w-full"
                                     formControlName="emergencyContact" />
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
-                                <label for="emergencyPhoneNumber">Emergency Phone Number</label>
+                                <label for="emergencyPhoneNumber">Celular</label>
                                 <input type="text" pInputText id="emergencyPhoneNumber" class="w-full"
                                     formControlName="emergencyPhoneNumber" />
                             </div>
@@ -140,14 +140,14 @@
                     </div>
 
                     <div class="w-full flex flex-column gap-3">
-                        <h2>Latest Results</h2>
+                        <h2>Últimos Resultados</h2>
                         <div *ngIf="results && results.length > 0; else noResults">
                             <p-listbox [options]="results" formControlName="selectedResult" optionLabel="id"
-                                [style]="{ width: '100%', 'background-color': '#EAE9F5' }">
+                                [style]="{ width: '100%', 'background-color': '#EAE9F5' }" (onChange)="onSelectResult($event)">
                                 <ng-template let-result pTemplate="item">
                                     <div class="flex gap-8">
-                                        <p>Date: {{ result.createdAt | date:'short' }}</p>
-                                        <p>Result: {{ result.predictionProbability }}</p>
+                                        <p>Fecha: {{ result.createdAt | date:'short' }}</p>
+                                        <p>Resultado obtenido: {{ result.predictionProbability }}</p>
                                     </div>
                                 </ng-template>
                             </p-listbox>
@@ -156,8 +156,8 @@
                             <p-card
                                 [style]="{ 'background-color': '#EAE9F5', 'box-shadow': 'none', 'border': '1px solid #DBDBDE' }">
                                 <div class="flex flex-wrap md:justify-content-between justify-content-center">
-                                    <p>It looks like this patient still has no results.</p>
-                                    <p-button label="Go to CAD Prediction" (click)="goToCADPrediction()"
+                                    <p>Parece que este paciente aún no tiene resultados.</p>
+                                    <p-button label="Ir a predicción de EAC" (click)="goToCADPrediction()"
                                         icon="pi pi-check"></p-button>
                                 </div>
                             </p-card>

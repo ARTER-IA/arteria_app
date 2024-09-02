@@ -14,6 +14,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ListboxModule } from 'primeng/listbox';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadModule } from 'primeng/fileupload';
+import { FormService } from '../../form/services/form.service';
 
 interface Patient {
   firstName: string;
@@ -80,7 +81,7 @@ export class PatientProfileComponent implements OnInit {
   //profilePictureUri: string = '';
   profilePictureFile: File | null = null;
 
-  constructor(private route: ActivatedRoute, private patientService: PatientService, private sanitizer: DomSanitizer, private router: Router) {
+  constructor(private route: ActivatedRoute, private patientService: PatientService, private formService: FormService, private sanitizer: DomSanitizer, private router: Router) {
     this.patientFormGroup = new FormGroup({
       firstName: new FormControl({ value: '', disabled: true }),
       lastName: new FormControl({ value: '', disabled: true }),
@@ -238,5 +239,65 @@ export class PatientProfileComponent implements OnInit {
 
   goToCADPrediction(){
     this.router.navigateByUrl('/form');
+  }
+
+  onSelectResult(event: any): void {
+    const selectedItem = event.value;  // Obteniendo el elemento seleccionado
+    const selectedId = selectedItem.id;  // Aquí puedes usar la propiedad 'id' o cualquier propiedad del objeto
+
+
+    console.log("new calculared risk", selectedId);
+    //const calculatedRiskJson = localStorage.getItem('calculatedRisk');
+    //const patientId = localStorage.getItem('selectedPatientId');
+
+    
+    
+    this.formService.getByCalculatedRiskId(selectedId).subscribe(
+      (response: any) => {
+        const formData = {
+          formId: response.id,
+          bmi: response.bmi,
+          bp: response.bp,
+          pr: response.pr,
+          tg: response.tg,
+          ldl: response.ldl,
+          hdl: response.hdl,
+          hb: response.hb
+        };
+
+        const formDataJSON = JSON.stringify(formData);
+        localStorage.setItem('formData', formDataJSON);
+      }
+    );
+
+    this.patientService.getCalculatedRiskById(selectedId).subscribe(
+      (response: any) => {
+        const calculatedRiskData = {
+          id: response.id,
+          predicted_class: response.predicted_class,
+          prediction_probability: response.prediction_probability,
+          createdAt: new Date(response.createdAt),
+          formId: response.formId
+        };
+
+        const predictionData = {
+          prediction_class: response.predicted_class,
+          prediction_probability: response.prediction_probability
+        }
+
+        const calculatedRiskJSON = JSON.stringify(calculatedRiskData);
+        //const predictionJSON = JSON.stringify(predictionData);
+        localStorage.setItem('calculatedRisk', calculatedRiskJSON);
+        //localStorage.setItem('prediction', predictionJSON);
+      }
+      
+    )
+  
+    // Redirigir a la ruta deseada
+    this.router.navigate(['/report'])
+    .then(() => {
+      window.location.reload();
+    });
+    
   }
 }

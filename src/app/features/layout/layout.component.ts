@@ -26,7 +26,7 @@ export class LayoutComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Support',
+        label: 'Soporte',
         icon: 'pi pi-headphones'
 
       },
@@ -38,18 +38,18 @@ export class LayoutComponent implements OnInit {
         }
       },
       {
-        label: 'Account',
+        label: 'Cuenta',
         icon: 'pi pi-user',
         items: [
           {
-            label: 'My Profile',
+            label: 'Mi perfil',
             icon: 'pi pi-address-book',
             command: () => {
               this.router.navigate(['/profile']);
             }
           },
           {
-            label: 'Log Out',
+            label: 'Cerrar sesión',
             icon: 'pi pi-sign-out',
             command: () => {
               this.logOff();

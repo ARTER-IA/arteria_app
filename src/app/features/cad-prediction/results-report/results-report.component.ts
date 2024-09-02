@@ -139,7 +139,7 @@ export class ResultsReportComponent implements OnInit {
     const patientId = localStorage.getItem('selectedPatientId');
     if (calculatedRiskJson) {
       const calculatedRisk = JSON.parse(calculatedRiskJson);
-      this.calculatedRiskId = calculatedRisk?.id;
+      this.calculatedRiskId = calculatedRisk.id;
       this.resultCAD = Number((calculatedRisk.prediction_probability * 100).toFixed(2));
     }
     this.getPatient(patientId);
