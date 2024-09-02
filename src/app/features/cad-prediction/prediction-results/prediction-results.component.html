@@ -2,11 +2,11 @@
   <!-- Welcome Section -->
   <div class="w-full text-center">
     <br />
-    <h1 class="title-text">Calculated Risk</h1>
+    <h1 class="title-text">Riesgo Calculado</h1>
     <div>
       <p class="welcome-text">
-        The calculated risk information and a radar graph with the risk factors
-        are displayed
+        Se muestra la información de riesgo calculada y un gráfico de radar con
+        los factores de riesgo
       </p>
     </div>
   </div>
@@ -23,8 +23,8 @@
         </div>
         <div class="probability-text">
           <p>
-            {{ newResults.value.prediction_probability }}% probability of having
-            the disease
+            {{ newResults.value.prediction_probability }}% de probabilidad de
+            tener la enfermedad
           </p>
         </div>
       </ng-template>
@@ -40,27 +40,30 @@
             ></p-chart>
           </div>
           <div class="legend-container">
-            <h3>Legend</h3>
+            <h3>Leyenda</h3>
             <ul>
               <li>
-                <span class="legend-symbol">BMI</span>: Body Mass Index</li>
-              <li>
-                <span class="legend-symbol">BP</span>: Blood Pressure (mm Hg)
-              </li>
-              <li><span class="legend-symbol">PR</span>: Pulse Rate (PPM)</li>
-              <li>
-                <span class="legend-symbol">TG</span>: Triglyceride (mg/dL)
+                <span class="legend-symbol">IMC</span>: Índice de Masa Corporal
               </li>
               <li>
-                <span class="legend-symbol">LDL</span>: Low-density Lipoprotein
-                (mg/dL)
+                <span class="legend-symbol">BP</span>: Presión Arterial (mm Hg)
               </li>
               <li>
-                <span class="legend-symbol">HDL</span>: High-density Lipoprotein
-                (mg/dL)
+                <span class="legend-symbol">PR</span>: Frecuencia del Pulso
+                (PPM)
               </li>
-              <li><span class="legend-symbol">HB</span>: Hemoglobin (g/dL)</li>
-              <!-- Add more symbols and meanings as needed -->
+              <li>
+                <span class="legend-symbol">TG</span>: Triglicérido (mg/dL)
+              </li>
+              <li>
+                <span class="legend-symbol">LDL</span>: Lipoproteína de Baja
+                Densidad (mg/dL)
+              </li>
+              <li>
+                <span class="legend-symbol">HDL</span>: Lipoproteína de Alta
+                Densidad (mg/dL)
+              </li>
+              <li><span class="legend-symbol">HB</span>: Hemoglobina (g/dL)</li>
             </ul>
           </div>
         </div>
@@ -68,6 +71,12 @@
     </p-card>
   </div>
   <div class="flex flex-wrap justify-content-center align-items-center">
-    <p-button label="See Report" icon="pi pi-chart-bar" styleClass="w-10rem mx-auto" [rounded]="true" (click)="goToReport()"></p-button>
+    <p-button
+      label="Ver informe"
+      icon="pi pi-chart-bar"
+      styleClass="w-10rem mx-auto"
+      [rounded]="true"
+      (click)="goToReport()"
+    ></p-button>
   </div>
 </form>
