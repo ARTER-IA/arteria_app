@@ -15,6 +15,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FormService } from '../../form/services/form.service';
+import { firstValueFrom } from 'rxjs';
 
 interface Patient {
   firstName: string;
@@ -241,63 +242,43 @@ export class PatientProfileComponent implements OnInit {
     this.router.navigateByUrl('/form');
   }
 
-  onSelectResult(event: any): void {
+  async onSelectResult(event: any): Promise<void> {
     const selectedItem = event.value;  // Obteniendo el elemento seleccionado
     const selectedId = selectedItem.id;  // Aquí puedes usar la propiedad 'id' o cualquier propiedad del objeto
-
-
-    console.log("new calculared risk", selectedId);
-    //const calculatedRiskJson = localStorage.getItem('calculatedRisk');
-    //const patientId = localStorage.getItem('selectedPatientId');
-
-    
-    
-    this.formService.getByCalculatedRiskId(selectedId).subscribe(
-      (response: any) => {
-        const formData = {
-          formId: response.id,
-          bmi: response.bmi,
-          bp: response.bp,
-          pr: response.pr,
-          tg: response.tg,
-          ldl: response.ldl,
-          hdl: response.hdl,
-          hb: response.hb
-        };
-
-        const formDataJSON = JSON.stringify(formData);
-        localStorage.setItem('formData', formDataJSON);
-      }
-    );
-
-    this.patientService.getCalculatedRiskById(selectedId).subscribe(
-      (response: any) => {
-        const calculatedRiskData = {
-          id: response.id,
-          predicted_class: response.predicted_class,
-          prediction_probability: response.prediction_probability,
-          createdAt: new Date(response.createdAt),
-          formId: response.formId
-        };
-
-        const predictionData = {
-          prediction_class: response.predicted_class,
-          prediction_probability: response.prediction_probability
-        }
-
-        const calculatedRiskJSON = JSON.stringify(calculatedRiskData);
-        //const predictionJSON = JSON.stringify(predictionData);
-        localStorage.setItem('calculatedRisk', calculatedRiskJSON);
-        //localStorage.setItem('prediction', predictionJSON);
-      }
-      
-    )
   
-    // Redirigir a la ruta deseada
-    this.router.navigate(['/report'])
-    .then(() => {
-      window.location.reload();
-    });
-    
+    console.log("new calculated risk", selectedId);
+  
+    try {
+      // Primera solicitud asíncrona
+      const formResponse = await firstValueFrom(this.formService.getByCalculatedRiskId(selectedId));
+      const formData = {
+        formId: formResponse.id,
+        bmi: formResponse.bmi,
+        bp: formResponse.bp,
+        pr: formResponse.pr,
+        tg: formResponse.tg,
+        ldl: formResponse.ldl,
+        hdl: formResponse.hdl,
+        hb: formResponse.hb
+      };
+      localStorage.setItem('formData', JSON.stringify(formData));
+  
+      // Segunda solicitud asíncrona
+      const riskResponse = await firstValueFrom(this.patientService.getCalculatedRiskById(selectedId));
+      const calculatedRiskData = {
+        id: riskResponse.id,
+        predicted_class: riskResponse.predicted_class,
+        prediction_probability: riskResponse.prediction_probability,
+        createdAt: new Date(riskResponse.createdAt),
+        formId: riskResponse.formId
+      };
+      localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskData));
+  
+      // Redirección una vez que ambas solicitudes hayan finalizado
+      this.router.navigateByUrl('/patient-report-result');
+    } catch (error) {
+      console.error('Error loading data', error);
+    }
   }
+  
 }
