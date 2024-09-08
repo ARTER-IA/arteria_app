@@ -13,6 +13,11 @@ import { KnobModule } from 'primeng/knob';
 import { PredictionEacService } from '../services/prediction-eac.service';
 import { PatientService } from '../../patient/services/patient.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import PizZip from 'pizzip';
+import { saveAs } from 'file-saver';
+import { HttpClient } from '@angular/common/http';
+import Docxtemplater from 'docxtemplater';
+
 
 interface Recommendation {
   description: string;
@@ -53,7 +58,7 @@ export class PatientResultsComponent implements OnInit {
   chartData: any;
   chartOptions: any;
 
-  constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer) {
+  constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer, private http: HttpClient) {
     this.predictionReport = this.fb.group({
       fullName: new FormControl({ value: '', disabled: true }),
       age: new FormControl({ value: '', disabled: true }),
@@ -61,7 +66,18 @@ export class PatientResultsComponent implements OnInit {
       date: new FormControl({ value: '', disabled: true }),
       CADResult: new FormControl({ value: 0, disabled: true }),
       editableRecommendation: new FormControl(''),
-      recommendation: new FormControl('')
+      recommendation: new FormControl(''),
+
+      height: new FormControl({ value: '', disabled: true }),
+      weight: new FormControl({ value: '', disabled: true }),
+      bloodGroup: new FormControl({ value: '', disabled: true }),
+      dni: new FormControl({ value: '', disabled: true }),
+
+      allergies: new FormControl({ value: '', disabled: true }),
+      currentMedications: new FormControl({ value: '', disabled: true }),
+      previousIllnesses: new FormControl({ value: '', disabled: true }),
+      previousSurgeries: new FormControl({ value: '', disabled: true }),
+      currentConditions: new FormControl({ value: '', disabled: true }),
     });
 
     this.newRecommendation = { description: '' };
@@ -179,7 +195,18 @@ export class PatientResultsComponent implements OnInit {
           age: this.calculateAge(response.birthdayDate),
           gender: response.gender.name,
           date: new Date(),
-          CADResult: this.resultCAD
+          CADResult: this.resultCAD,
+
+          height: response.height,
+          weight: response.weight,
+          bloodGroup: response.bloodGroup,
+          dni: response.dni,
+
+          allergies: response.allergies,
+          currentMedications: response.currentMedications,
+          previousIllnesses: response.previousIllnesses,
+          previousSurgeries: response.previousSurgeries,
+          currentConditions: response.currentConditions
         });
       }
     }, (error: any) => {
@@ -198,32 +225,107 @@ export class PatientResultsComponent implements OnInit {
     return age;
   }
 
-  /*toggleEditMode() {
-    this.editMode = !this.editMode;
-  }*/
+  convertHtmlToDocx(html: string): string {
+    return html
+      .replace(/<\/?strong>/g, '**')  // Negrita
+      .replace(/<\/?b>/g, '**')        // Negrita (etiqueta <b>)
+      .replace(/<\/?em>/g, '_')        // Cursiva
+      .replace(/<\/?i>/g, '_')         // Cursiva (etiqueta <i>)
+      .replace(/<\/?h1>/g, '# ')       // Encabezado 1
+      .replace(/<\/?h2>/g, '## ')      // Encabezado 2
+      .replace(/<\/?h3>/g, '### ')     // Encabezado 3
+      .replace(/<\/?br>/g, '\n')       // Saltos de línea
+      .replace(/<\/?p>/g, '\n');       // Párrafo
+  }
 
-  /*saveRecommendation() {
-    //const updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value; 
-    let updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value;
+  downloadWord() {
+    this.http.get('/assets/template.docx', { responseType: 'arraybuffer' }).subscribe((template: ArrayBuffer) => {
+      const zip = new PizZip(template);
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
+        delimiters: { start: '{{', end: '}}' } // Usar {} como delimitador
+      });
 
-    updatedRecommendation = updatedRecommendation
-      .replace(/<p><br\s*\/?><\/p>/g, '<br>')
-      .replace(/<br\s*\/?><br\s*\/?>/g, '<br>')
-      .trim();
+      const fullName = this.predictionReport.get('fullName')?.value;
+      const age = this.predictionReport.get('age')?.value;
+      const gender = this.predictionReport.get('gender')?.value;
+      const CADResult = this.predictionReport.get('CADResult')?.value;
 
-    console.log("updatedRec", updatedRecommendation);
-    //this.recommendation = updatedRecommendation;
-    this.newRecommendation.description = updatedRecommendation.toString();
-    this.predictionEACService.updateRecommendation(this.recommendationToUpdateId, this.newRecommendation).subscribe((response: any) => {
-      if (response) {
-        //this.recommendation = response.description;
-        this.predictionReport.patchValue({ recommendation: response.description });
-        console.log("responseUpd", response);
+      const height = this.predictionReport.get('height')?.value;
+      const weight = this.predictionReport.get('weight')?.value;
+      const bloodGroup = this.predictionReport.get('bloodGroup')?.value;
+      const dni = this.predictionReport.get('dni')?.value;
+
+      const allergies = this.predictionReport.get('allergies')?.value;
+      const currentMedications = this.predictionReport.get('currentMedications')?.value;
+      const previousIllnesses = this.predictionReport.get('previousIllnesses')?.value;
+      const previousSurgeries = this.predictionReport.get('previousSurgeries')?.value;
+      const currentConditions = this.predictionReport.get('currentConditions')?.value;
+
+
+      const bmi = this.chartData.datasets[1].data[0];
+      const bp = this.chartData.datasets[1].data[1];
+      const pr = this.chartData.datasets[1].data[2];
+      const tg = this.chartData.datasets[1].data[3];
+      const ldl = this.chartData.datasets[1].data[4];
+      const hdl = this.chartData.datasets[1].data[5];
+      const hb = this.chartData.datasets[1].data[6];
+
+
+
+      //const recommendation = this.predictionReport.get('recommendation')?.value.replace(/<\/?[^>]+(>|$)/g, "");
+
+      const recommendationHtml = this.predictionReport.get('recommendation')?.value;
+      const recommendationFormatted = this.convertHtmlToDocx(recommendationHtml);
+
+
+      console.log('Nombre:', fullName);
+      console.log('Edad:', age);
+      console.log('Género:', gender);
+      console.log('Resultado CAD:', CADResult);
+      console.log('Altura:', height);
+
+      //console.log('Recomendación:', recommendationFormatted);
+
+      try {
+        doc.render({
+          fullName: fullName,
+          age: age,
+          gender: gender,
+          height: height,
+          weight: weight,
+          bloodGroup: bloodGroup,
+          dni: dni,
+          CADResult: CADResult,
+          bmi: bmi,
+          bp: bp,
+          pr: pr,
+          tg: tg,
+          ldl: ldl,
+          hdl: hdl,
+          hb: hb,
+          allergies: allergies,
+          currentMedications: currentMedications,
+          previousIllnesses: previousIllnesses,
+          previousSurgeries: previousSurgeries,
+          currentConditions: currentConditions,
+          recommendation: recommendationFormatted,
+        });
+      } catch (error) {
+        console.error('Error al renderizar el documento:', error);
+        throw error;
       }
-    }, (error: any) => {
-      console.error("Get failed", error);
-    })
-    this.toggleEditMode();
-  }*/
+
+      const out = doc.getZip().generate({
+        type: 'blob',
+        mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      });
+
+      saveAs(out, 'patient-results.docx');
+    });
+  }
+
+
 
 }
