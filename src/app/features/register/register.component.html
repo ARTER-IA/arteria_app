@@ -183,6 +183,9 @@
           <div *ngIf="registerForm.controls.password.errors?.['required']">
             Contraseña es requerido
           </div>
+          <div *ngIf="registerForm.controls.password.errors?.['minlength']">
+            La contraseña tiene que ser mayor a 8 caracteres
+          </div>
         </small>
       </div>
 

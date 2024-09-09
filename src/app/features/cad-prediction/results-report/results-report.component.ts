@@ -14,6 +14,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CommonModule } from '@angular/common';
 import { EditorModule } from 'primeng/editor';
 import { ChartModule } from 'primeng/chart';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { catchError, retryWhen, delay, take, tap, scan } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+
+
 
 interface Recommendation {
   description: string;
@@ -45,7 +50,8 @@ interface Genre {
     ButtonModule,
     InputTextareaModule,
     EditorModule,
-    ChartModule
+    ChartModule,
+    ProgressSpinnerModule
   ],
   templateUrl: './results-report.component.html',
   styleUrls: ['./results-report.component.css']
@@ -61,6 +67,8 @@ export class ResultsReportComponent implements OnInit {
   newRecommendation: Recommendation | any;
   chartData: any;
   chartOptions: any;
+  loadingRecommendation: boolean = true; // Nueva variable
+
 
   constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer) {
     this.predictionReport = this.fb.group({
@@ -159,7 +167,25 @@ export class ResultsReportComponent implements OnInit {
   }
 
   getRecommendations(calculatedRiskId: any) {
-    this.predictionEACService.getRecommendationsByCalculatedRisk(calculatedRiskId).subscribe((response: any) => {
+    this.loadingRecommendation = true;
+
+    this.predictionEACService.getRecommendationsByCalculatedRisk(calculatedRiskId).pipe(
+      retryWhen(errors => errors.pipe(
+        scan((retryCount, error) => {
+          if (retryCount >= 4) {
+            throw error;
+          }
+          return retryCount + 1;
+        }, 0),
+
+        delay(3000)
+      )),
+      catchError(error => {
+        console.error("Error fetching recommendations:", error);
+        this.loadingRecommendation = false;
+        return of(null);
+      })
+    ).subscribe((response: any) => {
       if (response) {
         const sanitizedDescription = response.description
           .replace(/\n/g, '<br>')
@@ -167,15 +193,14 @@ export class ResultsReportComponent implements OnInit {
           .replace(/## (.*?)(?=<br>|\n|$)/g, '<h2>$1</h2>')
           .replace(/# (.*?)(?=<br>|\n|$)/g, '<h1>$1</h1>')
           .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        //this.recommendation = this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
+
         this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription });
         this.predictionReport.patchValue({ recommendation: sanitizedDescription });
-        console.log("form", this.predictionReport);
-        console.log("response", response);
+
+        // Desactivar el spinner una vez que los datos están listos
+        this.loadingRecommendation = false;
         this.recommendationToUpdateId = response.id.toString();
       }
-    }, (error: any) => {
-      console.error("Get failed", error);
     });
   }
 
