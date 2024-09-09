@@ -98,3 +98,7 @@
   list-style-type: none;
   padding: 0;
 }
+
+:host ::ng-deep .p-progress-spinner-circle {
+  stroke: #007bff !important; /* Cambia el color del spinner a azul */
+}

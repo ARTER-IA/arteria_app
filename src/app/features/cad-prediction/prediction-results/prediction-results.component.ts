@@ -84,7 +84,7 @@ export class PredictionResultsComponent implements OnInit {
   }
 
   formatPercentage(value: number): number {
-    return parseFloat((value * 100).toFixed(1));
+    return parseFloat((value * 100).toFixed(2));
   }
 
   goToReport(){
