@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './services/login.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,14 @@ import { LoginService } from './services/login.service';
     InputTextModule,
     ReactiveFormsModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],

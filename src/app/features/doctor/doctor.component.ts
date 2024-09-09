@@ -9,6 +9,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DoctorService } from './services/doctor.service';
 import { ImageModule } from 'primeng/image';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { FileUploadModule } from 'primeng/fileupload';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 
 interface doctor {
   username: string;
@@ -41,15 +46,33 @@ interface doctor {
     InputTextareaModule,
     ButtonModule,
     CommonModule,
-    ImageModule
+    ImageModule,
+    FileUploadModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './doctor.component.html',
-  styleUrl: './doctor.component.css'
+  styleUrl: './doctor.component.css',
+  providers: [ConfirmationService, MessageService],
+  styles: [
+    `
+        p-confirm-dialog .p-dialog-title {
+            color: #2a2d77; 
+        }
+
+        :host ::ng-deep .p-confirm-dialog .p-dialog-content {
+            color: #5d5a88; 
+        }
+    `
+  ],
 })
 export class DoctorComponent implements OnInit {
 
   doctor: any;
   isEditing = false;
+  doctorId: any;
+  profilePictureUrl: SafeUrl | string = '';
+  profilePictureFile: File | null = null;
 
   newDoctor = new FormGroup({
     username: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -70,16 +93,20 @@ export class DoctorComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private doctorService: DoctorService) { }
+    private doctorService: DoctorService,
+    private sanitizer: DomSanitizer,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.loadDoctorData();
+    this.getProfilePicture(this.doctorId);
   }
 
   loadDoctorData() {
-    const doctorId = localStorage.getItem('id');
-    if (doctorId) {
-      this.doctorService.getDoctorById(doctorId).subscribe(
+    this.doctorId = localStorage.getItem('id');
+    if (this.doctorId) {
+      this.doctorService.getDoctorById(this.doctorId).subscribe(
         (res: any) => {
           console.log('Doctor data:', res);
           this.doctor = res;
@@ -118,6 +145,17 @@ export class DoctorComponent implements OnInit {
       department: doctor.department,
       workplace: doctor.workplace
     });
+  }
+
+  getProfilePicture(doctorId: string | null): void {
+    if (doctorId) {
+      this.doctorService.getProfilePicture(doctorId).subscribe((image: Blob) => {
+        const objectURL = URL.createObjectURL(image);
+        this.profilePictureUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      }, error => {
+        console.error("Get profile picture failed", error);
+      });
+    }
   }
 
 
@@ -159,15 +197,67 @@ export class DoctorComponent implements OnInit {
     }
   }
 
+  onUpload(event: any) {
+    const file = event.files[0];
+    this.profilePictureFile = file;
+    console.log("File selected", this.profilePictureFile);
+
+    // Create a URL for the selected image file
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.profilePictureUrl = reader.result as string;
+    };
+
+    this.uploadProfilePicture(this.doctorId);
+  }
+
+  uploadProfilePicture(doctorId: number) {
+    var formData = new FormData();
+    formData.append('file', this.profilePictureFile!);
+
+    this.doctorService.uploadProfilePicture(doctorId, formData).subscribe((response: any) => {
+      console.log("response", response);
+      if (response.message === "File uploaded successfully") {
+        console.log("Image uploaded successfully");
+      }
+    }, (error: any) => {
+      console.error("Image upload failed", error);
+    });
+  }
+
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
     if (this.isEditing) {
       this.newDoctor.enable();
     } else {
-      this.onSubmit(); // Guardar los datos si se está desactivando la edición
+      this.onSubmit(); 
       this.newDoctor.disable();
     }
+  }
+
+  deleteAccount(event: Event) {
+    this.confirmationService.confirm({
+      header: '¿Está seguro de eliminar su cuenta?',
+      message: 'Esta acción no se puede deshacer. Por favor, confirme para proceder.',
+      accept: () => {
+        this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'Ha aceptado eliminar su cuenta.', life: 3000 });
+        setTimeout(() => {
+          this.doctorService.delete(this.doctorId).subscribe(
+            (response: any) => {
+              this.router.navigateByUrl('/login'); 
+            },
+            (error: any) => {
+              console.error("Error al eliminar la cuenta", error);
+            }
+          );
+        }, 3000);
+      },
+      reject: () => {
+        this.messageService.add({ severity: 'warn', summary: 'Cancelado', detail: 'Ha cancelado la eliminación de su cuenta.', life: 3000 });
+      }
+    });
   }
 
 }

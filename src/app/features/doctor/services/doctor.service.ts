@@ -40,4 +40,40 @@ export class DoctorService {
       });
     }
   }
+
+  uploadProfilePicture(doctorId: any, data: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.basePath}/doctors/upload/${doctorId}`, data);
+    } else {
+      return new Observable((observer) => {
+        observer.error("Token not found. Please log in again.");
+      });
+    }
+  }
+
+  getProfilePicture(doctorId: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${this.basePath}/doctors/profilePicture/${doctorId}`, { responseType: 'blob' });
+    } else {
+      return new Observable((observer) => {
+        observer.error("Token not found. Please log in again.");
+      });
+    }
+  }
+
+  delete(doctorId: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.basePath}/doctors/${doctorId}`, { headers });
+    } else {
+      return new Observable((observer) => {
+        observer.error("Token not found. Please log in again.");
+      });
+    }
+  }
 }

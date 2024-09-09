@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -8,5 +8,10 @@ import { customInterceptor } from './features/login/services/custom.interceptor'
 import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideHttpClient(withInterceptors([customInterceptor])), provideAnimations()]
+  providers: [
+    provideRouter(routes), 
+    provideClientHydration(), 
+    provideHttpClient(withInterceptors([customInterceptor])), 
+    provideAnimations()
+  ]
 };
