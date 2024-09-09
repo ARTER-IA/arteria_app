@@ -1,0 +1,15 @@
+<div class="faq-container">
+  <h1 class="title-text">Preguntas Frecuentes</h1>
+  <div class="search-bar">
+    <p-iconField iconPosition="left">
+      <p-inputIcon styleClass="pi pi-search" />
+      <input type="text" pInputText placeholder="¿Qué es lo que estás buscando?" [(ngModel)]="searchQuery" (input)="searchFaqs()" />
+    </p-iconField>
+  </div>
+
+  <div class="faq-categories">
+    <p-panel *ngFor="let faq of filteredFaqs" [header]="faq.title" [toggleable]="true">
+      <p class="m-0">{{ faq.content }}</p>
+    </p-panel>
+  </div>
+</div>

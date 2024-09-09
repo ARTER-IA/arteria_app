@@ -13,6 +13,7 @@ import { DoctorComponent } from './features/doctor/doctor.component';
 import { PredictionResultsComponent } from './features/cad-prediction/prediction-results/prediction-results.component';
 import { ResultsReportComponent } from './features/cad-prediction/results-report/results-report.component';
 import { PatientResultsComponent } from './features/cad-prediction/patient-results/patient-results.component';
+import { HelpSupportComponent } from './features/help-support/help-support.component';
 
 export const routes: Routes = [
   //{path: 'home', component: HomeComponent},
@@ -63,6 +64,10 @@ export const routes: Routes = [
       {
         path: 'patient-report-result',
         component: PatientResultsComponent
+      },
+      {
+        path: 'support',
+        component: HelpSupportComponent
       }
     ]
   }

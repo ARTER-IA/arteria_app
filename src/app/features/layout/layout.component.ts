@@ -27,7 +27,10 @@ export class LayoutComponent implements OnInit {
     this.items = [
       {
         label: 'Soporte',
-        icon: 'pi pi-headphones'
+        icon: 'pi pi-headphones',
+        command: () => {
+          this.router.navigate(['/support']);
+        }
 
       },
       {
