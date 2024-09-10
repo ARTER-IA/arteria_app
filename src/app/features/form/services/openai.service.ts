@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class OpenaiService {
 
-  basePath: string = 'http://127.0.0.1:5080/api';
+  basePath: string = 'https://arteria-chatgpt-api-p5wa.onrender.com/api';
 
   httpOptions = {
     headers: new HttpHeaders({

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PredictionService {
-  basePath: string = 'http://127.0.0.1:5000';
+  basePath: string = 'https://arteria-ml-w6o2.onrender.com';
 
   httpOptions = {
     headers: new HttpHeaders({
