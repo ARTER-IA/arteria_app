@@ -25,7 +25,6 @@ interface doctor {
   phone: string;
   workplace: string;
   about: string;
-  profilePicUri: string;
   isDeleted: number;
   email: string;
   password: string;
@@ -82,7 +81,6 @@ export class RegisterComponent implements OnInit {
       phone: "963258741",
       workplace: "Clinica San Pablo",
       about: "I am a doctor",
-      profilePicUri: "Photo", 
       isDeleted: 0,
       email: this.registerForm.value.email ?? '',
       password: this.registerForm.value.password ?? ''
