@@ -178,7 +178,7 @@ export class ResultsReportComponent implements OnInit {
           return retryCount + 1;
         }, 0),
 
-        delay(3000)
+        delay(5000)
       )),
       catchError(error => {
         console.error("Error fetching recommendations:", error);
