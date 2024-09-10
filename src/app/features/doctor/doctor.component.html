@@ -16,7 +16,7 @@
           </div>
           <div *ngIf="isEditing || !profilePictureUrl" class="flex flex-wrap justify-content-center text-center mt-3">
             <p-fileUpload mode="basic" chooseLabel="Browse" [auto]="true" name="pictureProfileUri" customUpload="true"
-              (uploadHandler)="onUpload($event)" accept="image/jpg" maxFileSize="1000000" />
+              (uploadHandler)="onUpload($event)" accept="image/jpeg" maxFileSize="1000000" />
           </div>
           <br />
           <div class="input-group">
