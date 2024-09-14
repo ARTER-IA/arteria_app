@@ -93,7 +93,7 @@ export class FormComponent implements OnInit {
     thyroid_Disease: new FormControl(0, [Validators.required]),
     bp: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
     pr: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
-    weak_Peripheral_Pulse: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    weak_Peripheral_Pulse: new FormControl(null, [Validators.required]),
     q_Wave: new FormControl(null, [Validators.required]),
     st_Elevation: new FormControl(null, [Validators.required]),
     st_Depression: new FormControl(null, [Validators.required]),
@@ -113,7 +113,7 @@ export class FormComponent implements OnInit {
     private resultsReportService: OpenaiService
   ) {
     this.consentOptions = [
-      { label: 'Yes', value: 1 },
+      { label: 'Si', value: 1 },
       { label: 'No', value: 0 }
     ];
 
@@ -219,7 +219,7 @@ export class FormComponent implements OnInit {
       thyroid_Disease: formValue.thyroid_Disease ?? 0,
       bp: formValue.bp ?? 0,
       pr: formValue.pr ?? 0,
-      weak_Peripheral_Pulse: formValue.weak_Peripheral_Pulse ?? 0,
+      weak_Peripheral_Pulse: getDropdownValue(formValue.weak_Peripheral_Pulse),
       q_Wave: getDropdownValue(formValue.q_Wave),
       st_Elevation: getDropdownValue(formValue.st_Elevation),
       st_Depression: getDropdownValue(formValue.st_Depression),
@@ -282,7 +282,7 @@ export class FormComponent implements OnInit {
                       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskResponse));
 
                       const generateRecommendation = {
-                        prediction_probability: predictionResponse.prediction_probability*100,
+                        prediction_probability: predictionResponse.prediction_probability * 100,
                         predicted_class: predictionResponse.predicted_class ?? 0,
                         age: response.age,
                         weight: response.weight,

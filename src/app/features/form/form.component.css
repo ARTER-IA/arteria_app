@@ -1,4 +1,4 @@
-.form-container {
+:host ::ng-deep .form-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -7,35 +7,44 @@
   margin: auto;
 }
 
-.p-card {
-  margin: 20px 0;
+:host ::ng-deep .p-card {
+  margin: 5px 0;
 }
 
-.input-group {
+:host ::ng-deep .input-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-input[pInputText] {
+:host ::ng-deep input[pInputText] {
   box-sizing: border-box;
-  transition: all 0.3s ease;
-  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+  border: 1px solid var(--surface-border, #ccc);
   padding: 8px;
 }
 
-input[pInputText]:focus {
+:host ::ng-deep input[pInputText]:focus {
   outline: none;
-  border: 1px solid #007ad9;
+  border-color: var(--primary-color, #007ad9);
 }
 
-.p-checkbox-label {
-  margin-right: 1rem; /* Ajusta este valor según sea necesario */
+:host ::ng-deep .p-checkbox-label {
+  margin-right: 1rem;
   white-space: nowrap;
 }
 
+:host ::ng-deep .p-dropdown {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .p-dropdown {
+  width: 100% !important;
+}
+
 @media (max-width: 768px) {
-  .p-checkbox-label {
-    margin-right: 0.5rem; /* Ajusta este valor según sea necesario */
+  :host ::ng-deep .p-checkbox-label {
+    margin-right: 0.5rem;
   }
 }
