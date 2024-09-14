@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './services/login.service';
 import { ToastModule } from 'primeng/toast';
+import { PasswordModule } from 'primeng/password';
+
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,8 @@ import { ToastModule } from 'primeng/toast';
     ReactiveFormsModule,
     ButtonModule,
     HttpClientModule,
-    ToastModule
+    ToastModule,
+    PasswordModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
