@@ -1,0 +1,10 @@
+:host ::ng-deep .p-password input,
+:host ::ng-deep .p-calendar input {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .p-password,
+:host ::ng-deep .p-calendar {
+  width: 100% !important;
+}
