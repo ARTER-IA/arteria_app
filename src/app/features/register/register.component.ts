@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { passwordMatchValidator } from '../../shared/password-match.directive';
 import { RegisterService } from './services/register.service';
 import { CalendarModule } from 'primeng/calendar';
+import { PasswordModule } from 'primeng/password';
+
 
 
 interface doctor {
@@ -41,7 +43,8 @@ interface doctor {
     ReactiveFormsModule,
     ButtonModule,
     HttpClientModule,
-    CalendarModule
+    CalendarModule,
+    PasswordModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
