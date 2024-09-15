@@ -15,20 +15,42 @@
                     <h2>Información Personal</h2>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="firstName">Nombres</label>
-                        <input type="text" pInputText formControlName="firstName" id="firstName" name="firstName"
-                            class="w-full" />
+                        <input type="text" pInputText formControlName="firstName" id="firstName" name="firstName" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.firstName.invalid && (addPatientForm.controls.firstName.dirty ||
+                                      addPatientForm.controls.firstName.touched)"
+                                      class="block p-error">
+                            <div *ngIf="addPatientForm.controls.firstName.errors?.['required']">
+                                Nombre es requerido
+                            </div>
+                            <div *ngIf="addPatientForm.controls.firstName.errors?.['pattern']">
+                                Ingresa un nombre válido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="lastName">Apellidos</label>
-                        <input type="text" pInputText formControlName="lastName" id="lastName" name="lastName"
-                            class="w-full" />
+                        <input type="text" pInputText formControlName="lastName" id="lastName" name="lastName" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.lastName.invalid && (addPatientForm.controls.lastName.dirty ||
+                                      addPatientForm.controls.lastName.touched)"
+                                      class="block p-error">
+                            <div *ngIf="addPatientForm.controls.lastName.errors?.['required']">
+                                Apellido es requerido
+                            </div>
+                            <div *ngIf="addPatientForm.controls.lastName.errors?.['pattern']">
+                                Ingresa un Apellido válido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="birthdayDate">Fecha de nacimiento</label>
-                        <!--<input type="date" pInputText formControlName="birthdayDate" name="birthdayDate"
-                            class="w-full" />-->
                         <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
                             inputId="buttondisplay" id="birthdayDate" name="birthdayDate" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.birthdayDate.invalid && (addPatientForm.controls.birthdayDate.dirty || 
+                            addPatientForm.controls.birthdayDate.touched)" class="block p-error">
+                            <div *ngIf="addPatientForm.controls.birthdayDate.errors?.['required']">
+                                Fecha de nacimiento es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="gender">Género</label>
@@ -39,15 +61,39 @@
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="dni">DNI</label>
                         <input type="text" pInputText formControlName="dni" id="dni" name="dni" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.dni.invalid && (addPatientForm.controls.dni.dirty || 
+                            addPatientForm.controls.dni.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.dni.errors?.['required']">
+                                DNI es requerido
+                            </div>
+                            <div *ngIf="addPatientForm.controls.dni.errors?.['pattern']">
+                                Ingrese un DNI válido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="phoneNumber">Celular</label>
                         <p-inputMask mask="999999999" formControlName="phoneNumber" id="phoneNumber" name="phoneNumber"
                             placeholder="999999999" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.phoneNumber.invalid && (addPatientForm.controls.phoneNumber.dirty || 
+                            addPatientForm.controls.phoneNumber.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.phoneNumber.errors?.['required']">
+                                Número de celular es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="email">Correo</label>
                         <input type="email" pInputText formControlName="email" id="email" name="email" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.email.invalid && (addPatientForm.controls.email.dirty || 
+                            addPatientForm.controls.email.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.email.errors?.['required']">
+                                Correo es requerido
+                            </div>
+                            <div *ngIf="addPatientForm.controls.email.errors?.['email']">
+                                Ingrese un correo válido
+                            </div>
+                        </small>
                     </div>
                 </div>
 
@@ -68,27 +114,59 @@
                         <label for="height">Altura (cm)</label>
                         <input type="number" pInputText formControlName="height" id="height" name="height"
                             class="w-full" />
+                        <small *ngIf="addPatientForm.controls.height.invalid && (addPatientForm.controls.height.dirty || 
+                            addPatientForm.controls.height.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.height.errors?.['required']">
+                                Altura es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="weight">Peso (kg)</label>
                         <input type="number" pInputText formControlName="weight" id="weight" name="weight"
                             class="w-full" />
+                        <small *ngIf="addPatientForm.controls.weight.invalid && (addPatientForm.controls.weight.dirty || 
+                            addPatientForm.controls.weight.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.weight.errors?.['required']">
+                                Peso es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="bloodgroup">Grupo sanguíneo</label>
                         <input type="text" pInputText formControlName="bloodGroup" id="bloodGroup" name="bloodGroup"
                             class="w-full" />
+                        <small *ngIf="addPatientForm.controls.bloodGroup.invalid && (addPatientForm.controls.bloodGroup.dirty ||
+                            addPatientForm.controls.bloodGroup.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.bloodGroup.errors?.['required']">
+                                Grupo sanguíneo es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="allergies">Alergias</label>
                         <input type="text" pInputText formControlName="allergies" id="allergies" name="allergies"
                             class="w-full" />
-                        <!--<p-chips formControlName="allergies" class="w-full"/>-->
+                        <small *ngIf="addPatientForm.controls.allergies.invalid && (addPatientForm.controls.allergies.dirty ||
+                            addPatientForm.controls.allergies.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.allergies.errors?.['required']">
+                                Alergias es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="currentMedications">Medicación actual</label>
                         <input type="text" pInputText formControlName="currentMedications" id="currentMedications"
                             name="currentMedications" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.currentMedications.invalid && (addPatientForm.controls.currentMedications.dirty ||
+                            addPatientForm.controls.currentMedications.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.currentMedications.errors?.['required']">
+                                Medicación actual es requerido
+                            </div>
+                        </small>
                     </div>
 
                     <h2>Información sobre el Seguro Médico</h2>
@@ -96,11 +174,25 @@
                         <label for="insuranceNumber">Número del seguro</label>
                         <input type="text" pInputText formControlName="insuranceNumber" id="insuranceNumber"
                             name="insuranceNumber" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.insuranceNumber.invalid && (addPatientForm.controls.insuranceNumber.dirty ||
+                            addPatientForm.controls.insuranceNumber.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.insuranceNumber.errors?.['required']">
+                                Número del seguro es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="policy">Poliza de seguro</label>
                         <input type="text" pInputText formControlName="policy" id="policy" name="policy"
                             class="w-full" />
+                        <small *ngIf="addPatientForm.controls.policy.invalid && (addPatientForm.controls.policy.dirty ||
+                            addPatientForm.controls.policy.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.policy.errors?.['required']">
+                                Poliza de seguro es requerido
+                            </div>
+                        </small>
                     </div>
                 </div>
 
@@ -121,19 +213,37 @@
                         <label for="previousIllnesses">Enfermedades previas</label>
                         <input type="text" pInputText formControlName="previousIllnesses" id="previousIllnesses"
                             name="previousIllnesses" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.previousIllnesses.invalid && (addPatientForm.controls.previousIllnesses.dirty ||
+                            addPatientForm.controls.previousIllnesses.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.previousIllnesses.errors?.['required']">
+                                Enfermedades previas es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="previousSurgeries">Cirugías previas</label>
                         <input type="text" pInputText formControlName="previousSurgeries" id="previousSurgeries"
                             name="previousSurgeries" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.previousSurgeries.invalid && (addPatientForm.controls.previousSurgeries.dirty ||
+                            addPatientForm.controls.previousSurgeries.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.previousSurgeries.errors?.['required']">
+                                Cirugías previas es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="currentConditions">Condiciones actuales</label>
-                        <!--<textarea rows="5" cols="40" pInputTextarea formControlName="currentConditions"
-                            name="currentConditions" [autoResize]="true">
-                        </textarea>-->
                         <p-chips formControlName="currentConditions" id="currentConditions" name="currentConditions"
                             class="w-full" />
+                        <small *ngIf="addPatientForm.controls.currentConditions.invalid && (addPatientForm.controls.currentConditions.dirty ||
+                            addPatientForm.controls.currentConditions.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.currentConditions.errors?.['required']">
+                                Condiciones actuales es requerido
+                            </div>
+                        </small>
                     </div>
 
                     <h2>Contacto de Emergencia</h2>
@@ -141,11 +251,24 @@
                         <label for="emergencyContact">Nombre completo</label>
                         <input type="text" pInputText formControlName="emergencyContact" id="emergencyContact"
                             name="emergencyContact" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.emergencyContact.invalid && (addPatientForm.controls.emergencyContact.dirty ||
+                            addPatientForm.controls.emergencyContact.touched)"
+                            class="block p-error">
+                            <div *ngIf="addPatientForm.controls.emergencyContact.errors?.['required']">
+                                Nombre de contacto es requerido
+                            </div>
+                        </small>
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="emergencyPhoneNumber">Celular</label>
                         <p-inputMask mask="999999999" formControlName="emergencyPhoneNumber" placeholder="999999999"
                             id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="w-full" />
+                        <small *ngIf="addPatientForm.controls.emergencyPhoneNumber.invalid && (addPatientForm.controls.emergencyPhoneNumber.dirty || 
+                            addPatientForm.controls.emergencyPhoneNumber.touched)" class="block p-error" >
+                            <div *ngIf="addPatientForm.controls.emergencyPhoneNumber.errors?.['required']">
+                                Número de celular de contacto es requerido
+                            </div>
+                        </small>
                     </div>
 
                     <div class="flex flex-wrap justify-content-center align-items-center">

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../services/patient.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -64,7 +64,7 @@ interface Genre {
     CalendarModule,
     ChipsModule,
     DropdownModule,
-    ListboxModule,    
+    ListboxModule,
     FileUploadModule
   ],
   templateUrl: './patient-profile.component.html',
@@ -79,36 +79,35 @@ export class PatientProfileComponent implements OnInit {
   results: Result[] = [];
   filteredResults: Result[] = [];
   profilePictureUrl: SafeUrl | string = '';
-  //profilePictureUri: string = '';
   profilePictureFile: File | null = null;
 
   constructor(private route: ActivatedRoute, private patientService: PatientService, private formService: FormService, private sanitizer: DomSanitizer, private router: Router) {
     this.patientFormGroup = new FormGroup({
-      firstName: new FormControl({ value: '', disabled: true }),
-      lastName: new FormControl({ value: '', disabled: true }),
-      birthdayDate: new FormControl({ value: new Date(), disabled: true }),
-      gender: new FormControl({ value: '', disabled: true }),
-      phoneNumber: new FormControl({ value: '', disabled: true }),
-      dni: new FormControl({ value: '', disabled: true }),
-      email: new FormControl({ value: '', disabled: true }),
-      height: new FormControl({ value: 0, disabled: true }),
-      weight: new FormControl({ value: 0, disabled: true }),
-      bloodGroup: new FormControl({ value: '', disabled: true }),
-      insuranceNumber: new FormControl({ value: '', disabled: true }),
-      policy: new FormControl({ value: '', disabled: true }),
-      emergencyContact: new FormControl({ value: '', disabled: true }),
-      emergencyPhoneNumber: new FormControl({ value: '', disabled: true }),
-      allergies: new FormControl({ value: '', disabled: true }),
-      currentMedications: new FormControl({ value: '', disabled: true }),
-      previousIllnesses: new FormControl({ value: '', disabled: true }),
-      previousSurgeries: new FormControl({ value: '', disabled: true }),
-      currentConditions: new FormControl({ value: [], disabled: true })
+      firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+      lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+      birthdayDate: new FormControl({ value: new Date(), disabled: true }, Validators.required),
+      gender: new FormControl({ value: '', disabled: true }, Validators.required),
+      phoneNumber: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{9}$/)]),
+      dni: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
+      email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
+      height: new FormControl({ value: 0, disabled: true }, Validators.required),
+      weight: new FormControl({ value: 0, disabled: true }, Validators.required),
+      bloodGroup: new FormControl({ value: '', disabled: true }, Validators.required),
+      insuranceNumber: new FormControl({ value: '', disabled: true }, Validators.required),
+      policy: new FormControl({ value: '', disabled: true }, Validators.required),
+      emergencyContact: new FormControl({ value: '', disabled: true }, Validators.required),
+      emergencyPhoneNumber: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{9}$/)]),
+      allergies: new FormControl({ value: '', disabled: true }, Validators.required),
+      currentMedications: new FormControl({ value: '', disabled: true }, Validators.required),
+      previousIllnesses: new FormControl({ value: '', disabled: true }, Validators.required),
+      previousSurgeries: new FormControl({ value: '', disabled: true }, Validators.required),
+      currentConditions: new FormControl({ value: [], disabled: true }, Validators.required)
     });
   }
 
   ngOnInit(): void {
     this.patientId = this.route.snapshot.paramMap.get('id');
-    localStorage.setItem('selectedPatientId', this.patientId.toString());    
+    localStorage.setItem('selectedPatientId', this.patientId.toString());
     console.log("Id del paciente", this.patientId);
 
     this.genders = [
@@ -168,7 +167,7 @@ export class PatientProfileComponent implements OnInit {
     }
   }
 
-  getResultsByPatient(patientId: any){
+  getResultsByPatient(patientId: any) {
     this.patientService.getResultsByPatientId(patientId).subscribe((response: any) => {
       if (response) {
         console.log("response", response);
@@ -238,16 +237,16 @@ export class PatientProfileComponent implements OnInit {
   }
 
 
-  goToCADPrediction(){
+  goToCADPrediction() {
     this.router.navigateByUrl('/form');
   }
 
   async onSelectResult(event: any): Promise<void> {
     const selectedItem = event.value;  // Obteniendo el elemento seleccionado
     const selectedId = selectedItem.id;  // Aquí puedes usar la propiedad 'id' o cualquier propiedad del objeto
-  
+
     console.log("new calculated risk", selectedId);
-  
+
     try {
       // Primera solicitud asíncrona
       const formResponse = await firstValueFrom(this.formService.getByCalculatedRiskId(selectedId));
@@ -262,7 +261,7 @@ export class PatientProfileComponent implements OnInit {
         hb: formResponse.hb
       };
       localStorage.setItem('formData', JSON.stringify(formData));
-  
+
       // Segunda solicitud asíncrona
       const riskResponse = await firstValueFrom(this.patientService.getCalculatedRiskById(selectedId));
       const calculatedRiskData = {
@@ -273,12 +272,12 @@ export class PatientProfileComponent implements OnInit {
         formId: riskResponse.formId
       };
       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskData));
-  
+
       // Redirección una vez que ambas solicitudes hayan finalizado
       this.router.navigateByUrl('/patient-report-result');
     } catch (error) {
       console.error('Error loading data', error);
     }
   }
-  
+
 }
