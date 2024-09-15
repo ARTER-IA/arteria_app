@@ -75,20 +75,20 @@ export class DoctorComponent implements OnInit {
   profilePictureFile: File | null = null;
 
   newDoctor = new FormGroup({
-    username: new FormControl({ value: '', disabled: true }, Validators.required),
-    firstName: new FormControl({ value: '', disabled: true }, Validators.required),
-    lastName: new FormControl({ value: '', disabled: true }, Validators.required),
-    dni: new FormControl({ value: '', disabled: true }, Validators.required),
+    username: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    dni: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
     birthDate: new FormControl({ value: '', disabled: true }, Validators.required),
-    gender: new FormControl({ value: '', disabled: true }, Validators.required),
+    gender: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     country: new FormControl({ value: '', disabled: true }, Validators.required),
     department: new FormControl({ value: '', disabled: true }, Validators.required),
     address: new FormControl({ value: '', disabled: true }, Validators.required),
-    cmpNumber: new FormControl({ value: '', disabled: true }, Validators.required),
-    phone: new FormControl({ value: '', disabled: true }, Validators.required),
+    cmpNumber: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(8)]),
+    phone: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{9}$/)]),
     workplace: new FormControl({ value: '', disabled: true }, Validators.required),
     about: new FormControl({ value: '', disabled: true }, Validators.required),
-    email: new FormControl({ value: '', disabled: true }, Validators.required),
+    email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
   });
 
   constructor(
@@ -232,7 +232,7 @@ export class DoctorComponent implements OnInit {
     if (this.isEditing) {
       this.newDoctor.enable();
     } else {
-      this.onSubmit(); 
+      this.onSubmit();
       this.newDoctor.disable();
     }
   }
@@ -246,7 +246,7 @@ export class DoctorComponent implements OnInit {
         setTimeout(() => {
           this.doctorService.delete(this.doctorId).subscribe(
             (response: any) => {
-              this.router.navigateByUrl('/login'); 
+              this.router.navigateByUrl('/login');
             },
             (error: any) => {
               console.error("Error al eliminar la cuenta", error);

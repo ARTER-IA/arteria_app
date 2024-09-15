@@ -3,47 +3,95 @@
     <div class="card-column-1">
       <p-card header="Información Personal" [style]="{ width: '100%' }">
         <ng-template pTemplate="content">
-          <!-- Contenido de la tarjeta 1 -->
-          <!--<div class="flex flex-wrap justify-content-center text-center">
-            <p-image
-              src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
-              alt="Image"
-              width="250"
-            />
-          </div>-->
           <div class="flex flex-wrap justify-content-center text-center mb-2">
-            <p-image *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture" width="250"></p-image>
+            <p-image
+              *ngIf="profilePictureUrl"
+              [src]="profilePictureUrl"
+              alt="Profile Picture"
+              width="250"
+            ></p-image>
           </div>
-          <div *ngIf="isEditing || !profilePictureUrl" class="flex flex-wrap justify-content-center text-center mt-3">
-            <p-fileUpload mode="basic" chooseLabel="Browse" [auto]="true" name="pictureProfileUri" customUpload="true"
-              (uploadHandler)="onUpload($event)" accept="image/jpeg" maxFileSize="1000000" />
+          <div
+            *ngIf="isEditing || !profilePictureUrl"
+            class="flex flex-wrap justify-content-center text-center mt-3"
+          >
+            <p-fileUpload
+              mode="basic"
+              chooseLabel="Browse"
+              [auto]="true"
+              name="pictureProfileUri"
+              customUpload="true"
+              (uploadHandler)="onUpload($event)"
+              accept="image/jpeg"
+              maxFileSize="1000000"
+            />
           </div>
           <br />
           <div class="input-group">
             <label for="username">Nombre de usuario</label>
-            <input type="text" pInputText formControlName="username" id="username" name="username" class="w-full" />
+            <input
+              type="text"
+              pInputText
+              formControlName="username"
+              id="username"
+              name="username"
+              class="w-full"
+            />
+            <small
+              *ngIf="
+                newDoctor.controls.username.invalid &&
+                (newDoctor.controls.username.dirty ||
+                  newDoctor.controls.username.touched)
+              "
+              class="block p-error"
+            >
+              <div *ngIf="newDoctor.controls.username.errors?.['required']">
+                Username es requerido
+              </div>
+              <div *ngIf="newDoctor.controls.username.errors?.['pattern']">
+                Ingresa un username válido
+              </div>
+            </small>
           </div>
         </ng-template>
       </p-card>
       <div class="text-center">
         <p-toast />
-        <p-confirmDialog #cd [style]="{  color: '#2a2d77'}"> >
+        <p-confirmDialog #cd [style]="{ color: '#2a2d77' }">
+          >
           <ng-template pTemplate="headless" let-message>
-            <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <div
+              class="flex flex-column align-items-center p-5 surface-overlay border-round"
+            >
               <span class="font-bold text-2xl block mb-2 mt-4">
                 {{ message.header }}
               </span>
               <p class="mb-0">{{ message.message }}</p>
               <div class="flex align-items-center gap-2 mt-4">
-                <p-button label="Estoy seguro" icon="pi pi-check" (click)="cd.accept()" class="w-12rem">
+                <p-button
+                  label="Estoy seguro"
+                  icon="pi pi-check"
+                  (click)="cd.accept()"
+                  class="w-12rem"
+                >
                 </p-button>
-                <p-button label="Cancelar" icon="pi pi-times" (click)="cd.reject()" class="w-12rem">
+                <p-button
+                  label="Cancelar"
+                  icon="pi pi-times"
+                  (click)="cd.reject()"
+                  class="w-12rem"
+                >
                 </p-button>
               </div>
             </div>
           </ng-template>
         </p-confirmDialog>
-        <p-button type="button" label="Eliminar Cuenta" icon="pi pi-trash" (click)="deleteAccount($event)"></p-button>
+        <p-button
+          type="button"
+          label="Eliminar Cuenta"
+          icon="pi pi-trash"
+          (click)="deleteAccount($event)"
+        ></p-button>
       </div>
     </div>
     <div class="card-column-2-3">
@@ -53,13 +101,56 @@
             <div class="w-full flex flex-wrap gap-3">
               <div class="input-group">
                 <label for="firstName">Nombre</label>
-                <input type="text" pInputText formControlName="firstName" id="firstName" name="firstName"
-                  class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="firstName"
+                  id="firstName"
+                  name="firstName"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.firstName.invalid &&
+                    (newDoctor.controls.firstName.dirty ||
+                      newDoctor.controls.firstName.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div
+                    *ngIf="newDoctor.controls.firstName.errors?.['required']"
+                  >
+                    Nombre es requerido
+                  </div>
+                  <div *ngIf="newDoctor.controls.firstName.errors?.['pattern']">
+                    Ingresa un nombre válido
+                  </div>
+                </small>
               </div>
               <div class="input-group">
                 <label for="birthDate">Fecha de nacimiento</label>
-                <input type="text" pInputText formControlName="birthDate" id="birthDate" name="birthDate"
-                  class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="birthDate"
+                  id="birthDate"
+                  name="birthDate"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.birthDate.invalid &&
+                    (newDoctor.controls.birthDate.dirty ||
+                      newDoctor.controls.birthDate.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div
+                    *ngIf="newDoctor.controls.birthDate.errors?.['required']"
+                  >
+                    Fecha de nacimiento es requerido
+                  </div>
+                </small>
               </div>
             </div>
 
@@ -68,11 +159,55 @@
             <div class="w-full flex flex-wrap gap-3">
               <div class="input-group">
                 <label for="lastName">Apellido</label>
-                <input type="text" pInputText formControlName="lastName" id="lastName" name="lastName" class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="lastName"
+                  id="lastName"
+                  name="lastName"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.lastName.invalid &&
+                    (newDoctor.controls.lastName.dirty ||
+                      newDoctor.controls.lastName.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div *ngIf="newDoctor.controls.lastName.errors?.['required']">
+                    Apellido es requerido
+                  </div>
+                  <div *ngIf="newDoctor.controls.lastName.errors?.['pattern']">
+                    Ingresa un apellido válido
+                  </div>
+                </small>
               </div>
               <div class="input-group">
                 <label for="gender">Género</label>
-                <input type="text" pInputText formControlName="gender" id="gender" name="gender" class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="gender"
+                  id="gender"
+                  name="gender"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.gender.invalid &&
+                    (newDoctor.controls.gender.dirty ||
+                      newDoctor.controls.gender.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div *ngIf="newDoctor.controls.gender.errors?.['required']">
+                    Género es requerido
+                  </div>
+                  <div *ngIf="newDoctor.controls.gender.errors?.['pattern']">
+                    Ingresa un género válido
+                  </div>
+                </small>
               </div>
             </div>
 
@@ -81,11 +216,55 @@
             <div class="w-full flex flex-wrap gap-3">
               <div class="input-group">
                 <label for="email">Correo</label>
-                <input type="text" pInputText formControlName="email" id="email" name="email" class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="email"
+                  id="email"
+                  name="email"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.email.invalid &&
+                    (newDoctor.controls.email.dirty ||
+                      newDoctor.controls.email.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div *ngIf="newDoctor.controls.email.errors?.['required']">
+                    Correo es requerido
+                  </div>
+                  <div *ngIf="newDoctor.controls.email.errors?.['email']">
+                    Ingrese un correo válido
+                  </div>
+                </small>
               </div>
               <div class="input-group">
                 <label for="phone">Celular</label>
-                <input type="text" pInputText formControlName="phone" id="phone" name="phone" class="w-full" />
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="phone"
+                  id="phone"
+                  name="phone"
+                  class="w-full"
+                />
+                <small
+                  *ngIf="
+                    newDoctor.controls.phone.invalid &&
+                    (newDoctor.controls.phone.dirty ||
+                      newDoctor.controls.phone.touched)
+                  "
+                  class="block p-error"
+                >
+                  <div *ngIf="newDoctor.controls.phone.errors?.['required']">
+                    Celular es requerido
+                  </div>
+                  <div *ngIf="newDoctor.controls.phone.errors?.['pattern']">
+                    Ingrese un celular válido
+                  </div>
+                </small>
               </div>
             </div>
           </div>
@@ -98,17 +277,79 @@
               <div class="w-full flex flex-wrap gap-3">
                 <div class="input-group md:w-12">
                   <label for="about">Acerca de</label>
-                  <textarea type="text" rows="5" cols="30" pInputTextarea formControlName="about" id="about"
-                    name="about" class="w-full">
+                  <textarea
+                    type="text"
+                    rows="5"
+                    cols="30"
+                    pInputTextarea
+                    formControlName="about"
+                    id="about"
+                    name="about"
+                    class="w-full"
+                  >
                   </textarea>
+                  <small
+                    *ngIf="
+                      newDoctor.controls.about.invalid &&
+                      (newDoctor.controls.about.dirty ||
+                        newDoctor.controls.about.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div *ngIf="newDoctor.controls.about.errors?.['required']">
+                      Acerca de es requerido
+                    </div>
+                  </small>
                 </div>
                 <div class="input-group md:w-12">
                   <label for="country">País</label>
-                  <input type="text" pInputText formControlName="country" id="country" name="country" class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="country"
+                    id="country"
+                    name="country"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.country.invalid &&
+                      (newDoctor.controls.country.dirty ||
+                        newDoctor.controls.country.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div
+                      *ngIf="newDoctor.controls.country.errors?.['required']"
+                    >
+                      País es requerido
+                    </div>
+                  </small>
                 </div>
                 <div class="input-group md:w-12">
                   <label for="address">Dirección</label>
-                  <input type="text" pInputText formControlName="address" id="address" name="address" class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="address"
+                    id="address"
+                    name="address"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.address.invalid &&
+                      (newDoctor.controls.address.dirty ||
+                        newDoctor.controls.address.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div
+                      *ngIf="newDoctor.controls.address.errors?.['required']"
+                    >
+                      Dirección es requerido
+                    </div>
+                  </small>
                 </div>
               </div>
             </div>
@@ -120,22 +361,114 @@
               <div class="w-full flex flex-wrap gap-3">
                 <div class="input-group md:w-12">
                   <label for="cmpNumber">CMP</label>
-                  <input type="text" pInputText formControlName="cmpNumber" id="cmpNumber" name="cmpNumber"
-                    class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="cmpNumber"
+                    id="cmpNumber"
+                    name="cmpNumber"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.cmpNumber.invalid &&
+                      (newDoctor.controls.cmpNumber.dirty ||
+                        newDoctor.controls.cmpNumber.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div
+                      *ngIf="newDoctor.controls.cmpNumber.errors?.['required']"
+                    >
+                      CMP es requerido
+                    </div>
+                    <div
+                      *ngIf="newDoctor.controls.cmpNumber.errors?.['pattern']"
+                    >
+                      Ingrese un CMP válido
+                    </div>
+                    <div
+                      *ngIf="newDoctor.controls.cmpNumber.errors?.['maxlength']"
+                    >
+                      Ingrese un CMP menor o igual a 8 dígitos
+                    </div>
+                  </small>
                 </div>
                 <div class="input-group md:w-12">
                   <label for="dni">DNI</label>
-                  <input type="text" pInputText formControlName="dni" id="dni" name="dni" class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="dni"
+                    id="dni"
+                    name="dni"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.dni.invalid &&
+                      (newDoctor.controls.dni.dirty ||
+                        newDoctor.controls.dni.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div *ngIf="newDoctor.controls.dni.errors?.['required']">
+                      DNI es requerido
+                    </div>
+                    <div *ngIf="newDoctor.controls.dni.errors?.['pattern']">
+                      Ingrese un DNI válido
+                    </div>
+                  </small>
                 </div>
                 <div class="input-group md:w-12">
                   <label for="department">Departamento</label>
-                  <input type="text" pInputText formControlName="department" id="department" name="department"
-                    class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="department"
+                    id="department"
+                    name="department"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.department.invalid &&
+                      (newDoctor.controls.department.dirty ||
+                        newDoctor.controls.department.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div
+                      *ngIf="newDoctor.controls.department.errors?.['required']"
+                    >
+                      Departamento es requerido
+                    </div>
+                  </small>
                 </div>
                 <div class="input-group md:w-12">
                   <label for="workplace">Lugar de trabajo</label>
-                  <input type="text" pInputText formControlName="workplace" id="workplace" name="workplace"
-                    class="w-full" />
+                  <input
+                    type="text"
+                    pInputText
+                    formControlName="workplace"
+                    id="workplace"
+                    name="workplace"
+                    class="w-full"
+                  />
+                  <small
+                    *ngIf="
+                      newDoctor.controls.workplace.invalid &&
+                      (newDoctor.controls.workplace.dirty ||
+                        newDoctor.controls.workplace.touched)
+                    "
+                    class="block p-error"
+                  >
+                    <div
+                      *ngIf="newDoctor.controls.workplace.errors?.['required']"
+                    >
+                      Lugar de trabajo es requerido
+                    </div>
+                  </small>
                 </div>
               </div>
             </div>
@@ -146,7 +479,11 @@
     </div>
   </div>
   <div class="flex justify-content-center">
-    <p-button type="button" label="{{ isEditing ? 'Guardar' : 'Editar' }}"
-      icon="{{ isEditing ? 'pi pi-save' : 'pi pi-pencil' }}" (click)="toggleEdit()"></p-button>
+    <p-button
+      type="button"
+      label="{{ isEditing ? 'Guardar' : 'Editar' }}"
+      icon="{{ isEditing ? 'pi pi-save' : 'pi pi-pencil' }}"
+      (click)="toggleEdit()"
+    ></p-button>
   </div>
 </form>
