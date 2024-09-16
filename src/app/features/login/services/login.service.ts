@@ -35,6 +35,7 @@ export class LoginService {
       severity: 'error',
       summary: 'Error',
       detail: 'Credenciales inválidas.',
+      life: 3000
     });
   }
 
@@ -43,6 +44,7 @@ export class LoginService {
       severity: 'error',
       summary: 'Error',
       detail: error,
+      life: 3000
     });
   }
 }

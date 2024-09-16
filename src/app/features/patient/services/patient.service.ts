@@ -67,6 +67,7 @@ export class PatientService {
       severity: 'success',
       summary: 'Listo',
       detail: 'El paciente ha sido creado correctamente.',
+      life: 3000
     });
   }
   
@@ -74,7 +75,8 @@ export class PatientService {
     this.message.addMessage({
       severity: 'error',
       summary: 'Error',
-      detail: error
+      detail: error,
+      life: 3000
     });
   }
 
@@ -83,6 +85,7 @@ export class PatientService {
       severity: 'success',
       summary: 'Listo',
       detail: 'Los cambios han sido guardados correctamente.',
+      life: 3000
     });
   }
 
@@ -91,6 +94,7 @@ export class PatientService {
       severity: 'error',
       summary: 'Error',
       detail: error,
+      life: 3000
     });
   }
 }

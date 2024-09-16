@@ -28,6 +28,7 @@ export class RegisterService {
       severity: 'success',
       summary: 'Listo',
       detail: 'Registro exitoso.',
+      life: 3000
     });
   }
 
@@ -36,6 +37,7 @@ export class RegisterService {
       severity: 'error',
       summary: 'Error',
       detail: error,
+      life: 3000
     });
   }
 }

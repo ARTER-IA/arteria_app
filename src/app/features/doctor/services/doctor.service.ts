@@ -83,6 +83,7 @@ export class DoctorService {
       severity: 'success',
       summary: 'Listo',
       detail: 'Su cuenta ha sido eliminada correctamente.',
+      life: 3000
     });
   }
 
@@ -91,6 +92,7 @@ export class DoctorService {
       severity: 'error',
       summary: 'Error',
       detail: error,
+      life: 3000
     });
   }
 
@@ -99,6 +101,7 @@ export class DoctorService {
       severity: 'warn',
       summary: 'Cancelado',
       detail: 'La eliminación de su cuenta ha sido cancelada.',
+      life: 3000
     });
   }
 
@@ -107,6 +110,7 @@ export class DoctorService {
       severity: 'success',
       summary: 'Listo',
       detail: 'Los cambios han sido guardados correctamente.',
+      life: 3000
     });
   }
 
@@ -115,6 +119,7 @@ export class DoctorService {
       severity: 'error',
       summary: 'Error',
       detail: error,
+      life: 3000
     });
   }
 }
