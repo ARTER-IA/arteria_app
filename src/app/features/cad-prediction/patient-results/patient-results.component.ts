@@ -227,13 +227,13 @@ export class PatientResultsComponent implements OnInit {
 
   convertHtmlToDocx(html: string): string {
     return html
-      .replace(/<\/?strong>/g, '**')  // Negrita
-      .replace(/<\/?b>/g, '**')        // Negrita (etiqueta <b>)
+      .replace(/<\/?strong>/g, '')  // Negrita
+      .replace(/<\/?b>/g, '')        // Negrita (etiqueta <b>)
       .replace(/<\/?em>/g, '_')        // Cursiva
       .replace(/<\/?i>/g, '_')         // Cursiva (etiqueta <i>)
-      .replace(/<\/?h1>/g, '# ')       // Encabezado 1
-      .replace(/<\/?h2>/g, '## ')      // Encabezado 2
-      .replace(/<\/?h3>/g, '### ')     // Encabezado 3
+      .replace(/<\/?h1>/g, ' ')       // Encabezado 1
+      .replace(/<\/?h2>/g, ' ')      // Encabezado 2
+      .replace(/<\/?h3>/g, ' ')     // Encabezado 3
       .replace(/<\/?br>/g, '\n')       // Saltos de línea
       .replace(/<\/?p>/g, '\n');       // Párrafo
   }
@@ -317,12 +317,24 @@ export class PatientResultsComponent implements OnInit {
         throw error;
       }
 
+      // Extraer el nombre y apellido para formar el nombre del archivo
+      let firstName = 'Paciente';
+      let lastName = 'Desconocido';
+      if (fullName) {
+        const nameParts = fullName.split(' ');
+        firstName = nameParts[0];
+        lastName = nameParts[1] ? nameParts[1] : '';
+      }
+
+      const fileName = `${firstName}_${lastName}_results.docx`;
+
       const out = doc.getZip().generate({
         type: 'blob',
         mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       });
 
-      saveAs(out, 'patient-results.docx');
+      saveAs(out, fileName);
+
     });
   }
 
