@@ -28,12 +28,10 @@ export class HomeComponent implements OnInit {
   doctor: any;
 
   constructor(private http: HttpClient, private homeService: HomeService, private router: Router) {
-
   }
 
-  ngOnInit(): void {
-    //this.getAllUsers();
-    this.loadDoctor();
+  ngOnInit() {
+    this.loadDoctor();    
   }
 
   loadDoctor() {
@@ -41,7 +39,6 @@ export class HomeComponent implements OnInit {
     if (doctorId) {
       this.homeService.getDoctorById(doctorId).subscribe(
         (res: any) => {
-          console.log('Doctor data:', res);
           this.doctor = res;
         },
         (error: any) => {
@@ -53,7 +50,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  goToAddNewPatient() {
+  goToAddNewPatient() {    
     this.router.navigateByUrl('/add-new-patient');    
   }
 
@@ -64,5 +61,4 @@ export class HomeComponent implements OnInit {
   goToPrediction() {
     this.router.navigateByUrl('/cad-prediction');
   }
-
 }

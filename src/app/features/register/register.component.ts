@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router ,RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
@@ -65,9 +65,9 @@ export class RegisterComponent implements OnInit {
     validators: passwordMatchValidator('password', 'confirmPassword')
   });
 
-  constructor(private registerService: RegisterService, private router:Router) { }
+  constructor(private registerService: RegisterService, private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit() {
     const toSubmit: doctor = {
@@ -88,13 +88,13 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.value.email ?? '',
       password: this.registerForm.value.password ?? ''
     }
-    this.registerService.register(toSubmit).subscribe((response:any) => {
-      console.log('Registration successful', response);
+    this.registerService.register(toSubmit).subscribe((response: any) => {
+      this.registerService.registerSuccessfulMessage();
       this.router.navigate(['/login']);
-    }, (error:any) => {
-      console.error('Registration failed', error);
+    }, (e: any) => {
+      this.registerService.registerFailedMessage(e.error);
     }).add(() => {
-    this.refresh();
+      this.refresh();
     });
 
   }

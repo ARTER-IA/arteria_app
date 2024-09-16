@@ -51,8 +51,8 @@ export class ListPatientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.genders = [
-      { name: 'Female', code: 'F' },
-      { name: 'Male', code: 'M' }
+      { name: 'Femenino', code: 'Female' },
+      { name: 'Masculino', code: 'Male' }
     ];
 
     this.searchForm.valueChanges.subscribe(values => {
@@ -92,7 +92,6 @@ export class ListPatientsComponent implements OnInit {
         Promise.all(patientPromises).then(patients => {
           this.patients = patients;
           this.filteredPatients = [...this.patients];
-          console.log("patients", this.patients);
         }).catch(error => {
           console.error("Failed to fetch latest results", error);
         });
@@ -118,7 +117,6 @@ export class ListPatientsComponent implements OnInit {
   }
 
   selectPatient(patient: Patient) {
-    console.log("Entra")
     this.router.navigate(['patient-profile', patient.id]);
     /*this.router.navigate(['patient-profile', patient.id], {
       state: { patient },

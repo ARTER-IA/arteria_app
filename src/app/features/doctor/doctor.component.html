@@ -12,19 +12,20 @@
             ></p-image>
           </div>
           <div
-            *ngIf="isEditing || !profilePictureUrl"
+            *ngIf="isEditing"
             class="flex flex-wrap justify-content-center text-center mt-3"
           >
-            <p-fileUpload
-              mode="basic"
-              chooseLabel="Browse"
-              [auto]="true"
-              name="pictureProfileUri"
-              customUpload="true"
-              (uploadHandler)="onUpload($event)"
-              accept="image/jpeg"
-              maxFileSize="1000000"
-            />
+          <p-fileUpload 
+            #fileInput 
+            mode="basic" 
+            chooseLabel="Browse" 
+            [auto]="true"
+            name="pictureProfileUri" 
+            customUpload="true" 
+            (uploadHandler)="onUpload($event, fileInput)"
+            accept="image/jpeg, image/jpg" 
+            maxFileSize="1000000" 
+          />
           </div>
           <br />
           <div class="input-group">
@@ -56,9 +57,7 @@
         </ng-template>
       </p-card>
       <div class="text-center">
-        <p-toast />
-        <p-confirmDialog #cd [style]="{ color: '#2a2d77' }">
-          >
+        <p-confirmDialog #cd [style]="{  color: '#2a2d77'}"> >
           <ng-template pTemplate="headless" let-message>
             <div
               class="flex flex-column align-items-center p-5 surface-overlay border-round"

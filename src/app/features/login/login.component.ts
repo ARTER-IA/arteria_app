@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginService } from './services/login.service';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
+import { EOF } from '@angular/compiler';
 
 
 @Component({
@@ -56,23 +57,19 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.value.password!
       };
 
-      console.log('Attempting to log in with', loginData);
-
       this.loginService.login(loginData).subscribe(
         (res: any) => {
-          console.log('API response:', res);
           if (res.roles) {
-            alert("Login successful");
+            this.loginService.loginSuccessfulMessage();
             localStorage.setItem('token', res.token);
             localStorage.setItem('id', res.id);
             this.router.navigateByUrl('/home');
           } else {
-            alert("Invalid credentials");
+            this.loginService.invalidCredentialsMessage();
           }
         },
-        (error: any) => {
-          console.error('API error:', error);
-          alert("Invalid credentials");
+        (e: any) => {
+          this.loginService.loginFailedMessage(e.error);
         }
       );
     }

@@ -67,7 +67,7 @@ export class ResultsReportComponent implements OnInit {
   newRecommendation: Recommendation | any;
   chartData: any;
   chartOptions: any;
-  loadingRecommendation: boolean = true; // Nueva variable
+  loadingRecommendation: boolean = true;
 
 
   constructor(private fb: FormBuilder, private predictionEACService: PredictionEacService, private patientService: PatientService, private sanitizer: DomSanitizer) {
@@ -125,7 +125,7 @@ export class ResultsReportComponent implements OnInit {
     this.chartOptions = {
       plugins: {
         legend: {
-          position: 'bottom', // Cambia 'bottom' a 'top', 'left', o 'right' según lo que necesites
+          position: 'bottom',
         }
       }
     };
@@ -133,8 +133,8 @@ export class ResultsReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.genders = [
-      { name: 'Femenino', code: 'F' },
-      { name: 'Masculino', code: 'M' }
+      { name: 'Femenino', code: 'Female' },
+      { name: 'Masculino', code: 'Male' }
     ];
 
     const formJson = localStorage.getItem('formData');
@@ -197,7 +197,6 @@ export class ResultsReportComponent implements OnInit {
         this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription });
         this.predictionReport.patchValue({ recommendation: sanitizedDescription });
 
-        // Desactivar el spinner una vez que los datos están listos
         this.loadingRecommendation = false;
         this.recommendationToUpdateId = response.id.toString();
       }
@@ -237,7 +236,6 @@ export class ResultsReportComponent implements OnInit {
   }
 
   saveRecommendation() {
-    //const updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value; 
     let updatedRecommendation = this.predictionReport.get('editableRecommendation')?.value;
 
     updatedRecommendation = updatedRecommendation
@@ -245,17 +243,14 @@ export class ResultsReportComponent implements OnInit {
       .replace(/<br\s*\/?><br\s*\/?>/g, '<br>')
       .trim();
 
-    console.log("updatedRec", updatedRecommendation);
-    //this.recommendation = updatedRecommendation;
     this.newRecommendation.description = updatedRecommendation.toString();
     this.predictionEACService.updateRecommendation(this.recommendationToUpdateId, this.newRecommendation).subscribe((response: any) => {
       if (response) {
-        //this.recommendation = response.description;
+        this.predictionEACService.updateRecommendationSuccessfulMessage();
         this.predictionReport.patchValue({ recommendation: response.description });
-        console.log("responseUpd", response);
       }
-    }, (error: any) => {
-      console.error("Get failed", error);
+    }, (e: any) => {
+      this.predictionEACService.updateRecommendationFailedMessage(e.error)
     })
     this.toggleEditMode();
   }

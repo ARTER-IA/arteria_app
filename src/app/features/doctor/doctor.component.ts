@@ -14,6 +14,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { NotificationService } from '../notification/notification.service';
 
 interface doctor {
   username: string;
@@ -95,8 +96,7 @@ export class DoctorComponent implements OnInit {
     private router: Router,
     private doctorService: DoctorService,
     private sanitizer: DomSanitizer,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.loadDoctorData();
@@ -182,34 +182,36 @@ export class DoctorComponent implements OnInit {
     const doctorId = localStorage.getItem('id'); // Recuperar el ID del localStorage
 
     if (doctorId) {
+      this.uploadProfilePicture(this.doctorId);
       this.doctorService.updateProfile(doctorId, doctorResource).subscribe(
-        response => {
-          console.log('Doctor updated successfully', response);
-          this.newDoctor.disable(); // Deshabilita el formulario después de guardar
-          this.isEditing = false; // Cambia el estado a no edición
+        (response: any) => {
+          if (response) {
+            this.doctorService.updateChangesSuccessMessage();
+            this.newDoctor.disable(); // Deshabilita el formulario después de guardar
+            this.isEditing = false; // Cambia el estado a no edición
+          }
         },
-        error => {
-          console.error('Error updating doctor', error);
+        (e: any) => {
+          this.doctorService.updateChangesErrorMessage(e.error);
         }
-      );
+      );      
     } else {
       console.error('Doctor ID not found.');
     }
   }
 
-  onUpload(event: any) {
+  onUpload(event: any, fileInput: any) {
     const file = event.files[0];
     this.profilePictureFile = file;
-    console.log("File selected", this.profilePictureFile);
-
-    // Create a URL for the selected image file
+    //console.log("File selected", this.profilePictureFile);
+  
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.profilePictureUrl = reader.result as string;
-    };
-
-    this.uploadProfilePicture(this.doctorId);
+    };    
+  
+    fileInput.clear(); 
   }
 
   uploadProfilePicture(doctorId: number) {
@@ -242,20 +244,18 @@ export class DoctorComponent implements OnInit {
       header: '¿Está seguro de eliminar su cuenta?',
       message: 'Esta acción no se puede deshacer. Por favor, confirme para proceder.',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'Ha aceptado eliminar su cuenta.', life: 3000 });
-        setTimeout(() => {
-          this.doctorService.delete(this.doctorId).subscribe(
-            (response: any) => {
-              this.router.navigateByUrl('/login');
-            },
-            (error: any) => {
-              console.error("Error al eliminar la cuenta", error);
-            }
-          );
-        }, 3000);
+        this.doctorService.delete(this.doctorId).subscribe(
+          (response: any) => {
+            this.doctorService.deleteSuccessMessage();
+            this.router.navigateByUrl('/login');
+          },
+          (e: any) => {
+            this.doctorService.deleteErrorMessage(e.error);
+          }
+        );
       },
       reject: () => {
-        this.messageService.add({ severity: 'warn', summary: 'Cancelado', detail: 'Ha cancelado la eliminación de su cuenta.', life: 3000 });
+        this.doctorService.cancelMessage();
       }
     });
   }

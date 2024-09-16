@@ -50,7 +50,7 @@
           </div>
           <div class="input-group">
             <label for="sex">Género</label>
-            <input
+            <!--<input
               type="text"
               pInputText
               formControlName="sex"
@@ -58,6 +58,15 @@
               name="sex"
               class="w-full"
               style="background-color: #f5f5f5"
+              readonly
+            />-->
+            <p-dropdown 
+              formControlName="sex" 
+              [options]="genders" 
+              optionLabel="name" 
+              id="sex"
+              name="sex" 
+              class="w-full"
               readonly
             />
           </div>

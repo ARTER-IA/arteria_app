@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { NotificationService } from '../../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class DoctorService {
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private message: NotificationService) { }
 
   getDoctorById(id: string): Observable<any> {
     const token = localStorage.getItem('token');
@@ -75,5 +76,45 @@ export class DoctorService {
         observer.error("Token not found. Please log in again.");
       });
     }
+  }
+
+  async deleteSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'Su cuenta ha sido eliminada correctamente.',
+    });
+  }
+
+  async deleteErrorMessage(error: any): Promise<void>{
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+    });
+  }
+
+  async cancelMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'warn',
+      summary: 'Cancelado',
+      detail: 'La eliminación de su cuenta ha sido cancelada.',
+    });
+  }
+
+  async updateChangesSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'Los cambios han sido guardados correctamente.',
+    });
+  }
+
+  async updateChangesErrorMessage(error: any): Promise<void> {
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+    });
   }
 }
