@@ -129,14 +129,12 @@
               </div>
               <div class="input-group">
                 <label for="birthDate">Fecha de nacimiento</label>
-                <input
-                  type="text"
-                  pInputText
-                  formControlName="birthDate"
-                  id="birthDate"
-                  name="birthDate"
+                <p-calendar
+                  [showIcon]="true"
                   class="w-full"
-                />
+                  formControlName="birthDate"
+                  [showOnFocus]="false"
+                ></p-calendar>
                 <small
                   *ngIf="
                     newDoctor.controls.birthDate.invalid &&
@@ -185,14 +183,15 @@
               </div>
               <div class="input-group">
                 <label for="gender">Género</label>
-                <input
-                  type="text"
-                  pInputText
+                <p-dropdown
                   formControlName="gender"
+                  [options]="consentOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Seleccione"
                   id="gender"
-                  name="gender"
                   class="w-full"
-                />
+                ></p-dropdown>
                 <small
                   *ngIf="
                     newDoctor.controls.gender.invalid &&
@@ -203,9 +202,6 @@
                 >
                   <div *ngIf="newDoctor.controls.gender.errors?.['required']">
                     Género es requerido
-                  </div>
-                  <div *ngIf="newDoctor.controls.gender.errors?.['pattern']">
-                    Ingresa un género válido
                   </div>
                 </small>
               </div>

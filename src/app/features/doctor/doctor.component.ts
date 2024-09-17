@@ -14,13 +14,15 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
 
 interface doctor {
   username: string;
   firstName: string;
   lastName: string;
   dni: string;
-  birthDate: string;
+  birthDate: Date;
   gender: string;
   country: string;
   department: string;
@@ -49,7 +51,9 @@ interface doctor {
     ImageModule,
     FileUploadModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    CalendarModule
   ],
   templateUrl: './doctor.component.html',
   styleUrl: './doctor.component.css',
@@ -73,14 +77,16 @@ export class DoctorComponent implements OnInit {
   doctorId: any;
   profilePictureUrl: SafeUrl | string = '';
   profilePictureFile: File | null = null;
+  consentOptions: any[];
+
 
   newDoctor = new FormGroup({
     username: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
     dni: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
-    birthDate: new FormControl({ value: '', disabled: true }, Validators.required),
-    gender: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    birthDate: new FormControl({ value: new Date(), disabled: true }, Validators.required),
+    gender: new FormControl({ value: null, disabled: true }, [Validators.required]),
     country: new FormControl({ value: '', disabled: true }, Validators.required),
     department: new FormControl({ value: '', disabled: true }, Validators.required),
     address: new FormControl({ value: '', disabled: true }, Validators.required),
@@ -96,7 +102,13 @@ export class DoctorComponent implements OnInit {
     private doctorService: DoctorService,
     private sanitizer: DomSanitizer,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService) {
+    this.consentOptions = [
+      { label: 'Masculino', value: 'Masculino' },
+      { label: 'Femenino', value: 'Femenino' }
+    ];
+  }
+
 
   ngOnInit(): void {
     this.loadDoctorData();
@@ -134,7 +146,7 @@ export class DoctorComponent implements OnInit {
       firstName: doctor.firstName,
       lastName: doctor.lastName,
       dni: doctor.dni,
-      birthDate: this.formatDate(doctor.birthDate),
+      birthDate: new Date(doctor.birthDate),
       email: doctor.email,
       gender: doctor.gender,
       phone: doctor.phone,
@@ -165,7 +177,7 @@ export class DoctorComponent implements OnInit {
       firstName: this.newDoctor.get('firstName')?.value ?? '',
       lastName: this.newDoctor.get('lastName')?.value ?? '',
       dni: this.newDoctor.get('dni')?.value ?? '',
-      birthDate: this.newDoctor.get('birthDate')?.value ?? '',
+      birthDate: this.newDoctor.get('birthDate')?.value ?? new Date(),
       gender: this.newDoctor.get('gender')?.value ?? '',
       country: this.newDoctor.get('country')?.value ?? '',
       department: this.newDoctor.get('department')?.value ?? '',
