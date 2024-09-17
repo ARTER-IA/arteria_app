@@ -68,7 +68,27 @@ interface Genre {
     FileUploadModule
   ],
   templateUrl: './patient-profile.component.html',
-  styleUrls: ['./patient-profile.component.css']
+  styleUrls: ['./patient-profile.component.css'],
+  styles: [
+    `
+            :host ::ng-deep .p-dropdown {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-calendar {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-inputmask {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-chips {
+              display: block;
+              width: 100%;
+            }
+        `
+  ]
 })
 export class PatientProfileComponent implements OnInit {
 
@@ -108,18 +128,15 @@ export class PatientProfileComponent implements OnInit {
   ngOnInit(): void {
     this.patientId = this.route.snapshot.paramMap.get('id');
     localStorage.setItem('selectedPatientId', this.patientId.toString());
-    console.log("Id del paciente", this.patientId);
 
     this.genders = [
-      { name: 'Female', code: 'F' },
-      { name: 'Male', code: 'M' }
+      { name: 'Femenino', code: 'Female' },
+      { name: 'Masculino', code: 'Male' }
     ];
 
     this.getPatient(this.patientId);
     this.getProfilePicture(this.patientId);
     this.getResultsByPatient(this.patientId);
-    // Filter results based on patientId
-    //this.filteredResults = this.results.filter(result => result.patientId === this.patientId);
   }
 
   getPatient(patientId: any) {
@@ -147,9 +164,6 @@ export class PatientProfileComponent implements OnInit {
           previousSurgeries: response.previousSurgeries,
           currentConditions: response.currentConditions
         });
-
-        //this.objectURL = 'data:image/jpeg;base64,' + response.profilePictureUri;
-        //console.log(this.objectURL);
       }
     }, (error: any) => {
       console.error("Get failed", error);
@@ -170,13 +184,11 @@ export class PatientProfileComponent implements OnInit {
   getResultsByPatient(patientId: any) {
     this.patientService.getResultsByPatientId(patientId).subscribe((response: any) => {
       if (response) {
-        console.log("response", response);
         this.results = response.map((item: any) => ({
           id: item.id,
           predictionProbability: (Number(item.prediction_probability) * 100).toFixed(2) + '%',
           createdAt: new Date(item.createdAt)
-        }))
-        console.log("results", this.results);
+        }));
       }
     }, error => {
       console.error("Get results by patient failed", error);
@@ -191,35 +203,36 @@ export class PatientProfileComponent implements OnInit {
   onSaveChanges() {
     if (this.patientFormGroup.valid) {
       const updatedPatient = this.patientFormGroup.value;
-      console.log("Saving changes", updatedPatient);
 
       // Call the service to save changes
       this.patientService.update(this.patientId, updatedPatient).subscribe(
         (response) => {
-          console.log("Update successful", response);
-          this.isEditing = false;
-          this.patientFormGroup.disable();
+          if (response) {
+            this.patientService.updateChangesSuccessMessage();
+            this.isEditing = false;
+            this.patientFormGroup.disable();
+          }
         },
-        (error) => {
-          console.error("Update failed", error);
+        (e) => {
+          this.patientService.updateChangesErrorMessage(e.error);
         }
       );
-
       this.uploadProfilePicture(this.patientId);
     }
   }
 
-  onUpload(event: any) {
+  onUpload(event: any, fileInput: any) {
     const file = event.files[0];
     this.profilePictureFile = file;
     console.log("File selected", this.profilePictureFile);
 
-    // Create a URL for the selected image file
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.profilePictureUrl = reader.result as string;
     };
+  
+    fileInput.clear(); 
   }
 
   uploadProfilePicture(patientId: number) {
@@ -227,7 +240,6 @@ export class PatientProfileComponent implements OnInit {
     formData.append('file', this.profilePictureFile!);
 
     this.patientService.uploadProfilePicture(patientId, formData).subscribe((response: any) => {
-      console.log("response", response);
       if (response.message === "File uploaded successfully") {
         console.log("Image uploaded successfully");
       }
@@ -242,13 +254,10 @@ export class PatientProfileComponent implements OnInit {
   }
 
   async onSelectResult(event: any): Promise<void> {
-    const selectedItem = event.value;  // Obteniendo el elemento seleccionado
-    const selectedId = selectedItem.id;  // Aquí puedes usar la propiedad 'id' o cualquier propiedad del objeto
-
-    console.log("new calculated risk", selectedId);
+    const selectedItem = event.value;
+    const selectedId = selectedItem.id;
 
     try {
-      // Primera solicitud asíncrona
       const formResponse = await firstValueFrom(this.formService.getByCalculatedRiskId(selectedId));
       const formData = {
         formId: formResponse.id,
@@ -262,7 +271,6 @@ export class PatientProfileComponent implements OnInit {
       };
       localStorage.setItem('formData', JSON.stringify(formData));
 
-      // Segunda solicitud asíncrona
       const riskResponse = await firstValueFrom(this.patientService.getCalculatedRiskById(selectedId));
       const calculatedRiskData = {
         id: riskResponse.id,
@@ -273,7 +281,6 @@ export class PatientProfileComponent implements OnInit {
       };
       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskData));
 
-      // Redirección una vez que ambas solicitudes hayan finalizado
       this.router.navigateByUrl('/patient-report-result');
     } catch (error) {
       console.error('Error loading data', error);

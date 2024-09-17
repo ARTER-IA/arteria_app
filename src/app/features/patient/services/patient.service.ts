@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
+import { NotificationService } from '../../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class PatientService {
     })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private message: NotificationService) { }
 
   create(data: any, doctorId: any) {
     return this.http.post(`${this.basePath}/patients/doctor/${doctorId}`, data, this.httpOptions);
@@ -59,5 +60,41 @@ export class PatientService {
 
   getLatestResult(patientId: string){
     return this.http.get(`${this.basePath}/patients/latestResult/${patientId}`, this.httpOptions);
+  }
+
+  async showSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'El paciente ha sido creado correctamente.',
+      life: 3000
+    });
+  }
+  
+  async showErrorMessage(error: any): Promise<void> {
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+      life: 3000
+    });
+  }
+
+  async updateChangesSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'Los cambios han sido guardados correctamente.',
+      life: 3000
+    });
+  }
+
+  async updateChangesErrorMessage(error: any): Promise<void> {
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+      life: 3000
+    });
   }
 }

@@ -3,6 +3,7 @@ import {RouterLink, RouterOutlet} from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './features/register/register.component';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { RegisterComponent } from './features/register/register.component';
     RegisterComponent,
     RouterOutlet,
     RouterLink,
-    HttpClientModule
+    HttpClientModule,
+    ToastModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

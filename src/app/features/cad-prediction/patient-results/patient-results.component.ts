@@ -132,8 +132,8 @@ export class PatientResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.genders = [
-      { name: 'Femenino', code: 'F' },
-      { name: 'Masculino', code: 'M' }
+      { name: 'Femenino', code: 'Female' },
+      { name: 'Masculino', code: 'Male' }
     ];
 
     const formJson = localStorage.getItem('formData');
@@ -177,8 +177,6 @@ export class PatientResultsComponent implements OnInit {
         //this.recommendation = this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
         this.predictionReport.patchValue({ editableRecommendation: sanitizedDescription });
         this.predictionReport.patchValue({ recommendation: sanitizedDescription });
-        console.log("form", this.predictionReport);
-        console.log("response", response);
         this.recommendationToUpdateId = response.id.toString();
       }
     }, (error: any) => {
