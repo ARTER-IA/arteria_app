@@ -59,11 +59,18 @@
 
 :host ::ng-deep .p-dropdown {
   box-sizing: border-box;
+  height: 38px;
   width: 100% !important;
 }
 
 :host ::ng-deep p-dropdown .p-dropdown-label {
   padding: 8px;
+}
+
+:host ::ng-deep .p-calendar {
+  width: 100% !important;
+  height: 38px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
