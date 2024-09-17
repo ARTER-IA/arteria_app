@@ -195,13 +195,12 @@ export class DoctorComponent implements OnInit {
     const doctorId = localStorage.getItem('id'); // Recuperar el ID del localStorage
 
     if (doctorId) {
-      this.uploadProfilePicture(this.doctorId);
       this.doctorService.updateProfile(doctorId, doctorResource).subscribe(
         (response: any) => {
           if (response) {
             this.doctorService.updateChangesSuccessMessage();
-            this.newDoctor.disable(); // Deshabilita el formulario después de guardar
-            this.isEditing = false; // Cambia el estado a no edición
+            this.newDoctor.disable(); 
+            this.isEditing = false; 
           }
         },
         (e: any) => {
@@ -224,6 +223,7 @@ export class DoctorComponent implements OnInit {
       this.profilePictureUrl = reader.result as string;
     };    
   
+    this.uploadProfilePicture(this.doctorId);
     fileInput.clear(); 
   }
 
@@ -234,9 +234,10 @@ export class DoctorComponent implements OnInit {
     this.doctorService.uploadProfilePicture(doctorId, formData).subscribe((response: any) => {
       console.log("response", response);
       if (response.message === "File uploaded successfully") {
-        console.log("Image uploaded successfully");
+        this.doctorService.uploadImageSuccessMessage();
       }
     }, (error: any) => {
+      this.doctorService.uploadImageErrorMessage();
       console.error("Image upload failed", error);
     });
   }

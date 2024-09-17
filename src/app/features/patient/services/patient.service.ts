@@ -97,4 +97,22 @@ export class PatientService {
       life: 3000
     });
   }
+
+  async uploadImageSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'La foto de perfil ha sido actualizada correctamente.',
+      life: 3000
+    });
+  }
+
+  async uploadImageErrorMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Ocurrió un error al subir la foto de perfil.',
+      life: 3000
+    });
+  }
 }

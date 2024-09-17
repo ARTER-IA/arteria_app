@@ -100,6 +100,9 @@ export class PatientProfileComponent implements OnInit {
   filteredResults: Result[] = [];
   profilePictureUrl: SafeUrl | string = '';
   profilePictureFile: File | null = null;
+  date: Date | undefined;
+  minDate: Date | undefined;
+  maxDate: Date | undefined;
 
   constructor(private route: ActivatedRoute, private patientService: PatientService, private formService: FormService, private sanitizer: DomSanitizer, private router: Router) {
     this.patientFormGroup = new FormGroup({
@@ -133,6 +136,12 @@ export class PatientProfileComponent implements OnInit {
       { name: 'Femenino', code: 'Female' },
       { name: 'Masculino', code: 'Male' }
     ];
+
+    const today = new Date();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(today.getFullYear() - 40);
+    this.minDate = new Date();
+    this.minDate.setFullYear(today.getFullYear() - 120);
 
     this.getPatient(this.patientId);
     this.getProfilePicture(this.patientId);
@@ -217,7 +226,6 @@ export class PatientProfileComponent implements OnInit {
           this.patientService.updateChangesErrorMessage(e.error);
         }
       );
-      this.uploadProfilePicture(this.patientId);
     }
   }
 
@@ -232,6 +240,7 @@ export class PatientProfileComponent implements OnInit {
       this.profilePictureUrl = reader.result as string;
     };
   
+    this.uploadProfilePicture(this.patientId);
     fileInput.clear(); 
   }
 
@@ -241,9 +250,10 @@ export class PatientProfileComponent implements OnInit {
 
     this.patientService.uploadProfilePicture(patientId, formData).subscribe((response: any) => {
       if (response.message === "File uploaded successfully") {
-        console.log("Image uploaded successfully");
+        this.patientService.uploadImageSuccessMessage();
       }
     }, (error: any) => {
+      this.patientService.uploadImageErrorMessage();
       console.error("Image upload failed", error);
     });
   }
