@@ -70,18 +70,6 @@ interface Genre {
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css',
-  styles: [
-    `
-            :host ::ng-deep .p-dropdown {
-                width: 100%;
-                height: 35px;
-            }
-
-            :host ::ng-deep .p-dropdown-label {
-                margin-top: -5px;
-            }
-    `
-  ]
 })
 
 export class FormComponent implements OnInit {
