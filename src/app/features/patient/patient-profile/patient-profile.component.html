@@ -9,7 +9,7 @@
                         <p-image *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Profile Picture"
                             width="250"></p-image>
                     </div>
-                    <div *ngIf="isEditing" class="flex flex-wrap justify-content-center text-center mt-3">
+                    <div class="flex flex-wrap justify-content-center text-center mt-3">
                         <p-fileUpload #fileInput mode="basic" chooseLabel="Browse" [auto]="true"
                             name="pictureProfileUri" customUpload="true" (uploadHandler)="onUpload($event, fileInput)"
                             accept="image/jpeg, image/jpg" maxFileSize="1000000" />
@@ -45,8 +45,9 @@
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="birthdayDate">Fecha de nacimiento</label>
-                        <p-calendar [showIcon]="true" class="w-full" formControlName="birthdayDate"
-                            [showOnFocus]="false"></p-calendar>
+                         <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
+                            inputId="buttondisplay" id="birthdayDate" name="birthdayDate" [minDate]="minDate"
+                            [maxDate]="maxDate" class="w-full" />
                         <small *ngIf="patientFormGroup.get('birthdayDate')?.invalid && (patientFormGroup.get('birthdayDate')?.dirty ||
                             patientFormGroup.get('birthdayDate')?.touched)" class="block p-error">
                             <div *ngIf="patientFormGroup.get('birthdayDate')?.errors?.['required']">
