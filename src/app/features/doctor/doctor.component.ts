@@ -14,13 +14,17 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { NotificationService } from '../notification/notification.service';
+
 
 interface doctor {
   username: string;
   firstName: string;
   lastName: string;
   dni: string;
-  birthDate: string;
+  birthDate: Date;
   gender: string;
   country: string;
   department: string;
@@ -49,7 +53,9 @@ interface doctor {
     ImageModule,
     FileUploadModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    CalendarModule
   ],
   templateUrl: './doctor.component.html',
   styleUrl: './doctor.component.css',
@@ -73,22 +79,24 @@ export class DoctorComponent implements OnInit {
   doctorId: any;
   profilePictureUrl: SafeUrl | string = '';
   profilePictureFile: File | null = null;
+  consentOptions: any[];
+
 
   newDoctor = new FormGroup({
-    username: new FormControl({ value: '', disabled: true }, Validators.required),
-    firstName: new FormControl({ value: '', disabled: true }, Validators.required),
-    lastName: new FormControl({ value: '', disabled: true }, Validators.required),
-    dni: new FormControl({ value: '', disabled: true }, Validators.required),
-    birthDate: new FormControl({ value: '', disabled: true }, Validators.required),
-    gender: new FormControl({ value: '', disabled: true }, Validators.required),
+    username: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    dni: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
+    birthDate: new FormControl({ value: new Date(), disabled: true }, Validators.required),
+    gender: new FormControl({ value: null, disabled: true }, [Validators.required]),
     country: new FormControl({ value: '', disabled: true }, Validators.required),
     department: new FormControl({ value: '', disabled: true }, Validators.required),
     address: new FormControl({ value: '', disabled: true }, Validators.required),
-    cmpNumber: new FormControl({ value: '', disabled: true }, Validators.required),
-    phone: new FormControl({ value: '', disabled: true }, Validators.required),
+    cmpNumber: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/), Validators.maxLength(8)]),
+    phone: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{9}$/)]),
     workplace: new FormControl({ value: '', disabled: true }, Validators.required),
     about: new FormControl({ value: '', disabled: true }, Validators.required),
-    email: new FormControl({ value: '', disabled: true }, Validators.required),
+    email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
   });
 
   constructor(
@@ -96,7 +104,12 @@ export class DoctorComponent implements OnInit {
     private doctorService: DoctorService,
     private sanitizer: DomSanitizer,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService) { }
+    private messageService: MessageService) {
+    this.consentOptions = [
+      { label: 'Masculino', value: 'Masculino' },
+      { label: 'Femenino', value: 'Femenino' }
+    ];
+  }
 
   ngOnInit(): void {
     this.loadDoctorData();
@@ -134,7 +147,7 @@ export class DoctorComponent implements OnInit {
       firstName: doctor.firstName,
       lastName: doctor.lastName,
       dni: doctor.dni,
-      birthDate: this.formatDate(doctor.birthDate),
+      birthDate: new Date(doctor.birthDate),
       email: doctor.email,
       gender: doctor.gender,
       phone: doctor.phone,
@@ -165,7 +178,7 @@ export class DoctorComponent implements OnInit {
       firstName: this.newDoctor.get('firstName')?.value ?? '',
       lastName: this.newDoctor.get('lastName')?.value ?? '',
       dni: this.newDoctor.get('dni')?.value ?? '',
-      birthDate: this.newDoctor.get('birthDate')?.value ?? '',
+      birthDate: this.newDoctor.get('birthDate')?.value ?? new Date(),
       gender: this.newDoctor.get('gender')?.value ?? '',
       country: this.newDoctor.get('country')?.value ?? '',
       department: this.newDoctor.get('department')?.value ?? '',
@@ -183,33 +196,35 @@ export class DoctorComponent implements OnInit {
 
     if (doctorId) {
       this.doctorService.updateProfile(doctorId, doctorResource).subscribe(
-        response => {
-          console.log('Doctor updated successfully', response);
-          this.newDoctor.disable(); // Deshabilita el formulario después de guardar
-          this.isEditing = false; // Cambia el estado a no edición
+        (response: any) => {
+          if (response) {
+            this.doctorService.updateChangesSuccessMessage();
+            this.newDoctor.disable(); 
+            this.isEditing = false; 
+          }
         },
-        error => {
-          console.error('Error updating doctor', error);
+        (e: any) => {
+          this.doctorService.updateChangesErrorMessage(e.error);
         }
-      );
+      );      
     } else {
       console.error('Doctor ID not found.');
     }
   }
 
-  onUpload(event: any) {
+  onUpload(event: any, fileInput: any) {
     const file = event.files[0];
     this.profilePictureFile = file;
-    console.log("File selected", this.profilePictureFile);
-
-    // Create a URL for the selected image file
+    //console.log("File selected", this.profilePictureFile);
+  
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.profilePictureUrl = reader.result as string;
-    };
-
+    };    
+  
     this.uploadProfilePicture(this.doctorId);
+    fileInput.clear(); 
   }
 
   uploadProfilePicture(doctorId: number) {
@@ -219,9 +234,10 @@ export class DoctorComponent implements OnInit {
     this.doctorService.uploadProfilePicture(doctorId, formData).subscribe((response: any) => {
       console.log("response", response);
       if (response.message === "File uploaded successfully") {
-        console.log("Image uploaded successfully");
+        this.doctorService.uploadImageSuccessMessage();
       }
     }, (error: any) => {
+      this.doctorService.uploadImageErrorMessage();
       console.error("Image upload failed", error);
     });
   }
@@ -232,7 +248,7 @@ export class DoctorComponent implements OnInit {
     if (this.isEditing) {
       this.newDoctor.enable();
     } else {
-      this.onSubmit(); 
+      this.onSubmit();
       this.newDoctor.disable();
     }
   }
@@ -242,20 +258,18 @@ export class DoctorComponent implements OnInit {
       header: '¿Está seguro de eliminar su cuenta?',
       message: 'Esta acción no se puede deshacer. Por favor, confirme para proceder.',
       accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmado', detail: 'Ha aceptado eliminar su cuenta.', life: 3000 });
-        setTimeout(() => {
-          this.doctorService.delete(this.doctorId).subscribe(
-            (response: any) => {
-              this.router.navigateByUrl('/login'); 
-            },
-            (error: any) => {
-              console.error("Error al eliminar la cuenta", error);
-            }
-          );
-        }, 3000);
+        this.doctorService.delete(this.doctorId).subscribe(
+          (response: any) => {
+            this.doctorService.deleteSuccessMessage();
+            this.router.navigateByUrl('/login');
+          },
+          (e: any) => {
+            this.doctorService.deleteErrorMessage(e.error);
+          }
+        );
       },
       reject: () => {
-        this.messageService.add({ severity: 'warn', summary: 'Cancelado', detail: 'Ha cancelado la eliminación de su cuenta.', life: 3000 });
+        this.doctorService.cancelMessage();
       }
     });
   }

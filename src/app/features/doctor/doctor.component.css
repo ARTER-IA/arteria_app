@@ -1,4 +1,4 @@
-.doctor-container {
+:host ::ng-deep .doctor-container {
   display: flex;
   justify-content: center; /* Centra las tarjetas horizontalmente */
   align-items: flex-start; /* Alinea las tarjetas en la parte superior */
@@ -10,36 +10,41 @@
   margin: 0 auto; /* Centra el contenedor en la página */
 }
 
-.card-column-1 {
+:host ::ng-deep .card-column-1 {
   flex: 1 1 33.3333%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.card-column-2-3 {
+:host ::ng-deep .card-column-2-3 {
   flex: 2 1 66.6666%;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.card-column-3-inner {
+:host ::ng-deep .card-column-3-inner {
   display: flex;
   gap: 20px;
 }
 
-.card-column-3-inner p-card {
+:host ::ng-deep p-card {
+  width: 100%;
+}
+
+:host ::ng-deep .card-column-3-inner p-card {
   flex: 1 1 50%;
 }
 
-.input-group {
+:host ::ng-deep .input-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100% !important;
 }
 
-input[pInputText] {
+:host ::ng-deep input[pInputText] {
   box-sizing: border-box;
   transition: all 0.3s ease;
   border: 1px solid #ccc;
@@ -47,30 +52,42 @@ input[pInputText] {
   width: 100%;
 }
 
-input[pInputText]:focus {
+:host ::ng-deep input[pInputText]:focus {
   outline: none;
   border: 1px solid #007ad9;
 }
 
-p-card {
-  width: 100%;
+:host ::ng-deep .p-dropdown {
+  box-sizing: border-box;
+  height: 38px;
+  width: 100% !important;
+}
+
+:host ::ng-deep p-dropdown .p-dropdown-label {
+  padding: 8px;
+}
+
+:host ::ng-deep .p-calendar {
+  width: 100% !important;
+  height: 38px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {
-  .doctor-container {
+  :host ::ng-deep .doctor-container {
     flex-direction: column;
   }
 
-  .card-column-1,
-  .card-column-2-3 {
+  :host ::ng-deep .card-column-1,
+  :host ::ng-deep .card-column-2-3 {
     flex: 1 1 100%;
   }
 
-  .card-column-3-inner {
+  :host ::ng-deep .card-column-3-inner {
     flex-direction: column;
   }
 
-  .card-column-3-inner p-card {
+  :host ::ng-deep .card-column-3-inner p-card {
     flex: 1 1 100%;
   }
 }

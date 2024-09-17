@@ -50,6 +50,11 @@ interface calulatedRisk {
   predicted_class: number;
 }
 
+interface Genre {
+  name: string;
+  code: string;
+}
+
 @Component({
   selector: 'app-form',
   standalone: true,
@@ -64,24 +69,23 @@ interface calulatedRisk {
     DropdownModule
   ],
   templateUrl: './form.component.html',
-  styleUrl: './form.component.css'
+  styleUrl: './form.component.css',
 })
 
 export class FormComponent implements OnInit {
 
   patient: any;
   consentOptions: any[];
-
+  genders: Genre[] | undefined;
 
   newForm = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     bloodGroup: new FormControl('', [Validators.required]),
-
     age: new FormControl(0, [Validators.required]),
     weight: new FormControl(0, [Validators.required]),
     length: new FormControl(0, [Validators.required]),
-    sex: new FormControl('', [Validators.required]),
+    sex: new FormControl(null, [Validators.required]),
     bmi: new FormControl(0, [Validators.required]),
     dm: new FormControl(0, [Validators.required]),
     htn: new FormControl(0, [Validators.required]),
@@ -93,7 +97,7 @@ export class FormComponent implements OnInit {
     thyroid_Disease: new FormControl(0, [Validators.required]),
     bp: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
     pr: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
-    weak_Peripheral_Pulse: new FormControl(0, [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]),
+    weak_Peripheral_Pulse: new FormControl(null, [Validators.required]),
     q_Wave: new FormControl(null, [Validators.required]),
     st_Elevation: new FormControl(null, [Validators.required]),
     st_Depression: new FormControl(null, [Validators.required]),
@@ -113,14 +117,19 @@ export class FormComponent implements OnInit {
     private resultsReportService: OpenaiService
   ) {
     this.consentOptions = [
-      { label: 'Yes', value: 1 },
+      { label: 'Si', value: 1 },
       { label: 'No', value: 0 }
     ];
 
+    this.genders = [
+          { name: 'Femenino', code: 'Female' },
+          { name: 'Masculino', code: 'Male' }
+        ];
   }
 
   ngOnInit(): void {
-    this.loadPatientData();
+    this.loadPatientData();    
+    //this.newForm.controls['sex'].disable();
   }
 
   loadPatientData() {
@@ -128,7 +137,6 @@ export class FormComponent implements OnInit {
     if (patientId) {
       this.formService.getPatientById(patientId).subscribe(
         (res: any) => {
-          console.log('Patient data:', res);
           this.patient = res;
           this.patchFormWithPatientData(res);
         },
@@ -151,7 +159,7 @@ export class FormComponent implements OnInit {
       weight: patient.weight,
       bmi: imc,
       age: age,
-      sex: patient.gender.name,
+      sex: patient.gender,
       bloodGroup: patient.bloodGroup,
     });
   }
@@ -195,19 +203,21 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
-
-
     const formValue = this.newForm.value;
 
     const getDropdownValue = (field: any): number => {
       return field && field.value !== undefined ? field.value : 0;
     };
 
+    const getDropdownCode = (field: any): string => {
+      return field && field.code !== undefined ? field.code : '';
+    };
+
     const formResource: form = {
       age: formValue.age ?? 0,
       weight: formValue.weight ?? 0,
       length: formValue.length ?? 0,
-      sex: formValue.sex ?? '',
+      sex: getDropdownCode(formValue.sex),
       bmi: formValue.bmi ?? 0,
       dm: formValue.dm ?? 0,
       htn: formValue.htn ?? 0,
@@ -219,7 +229,7 @@ export class FormComponent implements OnInit {
       thyroid_Disease: formValue.thyroid_Disease ?? 0,
       bp: formValue.bp ?? 0,
       pr: formValue.pr ?? 0,
-      weak_Peripheral_Pulse: formValue.weak_Peripheral_Pulse ?? 0,
+      weak_Peripheral_Pulse: getDropdownValue(formValue.weak_Peripheral_Pulse),
       q_Wave: getDropdownValue(formValue.q_Wave),
       st_Elevation: getDropdownValue(formValue.st_Elevation),
       st_Depression: getDropdownValue(formValue.st_Depression),
@@ -236,13 +246,11 @@ export class FormComponent implements OnInit {
     const patientId = localStorage.getItem('selectedPatientId');
 
     if (!doctorId || !patientId) {
-      console.error("Doctor ID or Patient ID is missing");
       return;
     }
 
     this.formService.create(formResource, doctorId, patientId).subscribe(
       (response: any) => {
-        console.log("Create successful", response);
         if (response) {
           const formData = {
             formId: response.id,
@@ -260,7 +268,6 @@ export class FormComponent implements OnInit {
 
           this.predictionService.predict(formResource).subscribe(
             (predictionResponse: any) => {
-              console.log("Prediction successful", predictionResponse);
               if (predictionResponse) {
                 localStorage.setItem('prediction', JSON.stringify(predictionResponse));
 
@@ -269,20 +276,13 @@ export class FormComponent implements OnInit {
                   prediction_probability: predictionResponse.prediction_probability ?? 0,
                 };
 
-                /*const formId = localStorage.getItem('formId');
-                if (!formId) {
-                  console.error("Form ID is missing");
-                  return;
-                }*/
-
                 this.formService.createCalculatedRisk(calculatedRiskResource, response.id).subscribe(
                   (calculatedRiskResponse: any) => {
-                    console.log("Calculated risk created", calculatedRiskResponse);
                     if (calculatedRiskResponse) {
                       localStorage.setItem('calculatedRisk', JSON.stringify(calculatedRiskResponse));
 
                       const generateRecommendation = {
-                        prediction_probability: predictionResponse.prediction_probability*100,
+                        prediction_probability: predictionResponse.prediction_probability * 100,
                         predicted_class: predictionResponse.predicted_class ?? 0,
                         age: response.age,
                         weight: response.weight,

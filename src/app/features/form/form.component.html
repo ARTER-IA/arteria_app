@@ -13,6 +13,8 @@
               id="firstName"
               name="firstName"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
           <div class="input-group">
@@ -24,6 +26,8 @@
               id="age"
               name="age"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
         </div>
@@ -40,17 +44,20 @@
               id="lastName"
               name="lastName"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
           <div class="input-group">
             <label for="sex">Género</label>
-            <input
-              type="text"
-              pInputText
+            <p-dropdown
               formControlName="sex"
+              [options]="genders"
+              optionLabel="name"
               id="sex"
               name="sex"
-              class="w-full"
+              class="w-full custom-dropdown"
+              readonly
             />
           </div>
         </div>
@@ -67,6 +74,8 @@
               id="length"
               name="length"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
           <div class="input-group">
@@ -78,6 +87,8 @@
               id="bloodGroup"
               name="bloodGroup"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
         </div>
@@ -94,6 +105,8 @@
               id="weight"
               name="weight"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
           <div class="input-group">
@@ -105,6 +118,8 @@
               id="bmi"
               name="bmi"
               class="w-full"
+              style="background-color: #f5f5f5"
+              readonly
             />
           </div>
         </div>
@@ -264,32 +279,27 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="weak_Peripheral_Pulse">Pulso periférico débil</label>
+            <label for="hb">Hemoglobina g/dL</label>
             <input
               type="text"
               pInputText
-              formControlName="weak_Peripheral_Pulse"
-              id="weak_Peripheral_Pulse"
-              name="weak_Peripheral_Pulse"
+              formControlName="hb"
+              id="hb"
+              name="hb"
               class="w-full"
             />
             <small
               *ngIf="
-                newForm.controls.weak_Peripheral_Pulse.invalid &&
-                (newForm.controls.weak_Peripheral_Pulse.dirty ||
-                  newForm.controls.weak_Peripheral_Pulse.touched)
+                newForm.controls.hb.invalid &&
+                (newForm.controls.hb.dirty || newForm.controls.hb.touched)
               "
               class="block p-error"
             >
-              <div
-                *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['required']"
-              >
-                Pulso periférico débil es requerido
+              <div *ngIf="newForm.controls.hb.errors?.['required']">
+                Hemoglobina es requerido
               </div>
-              <div
-                *ngIf="newForm.controls.weak_Peripheral_Pulse.errors?.['pattern']"
-              >
-                Ingrese un Pulso periférico débil válido
+              <div *ngIf="newForm.controls.hb.errors?.['pattern']">
+                Ingrese un valo de Hemoglobina válido
               </div>
             </small>
           </div>
@@ -324,7 +334,7 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="ldl">Lipoproteína de baja densidad mg/dL</label>
+            <label for="ldl">LDL mg/dL</label>
             <input
               type="text"
               pInputText
@@ -349,7 +359,7 @@
             </small>
           </div>
           <div class="input-group">
-            <label for="hdl">Lipoproteína de alta densidad mg/dL</label>
+            <label for="hdl">HDL mg/dL</label>
             <input
               type="text"
               pInputText
@@ -379,28 +389,23 @@
 
         <div class="w-full md:w-6 flex flex-column gap-3">
           <div class="input-group">
-            <label for="hb">Hemoglobina g/dL</label>
-            <input
-              type="text"
-              pInputText
-              formControlName="hb"
-              id="hb"
-              name="hb"
+            <label for="weak_Peripheral_Pulse">Pulso periférico débil</label>
+            <p-dropdown
+              formControlName="weak_Peripheral_Pulse"
+              [options]="consentOptions"
+              optionLabel="label"
+              placeholder="Seleccione Si o No"
               class="w-full"
-            />
+            ></p-dropdown>
             <small
               *ngIf="
-                newForm.controls.hb.invalid &&
-                (newForm.controls.hb.dirty || newForm.controls.hb.touched)
+                newForm.controls.weak_Peripheral_Pulse.invalid &&
+                (newForm.controls.weak_Peripheral_Pulse.dirty ||
+                  newForm.controls.weak_Peripheral_Pulse.touched)
               "
               class="block p-error"
             >
-              <div *ngIf="newForm.controls.hb.errors?.['required']">
-                Hemoglobina es requerido
-              </div>
-              <div *ngIf="newForm.controls.hb.errors?.['pattern']">
-                Ingrese un valo de Hemoglobina válido
-              </div>
+              Debes seleccionar una opción válida.
             </small>
           </div>
         </div>
@@ -417,7 +422,7 @@
               formControlName="q_Wave"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small
@@ -437,7 +442,7 @@
               formControlName="st_Elevation"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small
@@ -462,7 +467,7 @@
               formControlName="st_Depression"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small
@@ -482,7 +487,7 @@
               formControlName="tinversion"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small
@@ -507,7 +512,7 @@
               formControlName="lvh"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small
@@ -528,7 +533,7 @@
               formControlName="poor_R_Progression"
               [options]="consentOptions"
               optionLabel="label"
-              placeholder="Select Yes or No"
+              placeholder="Seleccione Si o No"
               class="w-full"
             ></p-dropdown>
             <small

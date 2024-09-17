@@ -21,13 +21,13 @@
       </div>
       <div class="field">
         <label for="password">Contraseña</label>
-        <input
-          type="password"
-          pInputText
+        <p-password
           formControlName="password"
           class="w-full"
           name="password"
           placeholder="Ingresa una contraseña"
+          [toggleMask]="true"
+          feedback="false"
         />
         <small
           *ngIf="password.invalid && (password.dirty || password.touched)"

@@ -2,9 +2,14 @@
   <!-- Welcome Section -->
   <div class="w-full text-center">
     <br />
-    <div *ngIf="doctor">
+    <div *ngIf="doctor?.gender === 'Masculino'">
       <p class="welcome-text">
         Bienvenido, Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+      </p>
+    </div>
+    <div *ngIf="doctor?.gender === 'Femenino'">
+      <p class="welcome-text">
+        Bienvenido, Dra. {{ doctor.firstName }} {{ doctor.lastName }}
       </p>
     </div>
     <div *ngIf="!doctor">
@@ -116,7 +121,7 @@
           </div>
         </ng-template>
         <ng-template pTemplate="footer">
-          <div class="flex flex-wrap justify-content-center align-items-center">
+          <div class="flex flex-wrap justify-content-center align-items-center">            
             <p-button
               label="Buscar"
               icon="pi pi-search"

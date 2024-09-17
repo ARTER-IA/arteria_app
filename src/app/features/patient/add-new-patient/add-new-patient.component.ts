@@ -14,7 +14,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PatientService } from '../services/patient.service';
+import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../notification/notification.service';
 
 interface patient {
   firstName: string;
@@ -60,10 +62,34 @@ interface genre {
     DropdownModule,
     ChipsModule,
     FileUploadModule,
-    CommonModule
+    CommonModule,
+    ToastModule
+  ],
+  providers: [
+    NotificationService
   ],
   templateUrl: './add-new-patient.component.html',
-  styleUrl: './add-new-patient.component.css'
+  styleUrl: './add-new-patient.component.css',
+  styles: [
+    `
+            :host ::ng-deep .p-dropdown {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-calendar {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-inputmask {
+                width: 100%
+            }
+
+            :host ::ng-deep .p-chips {
+              display: block;
+              max-width: 100%;
+            }
+    `
+  ]
 })
 
 export class AddNewPatientComponent implements OnInit {
@@ -93,14 +119,23 @@ export class AddNewPatientComponent implements OnInit {
   genders: genre[] | undefined;
   profilePictureUri: string = '';
   profilePictureFile: File | null = null;
+  date: Date | undefined;
+  minDate: Date | undefined;
+  maxDate: Date | undefined;
 
-  constructor(private patientService: PatientService, private router: Router) { }
+  constructor(private patientService: PatientService, private router: Router,
+    private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+    const today = new Date();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(today.getFullYear() - 40);
+    this.minDate = new Date();
+    this.minDate.setFullYear(today.getFullYear() - 120);
 
     this.genders = [
-      { name: 'Female', code: 'F' },
-      { name: 'Male', code: 'M' }
+      { name: 'Femenino', code: 'Female' },
+      { name: 'Masculino', code: 'Male' }
     ];
 
   }
@@ -130,49 +165,38 @@ export class AddNewPatientComponent implements OnInit {
 
     const doctorId = localStorage.getItem('id');
 
-    console.log("Resource", patientResource);
-
     this.patientService.create(patientResource, doctorId).subscribe((response: any) => {
-      console.log("Create successful", response);
       if (response) {
         this.uploadProfilePicture(response.id);
+        this.patientService.showSuccessMessage();
         this.router.navigateByUrl('/home');
       }
-    }, (error: any) => {
-      console.error("Creation failed", error);
+    }, (e: any) => {
+        this.patientService.showErrorMessage(e.error);
     });
+    
   }
 
   onFileChange(event: any) {
     if (event.target.files.length > 0) {
       this.profilePictureFile = event.target.files[0];
-      console.log("file", this.profilePictureFile);
     }
   }
 
-  /*onUpload(event: any) {
-    const file = event.files[0];
-    console.log(file);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      console.log("Result", reader.result);
-      this.profilePictureUri = reader.result as string;
-    };
-  }*/
-
-  onUpload(event: any) {
+  onUpload(event: any, fileInput: any) {
     const file = event.files[0];
     this.profilePictureFile = file;
-    console.log("File selected", this.profilePictureFile);
+    //console.log("File selected", this.profilePictureFile);
 
-    // Create a URL for the selected image file
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
       this.profilePictureUri = reader.result as string;
     };
+  
+    fileInput.clear(); 
   }
+  
 
   uploadProfilePicture(patientId: number) {
     var formData = new FormData();
