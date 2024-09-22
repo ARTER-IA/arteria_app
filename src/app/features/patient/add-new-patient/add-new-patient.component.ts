@@ -95,8 +95,8 @@ interface genre {
 export class AddNewPatientComponent implements OnInit {
 
   addPatientForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
-    lastName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    firstName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
+    lastName: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     dni: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
     birthdayDate: new FormControl(null, Validators.required),

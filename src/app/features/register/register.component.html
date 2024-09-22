@@ -126,6 +126,7 @@
               id="birthDate"
               name="birthDate"
               placeholder="dd/mm/yyyy"
+              dateFormat="dd/mm/yy"
               class="w-full"
             />
             <small
@@ -229,7 +230,7 @@
       </div>
 
       <p-button
-        label="ACCEDER"
+        label="REGISTRAR"
         styleClass="w-full"
         [disabled]="registerForm.invalid"
         (click)="onSubmit()"

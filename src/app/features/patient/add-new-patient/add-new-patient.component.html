@@ -47,7 +47,7 @@
                         <label for="birthdayDate">Fecha de nacimiento</label>
                         <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
                             inputId="buttondisplay" id="birthdayDate" name="birthdayDate" [minDate]="minDate"
-                            [maxDate]="maxDate" class="w-full" />
+                            [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" class="w-full" />
                         <small *ngIf="addPatientForm.controls.birthdayDate.invalid && (addPatientForm.controls.birthdayDate.dirty || 
                             addPatientForm.controls.birthdayDate.touched)" class="block p-error">
                             <div *ngIf="addPatientForm.controls.birthdayDate.errors?.['required']">

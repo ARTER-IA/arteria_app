@@ -16,6 +16,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FormService } from '../../form/services/form.service';
 import { firstValueFrom } from 'rxjs';
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 interface Patient {
   firstName: string;
@@ -65,7 +67,11 @@ interface Genre {
     ChipsModule,
     DropdownModule,
     ListboxModule,
-    FileUploadModule
+    FileUploadModule,
+    ConfirmDialogModule
+  ],
+  providers: [
+    ConfirmationService
   ],
   templateUrl: './patient-profile.component.html',
   styleUrls: ['./patient-profile.component.css'],
@@ -104,10 +110,10 @@ export class PatientProfileComponent implements OnInit {
   minDate: Date | undefined;
   maxDate: Date | undefined;
 
-  constructor(private route: ActivatedRoute, private patientService: PatientService, private formService: FormService, private sanitizer: DomSanitizer, private router: Router) {
+  constructor(private route: ActivatedRoute, private patientService: PatientService, private formService: FormService, private sanitizer: DomSanitizer, private router: Router, private confirmationService: ConfirmationService) {
     this.patientFormGroup = new FormGroup({
-      firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
-      lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+      firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
+      lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
       birthdayDate: new FormControl({ value: new Date(), disabled: true }, Validators.required),
       gender: new FormControl({ value: '', disabled: true }, Validators.required),
       phoneNumber: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{9}$/)]),
@@ -295,6 +301,27 @@ export class PatientProfileComponent implements OnInit {
     } catch (error) {
       console.error('Error loading data', error);
     }
+  }
+
+  deleteAccount(event: Event) {
+    this.confirmationService.confirm({
+      header: '¿Está seguro de eliminar la cuenta de este paciente?',
+      message: 'Esta acción no se puede deshacer. Por favor, confirme para proceder.',
+      accept: () => {
+        this.patientService.delete(this.patientId).subscribe(
+          (response: any) => {
+            this.patientService.deleteSuccessMessage();
+            this.router.navigateByUrl('/search-patients');
+          },
+          (e: any) => {
+            this.patientService.deleteErrorMessage(e.error);
+          }
+        );
+      },
+      reject: () => {
+        this.patientService.cancelMessage();
+      }
+    });
   }
 
 }
