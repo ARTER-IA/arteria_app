@@ -45,9 +45,9 @@
                     </div>
                     <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                         <label for="birthdayDate">Fecha de nacimiento</label>
-                         <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
+                        <p-calendar type="date" formControlName="birthdayDate" [showIcon]="true" [showOnFocus]="false"
                             inputId="buttondisplay" id="birthdayDate" name="birthdayDate" [minDate]="minDate"
-                            [maxDate]="maxDate" class="w-full" />
+                            [maxDate]="maxDate" placeholder="dd/mm/yyyy" dateFormat="dd/mm/yy" class="w-full" />
                         <small *ngIf="patientFormGroup.get('birthdayDate')?.invalid && (patientFormGroup.get('birthdayDate')?.dirty ||
                             patientFormGroup.get('birthdayDate')?.touched)" class="block p-error">
                             <div *ngIf="patientFormGroup.get('birthdayDate')?.errors?.['required']">
@@ -148,7 +148,8 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="allergies">Alergias</label>
-                                <input type="text" pInputText id="allergies" class="w-full" formControlName="allergies" />
+                                <input type="text" pInputText id="allergies" class="w-full"
+                                    formControlName="allergies" />
                                 <small *ngIf="patientFormGroup.get('allergies')?.invalid && (patientFormGroup.get('allergies')?.dirty ||
                                     patientFormGroup.get('allergies')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('allergies')?.errors?.['required']">
@@ -158,7 +159,8 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="currentMedications">Medicación actual</label>
-                                <input type="text" pInputText id="currentMedications" class="w-full" formControlName="currentMedications" />
+                                <input type="text" pInputText id="currentMedications" class="w-full"
+                                    formControlName="currentMedications" />
                                 <small *ngIf="patientFormGroup.get('currentMedications')?.invalid && (patientFormGroup.get('currentMedications')?.dirty ||
                                     patientFormGroup.get('currentMedications')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('currentMedications')?.errors?.['required']">
@@ -170,7 +172,8 @@
                             <h2>Información sobre el Seguro Médico</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="insuranceNumber">Número del seguro</label>
-                                <input type="text" pInputText id="insuranceNumber" class="w-full" formControlName="insuranceNumber" />
+                                <input type="text" pInputText id="insuranceNumber" class="w-full"
+                                    formControlName="insuranceNumber" />
                                 <small *ngIf="patientFormGroup.get('insuranceNumber')?.invalid && (patientFormGroup.get('insuranceNumber')?.dirty ||
                                     patientFormGroup.get('insuranceNumber')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('insuranceNumber')?.errors?.['required']">
@@ -203,7 +206,8 @@
                             <h2>Historial Médico</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="previousIllnesses">Enfermedades previas</label>
-                                <input type="text" pInputText id="previousIllnesses" class="w-full" formControlName="previousIllnesses" />
+                                <input type="text" pInputText id="previousIllnesses" class="w-full"
+                                    formControlName="previousIllnesses" />
                                 <small *ngIf="patientFormGroup.get('previousIllnesses')?.invalid && (patientFormGroup.get('previousIllnesses')?.dirty ||
                                     patientFormGroup.get('previousIllnesses')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('previousIllnesses')?.errors?.['required']">
@@ -213,7 +217,8 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="previousSurgeries">Cirugías previas</label>
-                                <input type="text" pInputText id="previousSurgeries" class="w-full" formControlName="previousSurgeries" />
+                                <input type="text" pInputText id="previousSurgeries" class="w-full"
+                                    formControlName="previousSurgeries" />
                                 <small *ngIf="patientFormGroup.get('previousSurgeries')?.invalid && (patientFormGroup.get('previousSurgeries')?.dirty ||
                                     patientFormGroup.get('previousSurgeries')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('previousSurgeries')?.errors?.['required']">
@@ -223,7 +228,8 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="currentConditions">Condiciones actuales</label>
-                                <p-chips formControlName="currentConditions" id="currentConditions" name="currentConditions" class="w-full"/>
+                                <p-chips formControlName="currentConditions" id="currentConditions"
+                                    name="currentConditions" class="w-full" />
                                 <small *ngIf="patientFormGroup.get('currentConditions')?.invalid && (patientFormGroup.get('currentConditions')?.dirty ||
                                     patientFormGroup.get('currentConditions')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('currentConditions')?.errors?.['required']">
@@ -235,7 +241,8 @@
                             <h2>Contacto de Emergencia</h2>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="emergencyContact">Nombre completo</label>
-                                <input type="text" pInputText id="emergencyContact" class="w-full" formControlName="emergencyContact" />
+                                <input type="text" pInputText id="emergencyContact" class="w-full"
+                                    formControlName="emergencyContact" />
                                 <small *ngIf="patientFormGroup.get('emergencyContact')?.invalid && (patientFormGroup.get('emergencyContact')?.dirty ||
                                     patientFormGroup.get('emergencyContact')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('emergencyContact')?.errors?.['required']">
@@ -245,7 +252,8 @@
                             </div>
                             <div class="flex flex-wrap justify-content-start align-items-start gap-2">
                                 <label for="emergencyPhoneNumber">Celular</label>
-                                <input type="text" pInputText id="emergencyPhoneNumber" class="w-full" formControlName="emergencyPhoneNumber" />
+                                <input type="text" pInputText id="emergencyPhoneNumber" class="w-full"
+                                    formControlName="emergencyPhoneNumber" />
                                 <small *ngIf="patientFormGroup.get('emergencyPhoneNumber')?.invalid && (patientFormGroup.get('emergencyPhoneNumber')?.dirty ||
                                     patientFormGroup.get('emergencyPhoneNumber')?.touched)" class="block p-error">
                                     <div *ngIf="patientFormGroup.get('emergencyPhoneNumber')?.errors?.['required']">
@@ -285,12 +293,32 @@
                         </ng-template>
                     </div>
 
-                    <div class="flex flex-wrap justify-content-center align-items-center">
+                    <div class="flex flex-wrap justify-content-center align-items-center gap-3">
+                        <!-- gap añadido aquí -->
                         <p-button *ngIf="!isEditing" (click)="onEditProfile()" label="Editar perfil" icon="pi pi-pencil"
                             styleClass="w-10rem mx-auto"></p-button>
                         <p-button *ngIf="isEditing" (click)="onSaveChanges()" label="Guardar" icon="pi pi-save"
-                            [disabled]="patientFormGroup.invalid" styleClass="w-12rem mx-auto"></p-button>
+                            [disabled]="patientFormGroup.invalid" styleClass="w-9rem mx-auto"></p-button>
+
+                        <p-confirmDialog #cd [style]="{  color: '#2a2d77'}">
+                            <ng-template pTemplate="headless" let-message>
+                                <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+                                    <span class="font-bold text-2xl block mb-2 mt-4">{{ message.header }}</span>
+                                    <p class="mb-0">{{ message.message }}</p>
+                                    <div class="flex align-items-center gap-2 mt-4">
+                                        <p-button label="Estoy seguro" icon="pi pi-check" (click)="cd.accept()"
+                                            class="w-12rem"></p-button>
+                                        <p-button label="Cancelar" icon="pi pi-times" (click)="cd.reject()"
+                                            class="w-12rem"></p-button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-confirmDialog>
+
+                        <p-button type="button" label="Eliminar perfil" icon="pi pi-trash"
+                            (click)="deleteAccount($event)"></p-button>
                     </div>
+
                 </div>
             </div>
         </p-card>

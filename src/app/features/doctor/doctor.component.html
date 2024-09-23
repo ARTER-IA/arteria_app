@@ -132,6 +132,8 @@
                   class="w-full"
                   formControlName="birthDate"
                   [showOnFocus]="false"
+                  placeholder="dd/mm/yyyy"
+                  dateFormat="dd/mm/yy"
                 ></p-calendar>
                 <small
                   *ngIf="
@@ -236,13 +238,21 @@
               </div>
               <div class="input-group">
                 <label for="phone">Celular</label>
-                <input
+                <!--<input
                   type="text"
                   pInputText
                   formControlName="phone"
                   id="phone"
                   name="phone"
                   class="w-full"
+                />-->
+                <p-inputMask 
+                  mask="999999999" 
+                  formControlName="phone" 
+                  id="phone" 
+                  name="phone"
+                  placeholder="999999999" 
+                  class="w-full" 
                 />
                 <small
                   *ngIf="

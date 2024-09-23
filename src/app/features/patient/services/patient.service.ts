@@ -62,6 +62,10 @@ export class PatientService {
     return this.http.get(`${this.basePath}/patients/latestResult/${patientId}`, this.httpOptions);
   }
 
+  delete(patientId: string){
+    return this.http.delete(`${this.basePath}/patients/${patientId}`, this.httpOptions);    
+  }
+
   async showSuccessMessage(): Promise<void> {
     this.message.addMessage({
       severity: 'success',
@@ -112,6 +116,33 @@ export class PatientService {
       severity: 'error',
       summary: 'Error',
       detail: 'Ocurrió un error al subir la foto de perfil.',
+      life: 3000
+    });
+  }
+
+  async deleteSuccessMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'success',
+      summary: 'Listo',
+      detail: 'El perfil del paciente ha sido eliminado correctamente.',
+      life: 3000
+    });
+  }
+
+  async deleteErrorMessage(error: any): Promise<void>{
+    this.message.addMessage({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+      life: 3000
+    });
+  }
+
+  async cancelMessage(): Promise<void> {
+    this.message.addMessage({
+      severity: 'warn',
+      summary: 'Cancelado',
+      detail: 'La eliminación del perfil de paciente ha sido cancelada.',
       life: 3000
     });
   }

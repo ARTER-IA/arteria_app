@@ -16,7 +16,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
-import { NotificationService } from '../notification/notification.service';
+import { InputMaskModule } from 'primeng/inputmask';
 
 
 interface doctor {
@@ -55,7 +55,8 @@ interface doctor {
     ConfirmDialogModule,
     ToastModule,
     DropdownModule,
-    CalendarModule
+    CalendarModule,
+    InputMaskModule
   ],
   templateUrl: './doctor.component.html',
   styleUrl: './doctor.component.css',
@@ -84,8 +85,8 @@ export class DoctorComponent implements OnInit {
 
   newDoctor = new FormGroup({
     username: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
-    firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
-    lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
+    firstName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
+    lastName: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(?: [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$/)]),
     dni: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]{8}$/)]),
     birthDate: new FormControl({ value: new Date(), disabled: true }, Validators.required),
     gender: new FormControl({ value: null, disabled: true }, [Validators.required]),
