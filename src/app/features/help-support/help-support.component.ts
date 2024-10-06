@@ -58,7 +58,7 @@ export class HelpSupportComponent {
   faqs: any[] = [
     {
       title: '¿Cómo ingresar los datos del paciente en el sistema?',
-      content: 'Para ingresar los datos de un paciente, dirígete a la vista Agregar Paciente y completa los campos obligatorios del formulario, incluyendo información personal, factores de riesgo como edad, sexo, antecedentes familiares de enfermedades cardíacas, hipertensión, diabetes, entre otros, y datos clínicos como los resultados de los electrocardiogramas. Asegúrate de revisar la información antes de enviar el formulario para garantizar la precisión de la predicción.'
+      content: 'Para ingresar los datos de un paciente, dirígete a la vista Agregar Nuevo Paciente y completa los campos obligatorios del formulario, incluyendo información personal, factores de riesgo como edad, sexo, antecedentes familiares de enfermedades cardíacas, hipertensión, diabetes, entre otros, y datos clínicos como los resultados de los electrocardiogramas. Asegúrate de revisar la información antes de enviar el formulario para garantizar la precisión de la predicción.'
     },
     {
       title: '¿Qué significan los resultados de predicción proporcionados por el sistema?',

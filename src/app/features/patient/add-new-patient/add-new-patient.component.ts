@@ -131,7 +131,7 @@ export class AddNewPatientComponent implements OnInit {
     this.maxDate = new Date();
     this.maxDate.setFullYear(today.getFullYear() - 40);
     this.minDate = new Date();
-    this.minDate.setFullYear(today.getFullYear() - 120);
+    this.minDate.setFullYear(today.getFullYear() - 90);
 
     this.genders = [
       { name: 'Femenino', code: 'Female' },

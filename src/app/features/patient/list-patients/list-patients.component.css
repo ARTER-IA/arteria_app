@@ -44,6 +44,23 @@
     box-sizing: border-box;
 }
 
+.no-results-container {
+    display: flex;
+    flex-direction: column;       /* Coloca el contenido en una columna */
+    justify-content: center;      /* Centra verticalmente */
+    align-items: center;          /* Centra horizontalmente */
+    height: 50vh;                /* Hace que el contenedor ocupe toda la pantalla */
+    text-align: center;           /* Alinea el texto en el centro */
+  }
+  
+  .no-results-container p {
+    margin-bottom: 5px;          /* Margen inferior para separar el texto del botón */
+  }
+  
+  .no-results-container button {
+    margin-top: 1rem;             /* Margen superior para separar el botón del texto */
+  }
+
 @media (max-width: 1400px) {
     .search-bar {
         flex-direction: column;

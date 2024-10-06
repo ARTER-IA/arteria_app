@@ -39,6 +39,7 @@ export class ListPatientsComponent implements OnInit {
   filteredPatients: Patient[] = [...this.patients];
   searchForm: FormGroup;
   genders: Genre[] | undefined;
+  hasSearched: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private patientService: PatientService) {
     this.searchForm = this.fb.group({
@@ -56,6 +57,7 @@ export class ListPatientsComponent implements OnInit {
     ];
 
     this.searchForm.valueChanges.subscribe(values => {
+      this.hasSearched = true;
       this.filterPatients(values);
     });
     this.getPatients();
@@ -140,6 +142,12 @@ export class ListPatientsComponent implements OnInit {
 
   clearFilters(): void {
     this.searchForm.reset();
+    this.hasSearched = false;
+    this.filteredPatients = [...this.patients];
+  }
+
+  addPatient(): void {
+    this.router.navigate(['add-new-patient']);
   }
 
 }
