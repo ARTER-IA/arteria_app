@@ -81,7 +81,8 @@ export class DoctorComponent implements OnInit {
   profilePictureUrl: SafeUrl | string = '';
   profilePictureFile: File | null = null;
   consentOptions: any[];
-
+  maxDate: Date | undefined;
+  minDate: Date | undefined;
 
   newDoctor = new FormGroup({
     username: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]),
@@ -113,6 +114,12 @@ export class DoctorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const today = new Date();
+    this.maxDate = new Date();
+    this.minDate = new Date();
+    this.maxDate.setFullYear(today.getFullYear()); 
+    this.minDate.setFullYear(today.getFullYear() - 90);
+
     this.loadDoctorData();
     this.getProfilePicture(this.doctorId);
   }

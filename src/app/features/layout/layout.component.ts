@@ -34,7 +34,7 @@ export class LayoutComponent implements OnInit {
 
       },
       {
-        label: 'Home',
+        label: 'Inicio',
         icon: 'pi pi-home',
         command: () => {
           this.router.navigate(['/home']);

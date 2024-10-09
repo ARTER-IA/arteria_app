@@ -17,7 +17,7 @@
           <p-fileUpload 
             #fileInput 
             mode="basic" 
-            chooseLabel="Browse" 
+            chooseLabel="Subir foto" 
             [auto]="true"
             name="pictureProfileUri" 
             customUpload="true" 
@@ -86,7 +86,7 @@
         </p-confirmDialog>
         <p-button
           type="button"
-          label="Eliminar Cuenta"
+          label="Eliminar cuenta"
           icon="pi pi-trash"
           (click)="deleteAccount($event)"
         ></p-button>
@@ -134,6 +134,8 @@
                   [showOnFocus]="false"
                   placeholder="dd/mm/yyyy"
                   dateFormat="dd/mm/yy"
+                  [minDate]="minDate"
+                  [maxDate]="maxDate"
                 ></p-calendar>
                 <small
                   *ngIf="

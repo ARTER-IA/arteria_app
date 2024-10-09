@@ -65,9 +65,19 @@ export class RegisterComponent implements OnInit {
     validators: passwordMatchValidator('password', 'confirmPassword')
   });
 
+  maxDate: Date | undefined;
+  minDate: Date | undefined;
+
   constructor(private registerService: RegisterService, private router: Router) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    const today = new Date();
+    this.maxDate = new Date();
+    this.minDate = new Date();
+    this.maxDate.setFullYear(today.getFullYear());
+    this.minDate.setFullYear(today.getFullYear() - 90);
+
+  }
 
   onSubmit() {
     const toSubmit: doctor = {

@@ -18,7 +18,7 @@
                             <input type="number" pInputText placeholder="Ingresa porcentaje EAC"
                                 formControlName="selectedCADPercent" class="mr-2">
                             <p-button label="Limpiar filtros" icon="pi pi-times" class="clear-filters-button"
-                                [rounded]="true" (click)="clearFilters()"></p-button>
+                                [rounded]="true" (click)="clearFilters()" [disabled]="!hasSearched"></p-button>
                         </div>
                     </div>
                 </p-toolbar>
@@ -26,7 +26,18 @@
         </div>
         <br>
     </form>
-    <div class="card patient-cards">
+
+    <div *ngIf="patients.length === 0 && !hasSearched" class="no-results-container">
+        <p>Aún no has registrado ningún paciente. Comienza agregando uno nuevo.</p>
+        <p-button label="Agregar paciente" icon="pi pi-plus" (click)="addPatient()"></p-button>
+    </div>
+
+    <div *ngIf="filteredPatients.length === 0 && hasSearched" class="no-results-container">
+        <p>No se encontraron pacientes que coincidan con los criterios de búsqueda.</p>
+        <p>Verifica los filtros aplicados o intenta con otra información.</p>
+    </div>
+
+    <div class="card patient-cards" *ngIf="filteredPatients.length > 0">
         <div *ngFor="let patient of filteredPatients" class="col-12 md:col-4">
             <p-card header="{{patient.name}}" subheader="DNI: {{patient.dni}}" class="text-center"
                 [style]="{ border: '1px solid #d4d2e3', borderRadius: '15px' }">
