@@ -29,7 +29,7 @@
 
     <div *ngIf="patients.length === 0 && !hasSearched" class="no-results-container">
         <p>Aún no has registrado ningún paciente. Comienza agregando uno nuevo.</p>
-        <p-button label="Agregar paciente" icon="pi pi-plus" (click)="addPatient()"></p-button>
+        <p-button label="Agregar paciente" icon="pi pi-plus" (click)="addPatient()" class="mt-3"></p-button>
     </div>
 
     <div *ngIf="filteredPatients.length === 0 && hasSearched" class="no-results-container">
