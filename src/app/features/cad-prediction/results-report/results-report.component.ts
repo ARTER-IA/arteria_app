@@ -250,7 +250,7 @@ export class ResultsReportComponent implements OnInit {
         this.predictionReport.patchValue({ recommendation: response.description });
       }
     }, (e: any) => {
-      this.predictionEACService.updateRecommendationFailedMessage(e.error)
+      this.predictionEACService.updateRecommendationFailedMessage(e.error.message)
     })
     this.toggleEditMode();
   }

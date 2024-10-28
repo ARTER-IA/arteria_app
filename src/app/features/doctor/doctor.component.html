@@ -489,6 +489,7 @@
       type="button"
       label="{{ isEditing ? 'Guardar' : 'Editar' }}"
       icon="{{ isEditing ? 'pi pi-save' : 'pi pi-pencil' }}"
+      [disabled]="newDoctor.invalid"
       (click)="toggleEdit()"
     ></p-button>
   </div>
